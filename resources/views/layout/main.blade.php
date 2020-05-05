@@ -145,12 +145,12 @@
 							</a>
 
 							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-								<!--<li>
+								<li>
 									<a href="#">
 										<i class="ace-icon fa fa-cog"></i>
 										Settings
 									</a>
-								</li>-->
+								</li>
 
 								<li>
 									<a href="profile.html">
