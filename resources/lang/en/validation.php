@@ -133,6 +133,12 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'menu_nama' => [
+           'required' => 'Nama Menu tidak boleh kosong !', 
+        ],
+        'role_nama' => [
+           'required' => 'Nama Role tidak boleh kosong !', 
+        ],
     ],
 
     /*

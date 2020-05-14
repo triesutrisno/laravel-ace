@@ -15,7 +15,7 @@ class StudentsController extends Controller
     public function index()
     {
         $students = Students::all();
-		return view('students.index',compact('students')); // fungsi compact digunakan jika nama variabel dan nama parameternya sama
+	return view('students.index',compact('students')); // fungsi compact digunakan jika nama variabel dan nama parameternya sama
     }
 
     /**
@@ -36,30 +36,30 @@ class StudentsController extends Controller
      */
     public function store(Request $request)
     {
-		 $request->validate([
-			'mhs_nama' => 'required',
-			'mhs_nim' => 'required|max:10',
-		]);
-		###--- Cara 1 ---###
+        $request->validate([
+               'mhs_nama' => 'required',
+               'mhs_nim' => 'required|max:10',
+        ]);
+        ###--- Cara 1 ---###
         #$student = new Students;
-		#$student->mhs_nama = $request->mhs_nama;
-		#$student->mhs_nim = $request->mhs_nim;
-		#$student->mhs_email = $request->mhs_email;
-		#$student->mhs_jurusan = $request->mhs_jurusan;
-		#$student->save();
+        #$student->mhs_nama = $request->mhs_nama;
+        #$student->mhs_nim = $request->mhs_nim;
+        #$student->mhs_email = $request->mhs_email;
+        #$student->mhs_jurusan = $request->mhs_jurusan;
+        #$student->save();
 
-		###--- Cara 2 ---###
-		#Students::create([
-		#	'mhs_nama'		=> 	$request->mhs_nama,
-		#	'mhs_nim'		=> 	$request->mhs_nim,
-		#	'mhs_email'		=> 	$request->mhs_email,
-		#	'mhs_jurusan'	=> 	$request->mhs_jurusan
-		#]);
+        ###--- Cara 2 ---###
+        #Students::create([
+        #	'mhs_nama'		=> 	$request->mhs_nama,
+        #	'mhs_nim'		=> 	$request->mhs_nim,
+        #	'mhs_email'		=> 	$request->mhs_email,
+        #	'mhs_jurusan'	=> 	$request->mhs_jurusan
+        #]);
 
-		###--- Cara 3 ---###
-		Students::create($request->all());
+        ###--- Cara 3 ---###
+        Students::create($request->all());
 
-		return redirect('/students')->with('pesan', 'Data berhasil disaimpan !');
+        return redirect('/students')->with('pesan', 'Data berhasil disaimpan !');
     }
 
     /**

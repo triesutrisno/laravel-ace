@@ -13,7 +13,7 @@
 		<link rel="stylesheet" href="{{ asset('assets/font-awesome/4.5.0/css/font-awesome.min.css') }}" />
 
 		<!-- page specific plugin styles -->
-
+                
 		<!-- text fonts -->
 		<link rel="stylesheet" href="{{ asset('assets/css/fonts.googleapis.com.css') }}" />
 
@@ -59,7 +59,7 @@
 				<div class="navbar-header pull-left">
 					<a href="{{url('/')}}" class="navbar-brand">
 						<small>
-							PT Semen Indonesia Logistik
+							PT Semen Indonesia Distributor
 						</small>
 					</a>
 				</div>
@@ -138,19 +138,27 @@
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 								<img class="nav-user-photo" src="{{ asset('assets/images/avatars/user.jpg') }}" alt="Jason's Photo" />
 								<span class="user-info">
-									<small>{{auth()->user()->name}}</small>
+                                                                        @php
+                                                                            if(auth()->user()->name!=""){
+                                                                                $arrNama = explode(' ',auth()->user()->name);
+                                                                            }else{
+                                                                                $arrNama = array('Noname','Noname');
+                                                                            }
+                                                                        @endphp
+									<small>{{$arrNama[0]}}</small>
+                                                                        {{ $arrNama[1]!='' ? $arrNama[1] : ''}}
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
 							</a>
 
 							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-								<li>
+								<!--<li>
 									<a href="#">
 										<i class="ace-icon fa fa-cog"></i>
 										Settings
 									</a>
-								</li>
+								</li>-->
 
 								<li>
 									<a href="profile.html">
@@ -183,36 +191,6 @@
 				<script type="text/javascript">
 					try{ace.settings.loadState('sidebar')}catch(e){}
 				</script>
-				<!--
-				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
-					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-						<button class="btn btn-success">
-							<i class="ace-icon fa fa-signal"></i>
-						</button>
-
-						<button class="btn btn-info">
-							<i class="ace-icon fa fa-pencil"></i>
-						</button>
-
-						<button class="btn btn-warning">
-							<i class="ace-icon fa fa-users"></i>
-						</button>
-
-						<button class="btn btn-danger">
-							<i class="ace-icon fa fa-cogs"></i>
-						</button>
-					</div>
-
-					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-						<span class="btn btn-success"></span>
-
-						<span class="btn btn-info"></span>
-
-						<span class="btn btn-warning"></span>
-
-						<span class="btn btn-danger"></span>
-					</div>
-				</div><!-- /.sidebar-shortcuts -->
 
 				<ul class="nav nav-list">
 					<li class="active highlight">
@@ -222,6 +200,65 @@
 						</a>
 
 						<b class="arrow"></b>
+					</li>
+                                        <li class="">
+                                            <a href="#" class="dropdown-toggle">
+                                                <i class="menu-icon fa fa-desktop"></i>
+                                                <span class="menu-text">
+                                                        Administrator
+                                                </span>
+
+                                                <b class="arrow fa fa-angle-down"></b>
+                                            </a>
+
+                                            <b class="arrow"></b>
+
+                                            <ul class="submenu">
+                                                <li class="">
+                                                    <a href="{{ url('/menu') }}">
+                                                            <i class="menu-icon fa fa-caret-right"></i>
+                                                            Master Menu
+                                                    </a>
+
+                                                    <b class="arrow"></b>
+                                                </li>
+
+                                                <li class="">
+                                                    <a href="{{ url('/role') }}">
+                                                            <i class="menu-icon fa fa-caret-right"></i>
+                                                            Master Role
+                                                    </a>
+
+                                                    <b class="arrow"></b>
+                                                </li>
+
+                                                <li class="">
+                                                    <a href="{{ url('/menurole') }}">
+                                                            <i class="menu-icon fa fa-caret-right"></i>
+                                                            Menu Role
+                                                    </a>
+
+                                                    <b class="arrow"></b>
+                                                </li>
+                                                
+                                                <li class="">
+                                                    <a href="content-slider.html">
+                                                            <i class="menu-icon fa fa-caret-right"></i>
+                                                            Master User
+                                                    </a>
+
+                                                    <b class="arrow"></b>
+                                                </li>
+
+                                                <li class="">
+                                                    <a href="content-slider.html">
+                                                            <i class="menu-icon fa fa-caret-right"></i>
+                                                            User Menu
+                                                    </a>
+
+                                                    <b class="arrow"></b>
+                                                </li>
+                                            </ul>
 					</li>
 					<li>
 						<a href="{{ url('/about') }}">
@@ -264,7 +301,6 @@
 							<li class="">
 								<a href="#" class="dropdown-toggle">
 									<i class="menu-icon fa fa-caret-right"></i>
-
 									Layouts
 									<b class="arrow fa fa-angle-down"></b>
 								</a>
@@ -457,10 +493,21 @@
 					<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
 						<ul class="breadcrumb">
 							<li>
-								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="{{url('/')}}">Home</a>
-							</li>
-							<li class="active">@yield('breadcrumb')</li>
+                                                            <i class="ace-icon fa fa-home home-icon"></i>
+                                                            <a href="{{url('/')}}">Home</a>
+							</li>							
+                                                        @if(trim($__env->yieldContent('subBreadcrumb')))
+                                                            <li class="active">
+                                                                <a href="{{url('/')}}/@yield('link')">@yield('breadcrumb')</a>
+                                                            </li>
+                                                            <li class="active">
+                                                                @yield('subBreadcrumb')
+                                                            </li>
+                                                         @else
+                                                            <li class="active">
+                                                                @yield('breadcrumb')
+                                                            </li>
+                                                        @endif
 						</ul><!-- /.breadcrumb -->
 
 						
@@ -549,7 +596,7 @@
 		<script src="{{ asset('assets/js/buttons.print.min.js') }}"></script>
 		<script src="{{ asset('assets/js/buttons.colVis.min.js') }}"></script>
 		<script src="{{ asset('assets/js/dataTables.select.min.js') }}"></script>
-
+                
 		<script type="text/javascript">
 			jQuery(function($) {
 				//initiate dataTables plugin
@@ -779,10 +826,9 @@
 					mouseWheelLock: true
 				  }
 				).css('padding-top', '12px');
-				*/
-			
-			
-			})
+				*/                                
+                                
+			});
 		</script>
 	</body>
 </html>

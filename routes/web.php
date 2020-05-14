@@ -17,12 +17,25 @@
 
 Route::get('/login','LoginController@index')->name('login');
 Route::post('/postlogin','LoginController@postlogin');
+Route::get('/logout','LoginController@logout');
 
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth'], function () {        
         
-        Route::get('/logout','LoginController@logout');
 	Route::get('/','PagesController@home');
+        
+        Route::namespace('Menu')->group(function () {
+            Route::resource('/menu','MenuController');
+        });
+        
+        Route::namespace('Role')->group(function () {
+            Route::resource('/role','RoleController');
+        });
+        
+        Route::namespace('Menurole')->group(function () {
+            Route::resource('/menurole','MenuroleController');
+        });
+        
 	Route::get('/about','PagesController@about');
 
 	Route::get('/mahasiswa','MahasiswaController@index');
