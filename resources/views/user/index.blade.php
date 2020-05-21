@@ -4,20 +4,21 @@
  <!-- page specific plugin style -->
 @endpush
 
-@section('breadcrumb','Master Role')
-@section('title','Daftar Role')
-@section('subTitle','Merupakan halaman daftar role dalam sistem')
+@section('breadcrumb','Menu User')
+@section('title','Daftar Menu User')
+@section('subTitle','Merupakan halaman daftar menu user dalam sistem')
 
 @section('container')
 <div class="row">
 	<div class="col-xs-12 col-sm-12">
 
 		<div class="clearfix">
-                        <a href="{{url('/role')}}" class="btn btn-white btn-info btn-bold">
+                        
+                        <a href="{{url('/user')}}" class="btn btn-white btn-info btn-bold">
                                 <i class="ace-icon fa fa-folder-open-o bigger-120 blue"></i>
                                 Lihat Data
-                        </a>                        
-                        <a href="{{url('/role/create')}}" class="btn btn-white btn-info btn-bold">
+                        </a>
+                        <a href="{{url('/user/create')}}" class="btn btn-white btn-info btn-bold">
                                 <i class="ace-icon glyphicon glyphicon-plus bigger-120 blue"></i>
                                 Tambah Data
                         </a>
@@ -51,16 +52,16 @@
                                             </label>
                                         </th>
                                         <th class="center">No</th>
-                                        <th>Nama Role</th>
-                                        <th>Keterangan</th>
-                                        <th class="center">Status</th>
+                                        <th>Username</th>
+                                        <th>Nama</th>
+                                        <th class="center">Email</th>
                                         <th>Created</th>
                                         <th colspan="3">Action</th>
                                 </tr>
                         </thead>
 
                         <tbody>
-                        @foreach($roles as $role)
+                        @foreach($users as $user)
                                 <tr>
                                         <td class="center">
                                             <label class="pos-rel">
@@ -70,16 +71,15 @@
                                         </td>
                                         
                                         <td class="center">{{$loop->iteration}}</td>
-                                        <td>{{$role->role_nama}}</td>
-                                        <td>{{$role->role_keterangan}}</td>
-                                        <td class="center">{{$role->role_status=='1' ? 'Aktif' : 'Tidak Aktif'}}</td>
-                                        <td>{{$role->created_at}}</td>
+                                        <td>{{$user->username}}</td>
+                                        <td>{{$user->name}}</td>
+                                        <td class="center">{{$user->email}}</td>
+                                        <td>{{$user->created_at}}</td>
                                         <td>
                                             <div class="hidden-sm hidden-xs action-buttons">
-                                                <a class="green" href="{{ url('/role')}}/{{$role->role_nama}}/edit"><i class="ace-icon fa fa-pencil bigger-130"></i></a>
-                                                <!--<a class="red btn-link" href="#" id="hapus-data"><i class="ace-icon fa fa-trash-o bigger-130"></i></a>-->
-                                                                                           
-                                                <form action="{{ url('/role')}}/{{$role->role_nama}}" method="post" class="inline">
+                                                <a class="green" href="{{ url('/user')}}/{{$user->id}}/edit"><i class="ace-icon fa fa-pencil bigger-130"></i></a>
+                                                                                               
+                                                <form action="{{ url('/user')}}/{{$user->id}}" method="post" class="inline">
                                                     @method('delete')
                                                     @csrf
                                                     <button class="red btn-link" >
@@ -101,19 +101,4 @@
 @push('scripts')
 <!-- ace scripts -->
 <!-- page specific plugin scripts -->
-<script>
-jQuery(function($) {
-    $("#hapus-data").on(ace.click_event, function() {
-        bootbox.confirm("Are you sure?", function(result) {
-            if(result) {
-                    //
-            }
-        });
-    });
-    
-    //$( "#hapus-data" ).click(function() {
-    //    alert( "Handler for .click() called." );
-    //});
-});
-</script>
 @endpush

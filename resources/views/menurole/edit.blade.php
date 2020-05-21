@@ -49,6 +49,7 @@
 
                         <div class="form-group">
                             <button class="btn btn-sm btn-primary" type="submit" class="btn btn-primary">Ubah</button>
+                            <a href="{{ url('/menurole') }}" class="btn btn-sm btn-primary">Kembali</a>
                         </div>
                 </form>
         </div> <!-- end col -->

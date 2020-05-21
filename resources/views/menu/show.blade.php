@@ -8,7 +8,19 @@
 
 @section('container')
 <div class="row">
-	<div class="col-xs-12 col-sm-12">
+	<div class="col-xs-12 col-sm-12">        
+            <div class="clearfix">
+                    <a href="{{url('/menu')}}" class="btn btn-white btn-info btn-bold">
+                            <i class="ace-icon fa fa-folder-open-o bigger-120 blue"></i>
+                            Lihat Data
+                    </a>
+                    <a href="{{url('/menu/create')}}" class="btn btn-white btn-info btn-bold">
+                            <i class="ace-icon glyphicon glyphicon-plus bigger-120 blue"></i>
+                            Tambah Data
+                    </a>
+                    <div class="pull-right tableTools-container"></div>
+            </div>
+            <br />
                 <div class="profile-user-info profile-user-info-striped">
                         <div class="profile-info-row">
                                 <div class="profile-info-name"> Nama Menu </div>

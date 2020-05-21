@@ -39,6 +39,8 @@
 
                         <div class="form-group">
                             <button class="btn btn-sm btn-primary" type="submit" class="btn btn-primary">Simpan</button>
+                            <button class="btn btn-sm btn-primary" type="reset" class="btn btn-primary">Reset</button>
+                            <a href="{{ url('/role') }}" class="btn btn-sm btn-primary">Kembali</a>
                         </div>
                 </form>
         </div> <!-- end col -->

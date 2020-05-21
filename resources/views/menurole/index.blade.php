@@ -12,8 +12,11 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12">
 
-		<div class="clearfix">
-                        
+		<div class="clearfix">                        
+                        <a href="{{url('/menurole')}}" class="btn btn-white btn-info btn-bold">
+                                <i class="ace-icon fa fa-folder-open-o bigger-120 blue"></i>
+                                Lihat Data
+                        </a>
                         <a href="{{url('/menurole/create')}}" class="btn btn-white btn-info btn-bold">
                                 <i class="ace-icon glyphicon glyphicon-plus bigger-120 blue"></i>
                                 Tambah Data

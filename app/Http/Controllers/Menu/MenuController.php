@@ -59,7 +59,12 @@ class MenuController extends Controller
     public function show(Menu $menu)
     {
         $dtParent = Menu::find($menu->menu_parent);
-        return view('menu.show',['menu'=>$menu, 'parentDesc'=>$dtParent->menu_nama]);
+        if($dtParent === null){
+            $parentNama = "";
+        }else{
+            $parentNama = $dtParent->menu_nama;            
+        }
+        return view('menu.show',['menu'=>$menu, 'parentDesc'=>$parentNama]);
     }
 
     /**
@@ -89,6 +94,7 @@ class MenuController extends Controller
         if (Menu::where([
                 ['menu_nama', '=', $request->menu_nama],
                 ['menu_status', '=', '1'],
+                ['deleted_at', '=', 'NULL'],
                 ['menu_id', '!=', $menu->menu_id]
         ])->doesntExist()) { // Cek data apakah sudah ada atau belum di database            
             Menu::where('menu_id', $menu->menu_id)

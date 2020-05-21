@@ -36,6 +36,10 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('/menurole','MenuroleController');
         });
         
+        Route::namespace('User')->group(function () {
+            Route::resource('/user','UserController');
+        });
+        
 	Route::get('/about','PagesController@about');
 
 	Route::get('/mahasiswa','MahasiswaController@index');

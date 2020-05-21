@@ -88,6 +88,7 @@ class RoleController extends Controller
         if (Role::where([
                 ['role_nama', '=', $request->role_nama],
                 ['role_status', '=', '1'],
+                ['deleted_at', '=', 'NULL'],
                 ['role_nama', '!=', $role->role_nama]
         ])->doesntExist()) { // Cek data apakah sudah ada atau belum di database            
             Role::where('role_nama', $role->role_nama)

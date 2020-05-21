@@ -93,6 +93,7 @@ class MenuroleController extends Controller
                 ['menu_id', '=', $request->menu_id],
                 ['role_nama', '=', $request->role_nama],
                 ['menurole_status', '=', '1'],
+                ['deleted_at', '=', 'NULL'],
                 ['menurole_id', '!=', $menurole->menurole_id]
         ])->doesntExist()) { // Cek data apakah sudah ada atau belum di database            
             Menurole::where('menurole_id', $menurole->menurole_id)

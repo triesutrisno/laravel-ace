@@ -242,7 +242,7 @@
                                                 </li>
                                                 
                                                 <li class="">
-                                                    <a href="content-slider.html">
+                                                    <a href="{{ url('/user') }}">
                                                             <i class="menu-icon fa fa-caret-right"></i>
                                                             Master User
                                                     </a>
@@ -264,23 +264,6 @@
 						<a href="{{ url('/about') }}">
 							<i class="menu-icon glyphicon glyphicon-user"></i>
 							<span class="menu-text"> About </span>
-						</a>
-
-						<b class="arrow"></b>
-					</li>
-					<li>
-						<a href="{{ url('/mahasiswa') }}">
-							<i class="menu-icon fa fa-users"></i>
-							<span class="menu-text"> Mahasiswa </span>
-						</a>
-
-						<b class="arrow"></b>
-					</li>
-					
-					<li>
-						<a href="{{ url('/students') }}">
-							<i class="menu-icon glyphicon glyphicon-list"></i>
-							<span class="menu-text"> Students </span>
 						</a>
 
 						<b class="arrow"></b>
