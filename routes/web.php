@@ -40,13 +40,17 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('/user','UserController');
         });
         
+        Route::namespace('Userrole')->group(function () {
+            Route::resource('/userrole','UserroleController');
+        });
+        
 	Route::get('/about','PagesController@about');
-
-	Route::get('/mahasiswa','MahasiswaController@index');
-
+        
+        /*
 	Route::get('/students','StudentsController@index');
 	Route::get('/students/create','StudentsController@create');
 	Route::get('/students/{student}','StudentsController@show');
 	Route::post('/students','StudentsController@store');
-	Route::delete('/students/{students}','StudentsController@destroy');
+	Route::delete('/students/{students}','StudentsController@destroy');        
+        */
 });

@@ -19,7 +19,13 @@
                         @csrf
                         <div class="form-group @error('role_nama') has-error @enderror">
                                 <label for="form-role_nama">Nama Role *</label>
-                                <input type="text" class="form-control" name='role_nama' id="form-role_nama" value="{{$menurole->role_nama}}">
+                                <!--<input type="text" class="form-control" name='role_nama' id="form-role_nama" value="{{$menurole->role_nama}}">-->
+                                <select class="form-control" name='role_nama' id="form-role_nama">
+                                    <option value="">Silakan Pilih</option>
+                                    @foreach($roles as $role)
+                                        <option value="{{$role->role_nama}}" @if($role->role_nama == $menurole->role_nama) Selected @endif>{{$role->role_nama}}</option>
+                                    @endforeach                                     
+                                </select>
                                 @error('role_nama')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

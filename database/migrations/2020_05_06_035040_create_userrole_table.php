@@ -14,9 +14,10 @@ class CreateUserroleTable extends Migration
     public function up()
     {
         Schema::create('userrole', function (Blueprint $table) {
-            $table->bigIncrements('userroleid');
-            $table->smallInteger('userid');
+            $table->bigIncrements('userrole_id');
+            $table->string('username',50);
             $table->string('role_nama',50);
+            $table->string('userrole_status',2)->nullable();
             $table->timestamps();
         });
         

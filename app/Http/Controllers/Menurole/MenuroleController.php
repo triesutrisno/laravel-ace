@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Menurole;
 use App\Http\Controllers\Controller;
 use App\Http\Model\Menurole\Menurole;
 use App\Http\Model\Menu\Menu;
+use App\Http\Model\Role\Role;
 use Illuminate\Http\Request;
 
 class MenuroleController extends Controller
@@ -28,8 +29,9 @@ class MenuroleController extends Controller
      */
     public function create()
     {
-        $menus = Menu::all();
-        return view('menurole.create',['menus'=>$menus]);
+        $menus = Menu::where(['menu_status'=>'1'])->get();
+        $roles = Role::where(['role_status'=>'1'])->get();
+        return view('menurole.create',['menus'=>$menus, 'roles'=>$roles]);
     }
 
     /**
@@ -72,8 +74,9 @@ class MenuroleController extends Controller
      */
     public function edit(Menurole $menurole)
     {
-        $menus = Menu::all();
-        return view('menurole.edit',['menurole'=>$menurole,'menus'=>$menus]);
+        $menus = Menu::where(['menu_status'=>'1'])->get();
+        $roles = Role::where(['role_status'=>'1'])->get();
+        return view('menurole.edit',['menurole'=>$menurole, 'menus'=>$menus, 'roles'=>$roles]);
     }
 
     /**

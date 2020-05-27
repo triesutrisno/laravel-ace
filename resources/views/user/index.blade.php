@@ -54,9 +54,9 @@
                                         <th class="center">No</th>
                                         <th>Username</th>
                                         <th>Nama</th>
-                                        <th class="center">Email</th>
+                                        <th>Email</th>
                                         <th>Created</th>
-                                        <th colspan="3">Action</th>
+                                        <th>Action</th>
                                 </tr>
                         </thead>
 
@@ -73,7 +73,7 @@
                                         <td class="center">{{$loop->iteration}}</td>
                                         <td>{{$user->username}}</td>
                                         <td>{{$user->name}}</td>
-                                        <td class="center">{{$user->email}}</td>
+                                        <td>{{$user->email}}</td>
                                         <td>{{$user->created_at}}</td>
                                         <td>
                                             <div class="hidden-sm hidden-xs action-buttons">

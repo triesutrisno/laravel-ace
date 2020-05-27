@@ -63,7 +63,6 @@
 						</small>
 					</a>
 				</div>
-
 				<div class="navbar-buttons navbar-header pull-right" role="navigation">
 					<ul class="nav ace-nav">
 						<li class="prImary dropdown-modal">
@@ -201,269 +200,37 @@
 
 						<b class="arrow"></b>
 					</li>
-                                        <li class="">
-                                            <a href="#" class="dropdown-toggle">
-                                                <i class="menu-icon fa fa-desktop"></i>
-                                                <span class="menu-text">
-                                                        Administrator
-                                                </span>
-
-                                                <b class="arrow fa fa-angle-down"></b>
-                                            </a>
-
-                                            <b class="arrow"></b>
-
-                                            <ul class="submenu">
-                                                <li class="">
-                                                    <a href="{{ url('/menu') }}">
-                                                            <i class="menu-icon fa fa-caret-right"></i>
-                                                            Master Menu
+                                        @php
+                                            $hakAkses = Session::get('hakAkses');
+                                            foreach ($hakAkses as $key => $val){
+                                                echo "
+                                                <li class=''>
+                                                    <a href='#' class='dropdown-toggle'>
+                                                            <i class='menu-icon fa fa-desktop'></i>
+                                                            <span class='menu-text'> $val[menu_nama] </span>
+                                                            <b class='arrow fa fa-angle-down'></b>
                                                     </a>
 
-                                                    <b class="arrow"></b>
-                                                </li>
+                                                    <b class='arrow'></b>";
 
-                                                <li class="">
-                                                    <a href="{{ url('/role') }}">
-                                                            <i class="menu-icon fa fa-caret-right"></i>
-                                                            Master Role
-                                                    </a>
+                                                    if(isset($val['data1'])){
+                                                        echo"<ul class='submenu'>";
+                                                        foreach ($val['data1'] as $key2 => $val2){
+                                                            echo"                                                               
+                                                            <li class=''>
+                                                                <a href='".url("/$val2[menu_link]")."'>
+                                                                        <i class='menu-icon fa fa-caret-right'></i>
+                                                                        $val2[menu_nama]
+                                                                </a>
 
-                                                    <b class="arrow"></b>
-                                                </li>
-
-                                                <li class="">
-                                                    <a href="{{ url('/menurole') }}">
-                                                            <i class="menu-icon fa fa-caret-right"></i>
-                                                            Menu Role
-                                                    </a>
-
-                                                    <b class="arrow"></b>
-                                                </li>
-                                                
-                                                <li class="">
-                                                    <a href="{{ url('/user') }}">
-                                                            <i class="menu-icon fa fa-caret-right"></i>
-                                                            Master User
-                                                    </a>
-
-                                                    <b class="arrow"></b>
-                                                </li>
-
-                                                <li class="">
-                                                    <a href="content-slider.html">
-                                                            <i class="menu-icon fa fa-caret-right"></i>
-                                                            User Menu
-                                                    </a>
-
-                                                    <b class="arrow"></b>
-                                                </li>
-                                            </ul>
-					</li>
-					<li>
-						<a href="{{ url('/about') }}">
-							<i class="menu-icon glyphicon glyphicon-user"></i>
-							<span class="menu-text"> About </span>
-						</a>
-
-						<b class="arrow"></b>
-					</li>
-					<li class="">
-						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-desktop"></i>
-							<span class="menu-text">
-								UI &amp; Elements
-							</span>
-
-							<b class="arrow fa fa-angle-down"></b>
-						</a>
-
-						<b class="arrow"></b>
-
-						<ul class="submenu">
-							<li class="">
-								<a href="#" class="dropdown-toggle">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Layouts
-									<b class="arrow fa fa-angle-down"></b>
-								</a>
-
-								<b class="arrow"></b>
-
-								<ul class="submenu">
-									<li class="">
-										<a href="top-menu.html">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Top Menu
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-									<li class="">
-										<a href="two-menu-1.html">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Two Menus 1
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-									<li class="">
-										<a href="two-menu-2.html">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Two Menus 2
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-									<li class="">
-										<a href="mobile-menu-1.html">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Default Mobile Menu
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-									<li class="">
-										<a href="mobile-menu-2.html">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Mobile Menu 2
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-									<li class="">
-										<a href="mobile-menu-3.html">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Mobile Menu 3
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-								</ul>
-							</li>
-
-							<li class="">
-								<a href="typography.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Typography
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="elements.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Elements
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="buttons.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Buttons &amp; Icons
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="content-slider.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Content Sliders
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="treeview.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Treeview
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="jquery-ui.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									jQuery UI
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="nestable-list.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Nestable Lists
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="#" class="dropdown-toggle">
-									<i class="menu-icon fa fa-caret-right"></i>
-
-									Three Level Menu
-									<b class="arrow fa fa-angle-down"></b>
-								</a>
-
-								<b class="arrow"></b>
-
-								<ul class="submenu">
-									<li class="">
-										<a href="#">
-											<i class="menu-icon fa fa-leaf green"></i>
-											Item #1
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-									<li class="">
-										<a href="#" class="dropdown-toggle">
-											<i class="menu-icon fa fa-pencil orange"></i>
-
-											4th level
-											<b class="arrow fa fa-angle-down"></b>
-										</a>
-
-										<b class="arrow"></b>
-
-										<ul class="submenu">
-											<li class="">
-												<a href="#">
-													<i class="menu-icon fa fa-plus purple"></i>
-													Add Product
-												</a>
-
-												<b class="arrow"></b>
-											</li>
-
-											<li class="">
-												<a href="#">
-													<i class="menu-icon fa fa-eye pink"></i>
-													View Products
-												</a>
-
-												<b class="arrow"></b>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
+                                                                <b class='arrow'></b>
+                                                            </li>";                                                                   
+                                                        }  
+                                                        echo"</ul>";
+                                                    }
+                                                echo"</li>";
+                                            }
+                                        @endphp                                        				
 				</ul><!-- /.nav-list -->
 
 				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

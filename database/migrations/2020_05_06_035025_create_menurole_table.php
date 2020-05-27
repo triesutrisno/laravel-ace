@@ -17,7 +17,7 @@ class CreateMenuroleTable extends Migration
             $table->bigIncrements('menurole_id');
             $table->smallInteger('menu_id');
             $table->string('role_nama',50);
-            $table->string('menurole_status',50)->nullable();
+            $table->string('menurole_status',2)->nullable();
             $table->timestamps();
             
             

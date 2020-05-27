@@ -19,7 +19,8 @@
                         @csrf
                         <div class="form-group @error('role_nama') has-error @enderror">
                                 <label for="form-role_nama">Nama Role *</label>
-                                <input type="text" class="form-control" name='role_nama' id="form-role_nama" value="{{$role->role_nama}}">
+                                <input type="hidden" class="form-control" name='role_nama' id="form-role_nama" value="{{$role->role_nama}}">
+                                <input type="text" class="form-control" name='role_nama2' id="form-role_nama2" value="{{$role->role_nama}}" disabled="true">
                                 @error('role_nama')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

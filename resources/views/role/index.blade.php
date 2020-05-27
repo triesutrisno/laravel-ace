@@ -55,7 +55,7 @@
                                         <th>Keterangan</th>
                                         <th class="center">Status</th>
                                         <th>Created</th>
-                                        <th colspan="3">Action</th>
+                                        <th>Action</th>
                                 </tr>
                         </thead>
 

@@ -42,9 +42,13 @@ class RoleController extends Controller
                'role_nama' => 'required',
         ]);
         
-        if (Role::where(['role_nama'=>$request->role_nama, 'role_status'=>'1', 'deleted_at'=>NULL])->doesntExist()) { // Cek data apakah sudah ada atau belum di database            
-            Role::create($request->all());
-            return redirect('/role')->with(['kode'=>'99', 'pesan'=>'Data berhasil disampan !']);
+        if (Role::where(['role_nama'=>$request->role_nama, 'role_status'=>'1'])->doesntExist()) { // Cek data apakah sudah ada atau belum di database            
+            $ins = Role::create($request->all());
+            //if($ins==true){
+                return redirect('/role')->with(['kode'=>'99', 'pesan'=>'Data berhasil disampan !']);
+            //}else{
+            //    return redirect('/role')->with(['kode'=>'98','pesan'=>'Data error !']);
+            //}
         }else{
             return redirect('/role')->with(['kode'=>'98','pesan'=>'Data sudah ada !']);
         }

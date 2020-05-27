@@ -4,20 +4,20 @@
  <!-- page specific plugin style -->
 @endpush
 
-@section('breadcrumb','Menu Role')
-@section('title','Daftar Menu Role')
-@section('subTitle','Merupakan halaman daftar menu role dalam sistem')
+@section('breadcrumb','User Role')
+@section('title','Daftar User Role')
+@section('subTitle','Merupakan halaman daftar user role dalam sistem')
 
 @section('container')
 <div class="row">
 	<div class="col-xs-12 col-sm-12">
 
 		<div class="clearfix">                        
-                        <a href="{{url('/menurole')}}" class="btn btn-white btn-info btn-bold">
+                        <a href="{{url('/userrole')}}" class="btn btn-white btn-info btn-bold">
                                 <i class="ace-icon fa fa-folder-open-o bigger-120 blue"></i>
                                 Lihat Data
                         </a>
-                        <a href="{{url('/menurole/create')}}" class="btn btn-white btn-info btn-bold">
+                        <a href="{{url('/userrole/create')}}" class="btn btn-white btn-info btn-bold">
                                 <i class="ace-icon glyphicon glyphicon-plus bigger-120 blue"></i>
                                 Tambah Data
                         </a>
@@ -51,8 +51,8 @@
                                             </label>
                                         </th>
                                         <th class="center">No</th>
+                                        <th>Username</th>
                                         <th>Nama Role</th>
-                                        <th>Nama Menu</th>
                                         <th class="center">Status</th>
                                         <th>Created</th>
                                         <th>Action</th>
@@ -60,7 +60,7 @@
                         </thead>
 
                         <tbody>
-                        @foreach($menuroles as $menurole)
+                        @foreach($userroles as $userrole)
                                 <tr>
                                         <td class="center">
                                             <label class="pos-rel">
@@ -70,15 +70,15 @@
                                         </td>
                                         
                                         <td class="center">{{$loop->iteration}}</td>
-                                        <td>{{$menurole->role_nama}}</td>
-                                        <td>{{$menurole->menu_id}}</td>
-                                        <td class="center">{{$menurole->menurole_status=='1' ? 'Aktif' : 'Tidak Aktif'}}</td>
-                                        <td>{{$menurole->created_at}}</td>
+                                        <td>{{$userrole->username}}</td>
+                                        <td>{{$userrole->role_nama}}</td>
+                                        <td class="center">{{$userrole->userrole_status=='1' ? 'Aktif' : 'Tidak Aktif'}}</td>
+                                        <td>{{$userrole->created_at}}</td>
                                         <td>
                                             <div class="hidden-sm hidden-xs action-buttons">
-                                                <a class="green" href="{{ url('/menurole')}}/{{$menurole->menurole_id}}/edit"><i class="ace-icon fa fa-pencil bigger-130"></i></a>
+                                                <a class="green" href="{{ url('/userrole')}}/{{$userrole->userrole_id}}/edit"><i class="ace-icon fa fa-pencil bigger-130"></i></a>
                                                                                                
-                                                <form action="{{ url('/menurole')}}/{{$menurole->menurole_id}}" method="post" class="inline">
+                                                <form action="{{ url('/userrole')}}/{{$userrole->userrole_id}}" method="post" class="inline">
                                                     @method('delete')
                                                     @csrf
                                                     <button class="red btn-link" >

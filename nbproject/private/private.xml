@@ -3,9 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/xampp/htdocs/laravel-ace/app/Login.php</file>
-            <file>file:/D:/xampp/htdocs/laravel-ace/routes/web.php</file>
-            <file>file:/D:/xampp/htdocs/laravel-ace/app/Http/Controllers/LoginController.php</file>
+            <file>file:/D:/xampp/htdocs/laravel-ace/app/Http/Controllers/User/UserController.php</file>
         </group>
     </open-files>
 </project-private>

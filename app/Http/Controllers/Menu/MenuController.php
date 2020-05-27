@@ -26,7 +26,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        $menusdtParent = Menu::all();
+        $menusdtParent = Menu::where(['menu_status'=>'1'])->get();
         return view('menu.create',['menus'=>$menusdtParent]);
     }
 
@@ -75,7 +75,7 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        $menusdtParent = Menu::all();
+        $menusdtParent = Menu::where(['menu_status'=>'1'])->get();
         return view('menu.edit',['menu'=>$menu, 'parents'=>$menusdtParent]);
     }
 
