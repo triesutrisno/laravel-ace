@@ -31,56 +31,58 @@ class LoginController extends Controller
     public function postlogin(Request $request)
     {
         $request->validate([
-                'username' => 'required',
-                'password' => 'required',
+            'username' => 'required',
+            'password' => 'required',
         ]);
         //$response = Http::post('http://localhost/belajar/login.php', [
         //    'username' => '02008',
         //]);        
-        
+
         $client = new Client();
-        $response = $client->request('POST', 'http://localhost/belajar/login.php', [
+        $response = $client->request('POST', 'http://119.252.168.253/api_siwa/userpass', [
             'form_params' => [
-                'username' => '02008',
+                'SID-API-KEY' => 'SIWA-DWH-2020',
+                'username' => $request->username,
+                'password' => $request->password,
             ]
         ]);
-        
-        $dtAPi = json_decode($response->getBody()->getContents(),true);  
+
+        $dtAPi = json_decode($response->getBody()->getContents(), true);
         $responStatus = $response->getStatusCode();
-        if($responStatus=='200'){
+        if ($responStatus == '200') {
             #dd($dtAPi);
             #echo $dtAPi['username'];
             //dd(Auth::loginUsingId('2'));
             #if(Auth::attempt($request->only('username','password'))){
             #}
-            
+
             $getUser = Login::where(['username' => $request->username])->first();
             #dd($getUser->id);
             if ($getUser === null) {
                 return redirect('login')->with('pesan', 'User tidak terdaftar diportal !');
-            }else{
-                if(Auth::loginUsingId($getUser->id)){
+            } else {
+                if (Auth::loginUsingId($getUser->id)) {
                     $hakAkses = DB::table('userrole AS a')
-                                    ->join('menurole AS b', 'a.role_nama', '=', 'b.role_nama')
-                                    ->join('menu AS c', 'b.menu_id', '=', 'c.menu_id')
-                                    ->select('a.username','a.role_nama','b.menu_id','c.menu_nama','c.menu_link','c.menu_type', 'c.menu_parent')
-                                    ->where([
-                                        ['a.userrole_status', '=', '1'],
-                                        ['b.menurole_status', '=', '1'],
-                                        ['c.menu_status', '=', '1'],
-                                        ['a.username', '=', $request->username]
-                                    ])
-                                    ->get();
+                        ->join('menurole AS b', 'a.role_nama', '=', 'b.role_nama')
+                        ->join('menu AS c', 'b.menu_id', '=', 'c.menu_id')
+                        ->select('a.username', 'a.role_nama', 'b.menu_id', 'c.menu_nama', 'c.menu_link', 'c.menu_type', 'c.menu_parent')
+                        ->where([
+                            ['a.userrole_status', '=', '1'],
+                            ['b.menurole_status', '=', '1'],
+                            ['c.menu_status', '=', '1'],
+                            ['a.username', '=', $request->username]
+                        ])
+                        ->get();
                     //dd($hakAkses);
                     $dtAkses = [];
-                    if (!empty($hakAkses)){
-                        foreach ($hakAkses as $key => $val){
-                            if($val->menu_type=='1'){
+                    if (!empty($hakAkses)) {
+                        foreach ($hakAkses as $key => $val) {
+                            if ($val->menu_type == '1') {
                                 $dtAkses[$val->menu_id]['menu_id'] = $val->menu_id;
                                 $dtAkses[$val->menu_id]['menu_nama'] = $val->menu_nama;
                                 $dtAkses[$val->menu_id]['menu_link'] = $val->menu_link;
                                 $dtAkses[$val->menu_id]['menu_type'] = $val->menu_type;
-                            }else if($val->menu_type=='2'){
+                            } else if ($val->menu_type == '2') {
                                 $parent1['menu_id'] = $val->menu_id;
                                 $parent1['menu_nama'] = $val->menu_nama;
                                 $parent1['menu_link'] = $val->menu_link;
@@ -94,14 +96,13 @@ class LoginController extends Controller
                     //exit;
                     $request->session()->put('hakAkses', $dtAkses);
                     return redirect('/');
-                 }else{
+                } else {
                     return redirect('login')->with('pesan', 'Username tidak terdaftar !');
-                 }   
+                }
             }
-        }else{
+        } else {
             return redirect('login')->with('pesan', 'Gagal login ke sistem !');
         }
-        
     }
 
     /**
@@ -113,6 +114,6 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
-		return redirect('login');
+        return redirect('login');
     }
 }

@@ -27,32 +27,32 @@
 					<div class="left">
 						<div class="content">
 							<div class="header">
-								<div class="logo text-center"><img src="assetsAuth/img/silogGroup.png" width="150" height="30"alt="SILOG GROUP"></div>
+								<div class="logo text-center"><img src="assetsAuth/img/silogGroup.png" width="150" height="30" alt="SILOG GROUP"></div>
 								<p class="lead">Login Sistem</p>
 							</div>
-                                                        @if (session('pesan'))
-                                                                <div class="alert alert-danger">
-                                                                        {{ session('pesan') }}
-                                                                </div>
-                                                        @endif
+							@if (session('pesan'))
+							<div class="alert alert-danger">
+								{{ session('pesan') }}
+							</div>
+							@endif
 							<form class="form-auth-small" method="post" action="{{url('/postlogin')}}">
-                                                            @csrf
-                                                            <div class="form-group @error('username') has-error @enderror">
-                                                                    <label for="signin-username" class="control-label sr-only">Username</label>
-                                                                    <input type="text" class="form-control" name="username" id="auth-username" placeholder="Username">
-                                                                    @error('username')                                                                       
-                                                                        <div class="help-block col-xs-12 col-sm-reset inline">{{ $message }}</div>
-                                                                    @enderror
-                                                            </div>
-                                                            <div class="form-group @error('password') has-error @enderror"">
-                                                                    <label for="signin-password" class="control-label sr-only">Password</label>
-                                                                    <input type="password" class="form-control is-invalid" name="password" id="auth-password" placeholder="Password">
-                                                                    @error('password')                                                                       
-                                                                        <div class="help-block col-xs-12 col-sm-reset">{{ $message }}</div>
-                                                                    @enderror
-                                                            </div>
-                                                            <button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
-                                                            <!--<div class="bottom">
+								@csrf
+								<div class="form-group @error('username') has-error @enderror">
+									<label for="signin-username" class="control-label sr-only">Username</label>
+									<input type="text" class="form-control" name="username" id="auth-username" placeholder="Username" autocomplete="off">
+									@error('username')
+									<div class="help-block col-xs-12 col-sm-reset inline">{{ $message }}</div>
+									@enderror
+								</div>
+								<div class="form-group @error('password') has-error @enderror"">
+                                                                    <label for=" signin-password" class="control-label sr-only">Password</label>
+									<input type="password" class="form-control is-invalid" name="password" id="auth-password" placeholder="Password">
+									@error('password')
+									<div class="help-block col-xs-12 col-sm-reset">{{ $message }}</div>
+									@enderror
+								</div>
+								<button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
+								<!--<div class="bottom">
                                                                     <span class="helper-text"><i class="fa fa-lock"></i> <a href="#">Forgot password?</a></span>
                                                             </div>-->
 							</form>
