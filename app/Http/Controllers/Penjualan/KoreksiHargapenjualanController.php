@@ -14,7 +14,7 @@ class KoreksiHargapenjualanController extends Controller
      */
     public function index()
     {
-        $data = 'TEsa2';
+        $data = 'TEsa3';
         return view('penjualan.koreksihargapenjualan.index', [
             'data' => $data
         ]);
