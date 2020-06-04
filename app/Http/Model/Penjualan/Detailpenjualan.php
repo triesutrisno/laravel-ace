@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Detailpenjualan extends Model
 {
-    // use SoftDeletes;
     protected $table = "tr_jual";
     protected $primaryKey = "jualid";
     public $incrementing = false;
+
+    public function cabang(){
+        return $this->hasMany('Cabang');
+    }
 }

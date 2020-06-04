@@ -326,7 +326,7 @@
 	<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 
 	<!-- page specific plugin scripts -->
-
+	@yield('script')
 	<!--[if lte IE 8]>
 		  <script src="assets/js/excanvas.min.js"></script>
 		<![endif]-->
@@ -357,40 +357,36 @@
 			//initiate dataTables plugin
 			var myTable =
 				$('#dynamic-table')
-				//.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+				.wrap("<div class='dataTables_borderWrap' />") //if you are applying horizontal scrolling (sScrollX)
 				.DataTable({
-					bAutoWidth: false,
-					"aoColumns": [{
-							"bSortable": false
-						},
-						null, null, null, null, null,
-						{
-							"bSortable": false
-						}
-					],
-					"aaSorting": [],
+					// bAutoWidth: false,
+					// "aoColumns": [null, null, null, null, null, null, {
+					// 	"bSortable": true
+					// }],
+					// "aaSorting": [],
 
 
-					//"bProcessing": true,
+					"bProcessing": true,
 					//"bServerSide": true,
 					//"sAjaxSource": "http://127.0.0.1/table.php"	,
 
 					//,
-					//"sScrollY": "200px",
+					"ordering": false,
+					"sScrollY": "500px",
 					//"bPaginate": false,
 
-					//"sScrollX": "100%",
-					//"sScrollXInner": "120%",
-					//"bScrollCollapse": true,
+					"sScrollX": "100%",
+					"sScrollXInner": "120%",
+					"bScrollCollapse": true,
 					//Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
 					//you may want to wrap the table inside a "div.dataTables_borderWrap" element
 
 					//"iDisplayLength": 50
 
 
-					select: {
-						style: 'multi'
-					}
+					// select: {
+					// 	style: 'multi'
+					// }
 				});
 
 
@@ -398,13 +394,12 @@
 			$.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
 
 			new $.fn.dataTable.Buttons(myTable, {
-				buttons: [
-					//{
-					//"extend": "colvis",
-					//"text": "<i class='fa  fa-check-square-o bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
-					//"className": "btn btn-white btn-primary btn-bold",
-					//columns: ':not(:first):not(:last)'
-					//},
+				buttons: [{
+						"extend": "colvis",
+						"text": "<i class='fa  fa-check-square-o bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
+						"className": "btn btn-white btn-primary btn-bold",
+						// columns: ':not(:first):not(:last)'
+					},
 					{
 						"extend": "copy",
 						"text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",

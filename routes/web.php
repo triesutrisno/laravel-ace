@@ -45,7 +45,8 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::namespace('Penjualan')->group(function () {
-        Route::resource('/detailpenjualan', 'DetailpenjualanController');
+        Route::get('/detailpenjualan', 'DetailpenjualanController@index');
+        Route::get('/detailpenjualan/search', 'DetailpenjualanController@search');
     });
 
     Route::namespace('Penjualan')->group(function () {
