@@ -13,14 +13,34 @@
     <div class="col-xs-12 col-sm-12">
 
         <div class="clearfix">
-            <div class="col-xs-5 col-sm-5">
-                <form method="get" action="{{url('/detailpenjualan/search')}}">
-                    <div class="col-xs-4 col-sm-4">
-                        <input type="text" class="form-control datepicker" name='tanggal_awal' placeholder="tanggal awal" id="form-tanggal_awal" value="{{old('tanggal_awal')}}">
+            <div class="col-xs-8 col-sm-8">
+                <form method="get" action="{{url('/detailpenjualan')}}">
+
+                    <div class="col-xs-3 col-sm-3">
+                        <select class="form-control chosen-select" id="form-field-select-3" name="wilayah">
+                            <option value="0" default>----Pilih Wilayah-----</option>
+                            @foreach($dataswilayah as $wilayahs)
+                            <option value="{{ $wilayahs->wilayahid }}" {{ $wilayah == $wilayahs->wilayahid ? 'selected' : '' }}>{{$wilayahs->wilayahnama}}</option>
+                            @endforeach
+                        </select>
                     </div>
-                    <div class="col-xs-4 col-sm-4">
-                        <input type="text" class="form-control datepicker" name='tanggal_akhir' placeholder="tanggal akhir" id="form-tanggal_akhir" value="{{old('tanggal_akhir')}}">
+
+                    <div class="col-xs-3 col-sm-3">
+                        <select class="form-control chosen-select" id="form-field-select-3" name="cabang">
+                            <option value="0" default>----Pilih Cabang-----</option>
+                            @foreach($datascabang as $cabangs)
+                            <option value="{{ $cabangs->cabangid }}" {{ $cabang == $cabangs->cabangid ? 'selected' : '' }}>{{$cabangs->cabangnama}}</option>
+                            @endforeach
+                        </select>
                     </div>
+
+                    <div class="col-xs-2 col-sm-2">
+                        <input type="text" class="form-control date-picker" placeholder="tanggal awal" name='tgl_awal' id="tgl_awal" value="{{ $tgl_awal }}">
+                    </div>
+                    <div class="col-xs-2 col-sm-2">
+                        <input type="text" class="form-control date-picker" placeholder="tanggal akhir" name='tgl_akhir' id="tgl_akhir" value="{{ $tgl_akhir }}">
+                    </div>
+
                     <div class="col-xs-1 col-sm-1">
                         <button class="btn btn-sm btn-primary" type="submit" class="btn btn-primary">Cari</button>
                     </div>
@@ -64,7 +84,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($data as $row)
+                @foreach($datas as $row)
                 <tr>
                     <td align="center">{{$loop->iteration}}</td>
                     <td align="center">{{$row->wilayahnama}}</td>
@@ -137,43 +157,68 @@
 @endsection
 
 @section('script')
-<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+
+<link rel="stylesheet" href="assets/css/bootstrap-datepicker3.min.css" />
+<script src="assets/js/bootstrap-datepicker.min.js"></script>
 
 
+<link rel="stylesheet" href="assets/css/chosen.min.css" />
+<script src="assets/js/chosen.jquery.min.js"></script>
 <script>
-    // jQuery.noConflict();
-    // $('#form-tanggal_awal").datepicker({
-    //     dateFormat: "yy-mm-dd"
-    // });
-    // $("#form-tanggal_akhir").datepicker({
-    //     dateFormat: "yy-mm-dd"
-    // });
+    //datepicker plugin
+    //link
+    $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: "yyyy-mm-dd"
+        })
+        //show datepicker when clicking on the icon
+        .next().on(ace.click_event, function() {
+            $(this).prev().focus();
+        });
 
+    if (!ace.vars['touch']) {
+        $('.chosen-select').chosen({
+            allow_single_deselect: true
+        });
+        //resize the chosen on window resize
+
+        // $(window)
+        //     .off('resize.chosen')
+        //     .on('resize.chosen', function() {
+        //         $('.chosen-select').each(function() {
+        //             var $this = $(this);
+        //             $this.next().css({
+        //                 'width': $this.parent().width()
+        //             });
+        //         })
+        //     }).trigger('resize.chosen');
+        // //resize chosen on sidebar collapse/expand
+        // $(document).on('settings.ace.chosen', function(e, event_name, event_val) {
+        //     if (event_name != 'sidebar_collapsed') return;
+        //     $('.chosen-select').each(function() {
+        //         var $this = $(this);
+        //         $this.next().css({
+        //             'width': $this.parent().width()
+        //         });
+        //     })
+        // });
+
+
+        // $('#chosen-multiple-style .btn').on('click', function(e) {
+        //     var target = $(this).find('input[type=radio]');
+        //     var which = parseInt(target.val());
+        //     if (which == 2) $('#form-field-select-4').addClass('tag-input-style');
+        //     else $('#form-field-select-4').removeClass('tag-input-style');
+        // });
+    }
 
     $(document).ready(function() {
 
-        $('#example tfoot th').each( function () {
+        $('#example tfoot th').each(function() {
             var title = $(this).text();
-            $(this).html( '<input type="text" placeholder="Cari '+title+'" size="10" />' );
-        } );
- 
-        // Setup - add a text input to each footer cell
-
-        // $('#example thead tr').clone(true).appendTo('#example thead');
-        // $('#example thead tr:eq(1) th').each(function(i) {
-        //     var title = $(this).text();
-        //     $(this).html('<input type="text" class="form-control" placeholder="Cari ' + title + '" />');
-
-        //     $('input', this).on('keyup change', function() {
-        //         if (table.column(i).search() !== this.value) {
-        //             table
-        //                 .column(i)
-        //                 .search(this.value)
-        //                 .draw();
-        //         }
-        //     });
-        // });
+            $(this).html('<input type="text" placeholder="Cari ' + title + '" size="10" />');
+        });
 
         var table = $('#example').DataTable({
             // "orderCellsTop": true,
@@ -185,19 +230,19 @@
             "scrollCollapse": true,
             "paging": true,
             "processing": true,
-            initComplete: function () {
+            initComplete: function() {
                 // Apply the search
-                this.api().columns().every( function () {
+                this.api().columns().every(function() {
                     var that = this;
-    
-                    $( 'input', this.footer() ).on( 'keyup change clear', function () {
-                        if ( that.search() !== this.value ) {
+
+                    $('input', this.footer()).on('keyup change clear', function() {
+                        if (that.search() !== this.value) {
                             that
-                                .search( this.value )
+                                .search(this.value)
                                 .draw();
                         }
-                    } );
-                } );
+                    });
+                });
             }
         });
 

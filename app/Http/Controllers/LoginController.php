@@ -40,6 +40,7 @@ class LoginController extends Controller
 
         $client = new Client();
         $response = $client->request('POST', 'http://119.252.168.253/api_siwa/userpass', [
+            // $response = $client->request('POST', 'http://localhost/api_siwa/userpass', [
             'form_params' => [
                 'SID-API-KEY' => 'SIWA-DWH-2020',
                 'username' => $request->username,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Penjualan;
 
 use App\Http\Controllers\Controller;
 use App\http\Model\Penjualan\Detailpenjualan;
+
 use DB;
 use Illuminate\Http\Request;
 
@@ -15,27 +16,62 @@ class DetailpenjualanController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    // public function index()
-    // {
-    //     // $data = Detailpenjualan::all();
-    //     $data = Detailpenjualan::wherebetween('tglspj', ['20200501', '20200501'])
-    //         ->orderBy("cabangid")
-    //         ->get();
-    //     return view('penjualan.detailpenjualan.index', [
-    //         'data' => $data
-    //     ]);
-    // }
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->wilayah !== "0") {
+            $wilayahs = 'ms_wilayah.wilayahid';
+            $wilayah = $request->wilayah;
+        } else {
+            $wilayahs = null;
+            $wilayah = null;
+        }
 
-        $data = Detailpenjualan::wheredate('tglspj', '20200501')
-        // $data = Detailpenjualan::where('tr_jual.nospj', 'SPJ/104/202001/0035')
-            ->select('ms_wilayah.wilayahnama', 'ms_cabang.cabangnama', 'ms_gudang.gudangnama'
-                    , 'ms_pelanggan.pelanggankode', 'ms_pelanggan.pelanggannama'
-                    , 'ms_barang.barangkode', 'ms_barang.barangnama', 'ms_barang.berat'
-                    , 'tr_piutang.nofaktur', 'tr_piutang.tglfaktur', 'tr_piutang.nofakturpajak'
-                    , 'tr_jual.*'
-                )
+        if ($request->cabang !== "0") {
+            $cabangs = 'tr_jual.cabangid';
+            $cabang = $request->cabang;
+        } else {
+            $cabangs = null;
+            $cabang = null;
+        }
+
+        if ($request->has('tgl_awal')) {
+            $tgl_awal = $request->tgl_awal;
+        } else {
+            $tgl_awal = now()->format('Y-m-d');
+        }
+
+        if ($request->has('tgl_akhir')) {
+            $tgl_akhir = $request->tgl_akhir;
+        } else {
+            $tgl_akhir = now()->format('Y-m-d');
+        }
+
+        $dataswilayah = DB::table('ms_wilayah')
+            ->orderBy('wilayahnama')
+            ->get();
+
+        $datascabang = DB::table('ms_cabang')
+            ->where('cabangid', '!=', 0)
+            ->orderBy('cabangnama')
+            ->get();
+
+        $datas = DB::table('tr_jual')->wherebetween('tglspj', [$tgl_awal, $tgl_akhir])
+            ->select(
+                'ms_wilayah.wilayahnama',
+                'ms_cabang.cabangnama',
+                'ms_gudang.gudangnama',
+                'ms_pelanggan.pelanggankode',
+                'ms_pelanggan.pelanggannama',
+                'ms_barang.barangkode',
+                'ms_barang.barangnama',
+                'ms_barang.berat',
+                'tr_piutang.nofaktur',
+                'tr_piutang.tglfaktur',
+                'tr_piutang.nofakturpajak',
+                'tr_jual.*'
+            )
+            ->where($wilayahs, $wilayah)
+            ->where($cabangs, $cabang)
             ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'tr_jual.cabangid')
             ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
             ->join('ms_gudang', 'ms_gudang.gudangid', '=', 'tr_jual.gudangid')
@@ -43,30 +79,22 @@ class DetailpenjualanController extends Controller
             ->join('ms_barang', 'ms_barang.barangid', '=', 'tr_jual.barangid')
             ->leftjoin('tr_piutang', function ($join) {
                 $join->on('tr_piutang.nospj', '=', 'tr_jual.nospj')
-                     ->where('tr_piutang.status', '=', 0)
-                ;})
+                    ->where('tr_piutang.status', '=', 0);
+            })
             ->orderBy("tr_jual.cabangid")
             ->get();
 
         return view('penjualan.detailpenjualan.index', [
-            'data' => $data
+            'datas' => $datas,
+            'dataswilayah' => $dataswilayah,
+            'datascabang' => $datascabang,
+            'wilayah' => $wilayah,
+            'cabang' => $cabang,
+            'tgl_awal' => $tgl_awal,
+            'tgl_akhir' => $tgl_akhir
         ]);
     }
 
-    public function search(Request $request)
-    {
-        // menangkap data pencarian
-        $awal = $request->tanggal_awal;
-        $akhir = $request->tanggal_akhir;
-
-        $data = Detailpenjualan::wherebetween('tglspj', [$awal, $akhir])
-            ->orderBy("cabangid")
-            ->get();
-
-        return view('penjualan.detailpenjualan.index', [
-            'data' => $data
-        ]);
-    }
     /**
      * Show the form for creating a new resource.
      *
