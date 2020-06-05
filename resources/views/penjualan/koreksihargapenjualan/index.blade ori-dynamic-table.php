@@ -4,8 +4,8 @@
 <!-- page specific plugin style -->
 @endpush
 
-@section('breadcrumb','Detail Penjualan')
-@section('title','Detail Penjualan')
+@section('breadcrumb','Koreksi Harga Jual')
+@section('title','Laporan Koreksi')
 @section('subTitle','Merupakan Laporan Detail Penjualan')
 
 @section('container')
