@@ -146,7 +146,7 @@
 								}
 								@endphp
 								<small>{{$arrNama[0]}}</small>
-								{{ $arrNama[1]!='' ? $arrNama[1] : ''}}
+								
 							</span>
 
 							<i class="ace-icon fa fa-caret-down"></i>
@@ -154,6 +154,11 @@
 
 						<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 							<!--<li>
+							
+							
+									
+
+
 									<a href="#">
 										<i class="ace-icon fa fa-cog"></i>
 										Settings
