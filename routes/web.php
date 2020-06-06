@@ -45,7 +45,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::namespace('Penjualan')->group(function () {
-        Route::get('/detailpenjualan', 'DetailpenjualanController@index');
+        Route::get('/jualdetail', 'DetailpenjualanController@index');
 
         Route::get('/koreksihargapenjualan', 'KoreksiHargapenjualanController@index');
         Route::get('/koreksihargapenjualan/search', 'KoreksiHargapenjualanController@search');

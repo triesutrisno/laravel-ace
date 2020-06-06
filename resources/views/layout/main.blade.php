@@ -146,7 +146,7 @@
 								}
 								@endphp
 								<small>{{$arrNama[0]}}</small>
-								
+
 							</span>
 
 							<i class="ace-icon fa fa-caret-down"></i>
@@ -282,6 +282,10 @@
 								<i class="ace-icon fa fa-angle-double-right"></i>
 								@yield('subTitle')
 							</small>
+							<small>
+								<i class="ace-icon fa fa-angle-double-right"></i>
+								<font style="color:red">@yield('subsubTitle')</font>
+							</small>
 						</h1>
 					</div><!-- /.page-header -->
 
@@ -302,7 +306,7 @@
 					<span class="bigger-120">
 						<span class="red bolder">SILOG </span>
 						<span class="blue bolder">Group</span>
-						&copy; 2020
+						&copy; {{ now()->format('Y')}}
 					</span>
 
 					&nbsp; &nbsp;

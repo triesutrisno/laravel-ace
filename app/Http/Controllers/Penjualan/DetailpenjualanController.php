@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Penjualan;
 
 use App\Http\Controllers\Controller;
 use App\http\Model\Penjualan\Detailpenjualan;
+use App\http\Model\Menu\Menu;
 
 use DB;
 use Illuminate\Http\Request;
@@ -46,6 +47,13 @@ class DetailpenjualanController extends Controller
             $tgl_akhir = now()->format('Y-m-d');
         }
 
+        $menus = Menu::where('menu_id', 8)
+            ->first();
+
+        $update = DB::table('tmp_sync')
+            ->where('nama', 'Penjualan')
+            ->first();
+
         $dataswilayah = DB::table('ms_wilayah')
             ->orderBy('wilayahnama')
             ->get();
@@ -85,6 +93,9 @@ class DetailpenjualanController extends Controller
             ->get();
 
         return view('penjualan.detailpenjualan.index', [
+            'menu' => $menus->menu_nama,
+            'keterangan' => $menus->menu_keterangan,
+            'update' => $update->modifieddate,
             'datas' => $datas,
             'dataswilayah' => $dataswilayah,
             'datascabang' => $datascabang,
