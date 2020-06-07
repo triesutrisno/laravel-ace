@@ -45,7 +45,19 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::namespace('Penjualan')->group(function () {
-        Route::get('/detailpenjualan', 'DetailpenjualanController@index');
+        Route::get('/jualdetail', 'DetailpenjualanController@index');
+
+        Route::get('/jualdetail', 'JualDetailController@index');
+        Route::get('/jualretur', 'JualReturController@index');
+        Route::get('/jualkoreksiharga', 'JualKoreksiHargaController@index');
+        Route::get('/jualkoreksipiutang', 'JualKoreksiPiutangController@index');
+        Route::get('/jualbayar', 'JualBayarController@index');
+        Route::get('/jualbayarbatal', 'JualBayarBatalController@index');
+        Route::get('/jualbayarlebih', 'JualBayarLebihController@index');
+        Route::get('/piutangkartu', 'PiutangKartuController@index');
+        Route::get('/piutangmutasi', 'PiutangMutasiController@index');
+        Route::get('/piutangaging', 'PiutangAgingController@index');
+
 
         Route::get('/koreksihargapenjualan', 'KoreksiHargapenjualanController@index');
         Route::get('/koreksihargapenjualan/search', 'KoreksiHargapenjualanController@search');

@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Penjualan;
 
 use App\Http\Controllers\Controller;
-use App\http\Model\Penjualan\Detailpenjualan;
-
-use DB;
 use Illuminate\Http\Request;
+use DB;
 
-class DetailpenjualanController extends Controller
+class JualDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -46,11 +44,23 @@ class DetailpenjualanController extends Controller
             $tgl_akhir = now()->format('Y-m-d');
         }
 
-        $dataswilayah = DB::table('ms_wilayah')
+        $menu = DB::table('menu')
+            ->where('menu_id', 8)
+            ->first();
+
+        $update = DB::table('tmp_sync')
+            ->where('nama', 'Penjualan')
+            ->first();
+
+        $datawilayah = DB::table('ms_wilayah')
             ->orderBy('wilayahnama')
             ->get();
 
-        $datascabang = DB::table('ms_cabang')
+        $datawilayah = DB::table('ms_wilayah')
+            ->orderBy('wilayahnama')
+            ->get();
+
+        $datacabang = DB::table('ms_cabang')
             ->where('cabangid', '!=', 0)
             ->orderBy('cabangnama')
             ->get();
@@ -84,10 +94,13 @@ class DetailpenjualanController extends Controller
             ->orderBy("tr_jual.cabangid")
             ->get();
 
-        return view('penjualan.detailpenjualan.index', [
+        return view('penjualan.jualdetail.index', [
+            'menu' => $menu->menu_nama,
+            'keterangan' => $menu->menu_keterangan,
+            'update' => $update->modifieddate,
             'datas' => $datas,
-            'dataswilayah' => $dataswilayah,
-            'datascabang' => $datascabang,
+            'datawilayah' => $datawilayah,
+            'datacabang' => $datacabang,
             'wilayah' => $wilayah,
             'cabang' => $cabang,
             'tgl_awal' => $tgl_awal,
@@ -119,10 +132,10 @@ class DetailpenjualanController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\http\Model\Penjualan\Detailpenjualan  $detailpenjualan
+     * @param  \App\http\Model\Penjualan\JualDetail  $jualdetail
      * @return \Illuminate\Http\Response
      */
-    public function show(Detailpenjualan $detailpenjualan)
+    public function show(JualDetail $jualdetail)
     {
         //
     }
@@ -130,10 +143,10 @@ class DetailpenjualanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\http\Model\Penjualan\Detailpenjualan  $detailpenjualan
+     * @param  \App\http\Model\Penjualan\JualDetail  $jualdetail
      * @return \Illuminate\Http\Response
      */
-    public function edit(Detailpenjualan $detailpenjualan)
+    public function edit(JualDetail $jualdetail)
     {
         //
     }
@@ -142,10 +155,10 @@ class DetailpenjualanController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\http\Model\Penjualan\Detailpenjualan  $detailpenjualan
+     * @param  \App\http\Model\Penjualan\JualDetail  $jualdetail
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Detailpenjualan $detailpenjualan)
+    public function update(Request $request, JualDetail $jualdetail)
     {
         //
     }
@@ -153,10 +166,10 @@ class DetailpenjualanController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\http\Model\Penjualan\Detailpenjualan  $detailpenjualan
+     * @param  \App\http\Model\Penjualan\JualDetail  $jualdetail
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Detailpenjualan $detailpenjualan)
+    public function destroy(JualDetail $jualdetail)
     {
         //
     }

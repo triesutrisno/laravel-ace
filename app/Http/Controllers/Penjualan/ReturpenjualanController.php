@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Penjualan;
 
 use App\Http\Controllers\Controller;
-use App\http\Model\Penjualan\Returpenjualan;
 use Illuminate\Http\Request;
+use DB;
 
-class ReturpenjualanController extends Controller
+class JualReturController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class ReturpenjualanController extends Controller
     public function index()
     {
         //
-        return view('penjualan.returpenjualan.index');
+        return view('penjualan.jualretur.index');
     }
 
     /**
@@ -43,10 +43,10 @@ class ReturpenjualanController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\http\Model\Penjualan\Returpenjualan  $returpenjualan
+     * @param  \App\http\Model\Penjualan\JualRetur  $jualretur
      * @return \Illuminate\Http\Response
      */
-    public function show(Returpenjualan $returpenjualan)
+    public function show(JualRetur $jualretur)
     {
         //
     }
@@ -54,10 +54,10 @@ class ReturpenjualanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\http\Model\Penjualan\Returpenjualan  $returpenjualan
+     * @param  \App\http\Model\Penjualan\JualRetur  $jualretur
      * @return \Illuminate\Http\Response
      */
-    public function edit(Returpenjualan $returpenjualan)
+    public function edit(JualRetur $jualretur)
     {
         //
     }
@@ -66,10 +66,10 @@ class ReturpenjualanController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\http\Model\Penjualan\Returpenjualan  $returpenjualan
+     * @param  \App\http\Model\Penjualan\JualRetur  $jualretur
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Returpenjualan $returpenjualan)
+    public function update(Request $request, JualRetur $jualretur)
     {
         //
     }
@@ -77,10 +77,10 @@ class ReturpenjualanController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\http\Model\Penjualan\Returpenjualan  $returpenjualan
+     * @param  \App\http\Model\Penjualan\JualRetur  $jualretur
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Returpenjualan $returpenjualan)
+    public function destroy(JualRetur $jualretur)
     {
         //
     }

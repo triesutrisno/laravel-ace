@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Penjualan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\http\Model\Penjualan\Koreksihargapenjualan;
-
 use DB;
 
-class KoreksiHargapenjualanController extends Controller
+class JualKoreksiHargaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -85,12 +83,12 @@ class KoreksiHargapenjualanController extends Controller
 
         return view('penjualan.koreksihargapenjualan.index', [
             'datas' => $datas,
-             'dataswilayah' => $dataswilayah,
-             'datascabang' => $datascabang,
-             'wilayah' => $wilayah,
-             'cabang' => $cabang,
-             'tgl_awal' => $tgl_awal,
-             'tgl_akhir' => $tgl_akhir
+            'dataswilayah' => $dataswilayah,
+            'datascabang' => $datascabang,
+            'wilayah' => $wilayah,
+            'cabang' => $cabang,
+            'tgl_awal' => $tgl_awal,
+            'tgl_akhir' => $tgl_akhir
         ]);
     }
 

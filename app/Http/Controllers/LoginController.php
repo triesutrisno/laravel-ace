@@ -73,6 +73,7 @@ class LoginController extends Controller
                             ['c.menu_status', '=', '1'],
                             ['a.username', '=', $request->username]
                         ])
+                        ->orderBy('c.menu_id', 'ASC')
                         ->get();
                     //dd($hakAkses);
                     $dtAkses = [];
