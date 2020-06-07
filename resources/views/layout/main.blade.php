@@ -213,10 +213,19 @@
 					<b class="arrow"></b>
 				</li>
 				@php
+                                $path = explode("/",\Request::path());
 				$hakAkses = Session::get('hakAkses');
 				foreach ($hakAkses as $key => $val){
+                                foreach ($val['data1'] as $keys => $datae){
+                                    if($path[0]==$datae['menu_link']){
+                                        $active = "active open";
+                                        break;  
+                                    }else{
+                                        $active = "";
+                                    }
+                                }
 				echo "
-				<li class=''>
+				<li class='".$active."'>
 					<a href='#' class='dropdown-toggle'>
 						<i class='menu-icon fa fa-desktop'></i>
 						<span class='menu-text'> $val[menu_nama] </span>
@@ -224,12 +233,13 @@
 					</a>
 
 					<b class='arrow'></b>";
-
-					if(isset($val['data1'])){
+                                        
+					if(isset($val['data1'])){                                        
 					echo"<ul class='submenu'>";
 						foreach ($val['data1'] as $key2 => $val2){
+                                                $aktif = $path[0]==$val2['menu_link'] ? 'active' : '';
 						echo"
-						<li class=''>
+						<li class='".$aktif."'>
 							<a href='".url("/$val2[menu_link]")."'>
 								<i class='menu-icon fa fa-caret-right'></i>
 								$val2[menu_nama]

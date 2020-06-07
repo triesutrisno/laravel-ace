@@ -39,13 +39,14 @@ class LoginController extends Controller
         //]);        
 
         $client = new Client();
-        $response = $client->request('POST', 'http://119.252.168.253/api_siwa/userpass', [
+        $response = $client->request('POST', 'http://119.252.168.253/api_siwa/userpass', 
+            [
             // $response = $client->request('POST', 'http://localhost/api_siwa/userpass', [
             'form_params' => [
                 'SID-API-KEY' => 'SIWA-DWH-2020',
                 'username' => $request->username,
                 'password' => $request->password,
-            ]
+            ],
         ]);
 
         $dtAPi = json_decode($response->getBody()->getContents(), true);
@@ -57,8 +58,8 @@ class LoginController extends Controller
             #if(Auth::attempt($request->only('username','password'))){
             #}
 
-            $getUser = Login::where(['username' => $request->username])->first();
-            #dd($getUser->id);
+            $getUser = Login::where(['username' => $request->username, 'deleted_at'=>NULL])->first();
+            //dd($getUser);
             if ($getUser === null) {
                 return redirect('login')->with('pesan', 'User tidak terdaftar diportal !');
             } else {
