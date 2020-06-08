@@ -44,27 +44,19 @@ class JualDetailController extends Controller
             $tgl_akhir = now()->format('Y-m-d');
         }
 
-<<<<<<< HEAD:app/Http/Controllers/Penjualan/JualDetailController.php
         $menu = DB::table('menu')
             ->where('menu_id', 8)
-=======
-        $menus = Menu::where('menu_id', 8)
->>>>>>> 33753a01c06b344703ddaf915fa0892986cae096:app/Http/Controllers/Penjualan/DetailpenjualanController.php
             ->first();
 
         $update = DB::table('tmp_sync')
             ->where('nama', 'Penjualan')
             ->first();
 
-<<<<<<< HEAD:app/Http/Controllers/Penjualan/JualDetailController.php
         $datawilayah = DB::table('ms_wilayah')
             ->orderBy('wilayahnama')
             ->get();
 
         $datawilayah = DB::table('ms_wilayah')
-=======
-        $dataswilayah = DB::table('ms_wilayah')
->>>>>>> 33753a01c06b344703ddaf915fa0892986cae096:app/Http/Controllers/Penjualan/DetailpenjualanController.php
             ->orderBy('wilayahnama')
             ->get();
 
@@ -102,15 +94,9 @@ class JualDetailController extends Controller
             ->orderBy("tr_jual.cabangid")
             ->get();
 
-<<<<<<< HEAD:app/Http/Controllers/Penjualan/JualDetailController.php
         return view('penjualan.jualdetail.index', [
             'menu' => $menu->menu_nama,
             'keterangan' => $menu->menu_keterangan,
-=======
-        return view('penjualan.detailpenjualan.index', [
-            'menu' => $menus->menu_nama,
-            'keterangan' => $menus->menu_keterangan,
->>>>>>> 33753a01c06b344703ddaf915fa0892986cae096:app/Http/Controllers/Penjualan/DetailpenjualanController.php
             'update' => $update->modifieddate,
             'datas' => $datas,
             'datawilayah' => $datawilayah,
