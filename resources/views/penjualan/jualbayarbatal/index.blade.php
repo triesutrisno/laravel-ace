@@ -134,7 +134,7 @@
     }
     $(document).ready(function() {
         $('#dynamic-table').DataTable({
-            "scrollX": true
+            //"scrollX": true
         });
     } );
             

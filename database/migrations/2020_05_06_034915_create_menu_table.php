@@ -21,7 +21,8 @@ class CreateMenuTable extends Migration
             $table->string('menu_parent',2)->nullable();
             $table->string('menu_status',2)->nullable();
             $table->string('menu_type',2)->nullable();
-            $table->smallInteger('menu_sort')->nullable();
+            $table->smallInteger('menu_sort')->nullable();            
+            $table->smallInteger('menu_icon',30)->nullable();
             $table->timestamps();
         });
     }

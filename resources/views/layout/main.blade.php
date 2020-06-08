@@ -227,7 +227,7 @@
 				echo "
 				<li class='".$active."'>
 					<a href='#' class='dropdown-toggle'>
-						<i class='menu-icon fa fa-desktop'></i>
+						<i class='menu-icon ".$val['menu_icon']."'></i>
 						<span class='menu-text'> $val[menu_nama] </span>
 						<b class='arrow fa fa-angle-down'></b>
 					</a>

@@ -67,7 +67,7 @@ class LoginController extends Controller
                     $hakAkses = DB::table('userrole AS a')
                         ->join('menurole AS b', 'a.role_nama', '=', 'b.role_nama')
                         ->join('menu AS c', 'b.menu_id', '=', 'c.menu_id')
-                        ->select('a.username', 'a.role_nama', 'b.menu_id', 'c.menu_nama', 'c.menu_link', 'c.menu_type', 'c.menu_parent')
+                        ->select('a.username', 'a.role_nama', 'b.menu_id', 'c.menu_nama', 'c.menu_link', 'c.menu_type', 'c.menu_parent', 'c.menu_icon')
                         ->where([
                             ['a.userrole_status', '=', '1'],
                             ['b.menurole_status', '=', '1'],
@@ -86,11 +86,13 @@ class LoginController extends Controller
                                 $dtAkses[$val->menu_id]['menu_nama'] = $val->menu_nama;
                                 $dtAkses[$val->menu_id]['menu_link'] = $val->menu_link;
                                 $dtAkses[$val->menu_id]['menu_type'] = $val->menu_type;
+                                $dtAkses[$val->menu_id]['menu_icon'] = $val->menu_icon;
                             } else if ($val->menu_type == '2') {
                                 $parent1['menu_id'] = $val->menu_id;
                                 $parent1['menu_nama'] = $val->menu_nama;
                                 $parent1['menu_link'] = $val->menu_link;
-                                $parent1['menu_type'] = $val->menu_type;
+                                $parent1['menu_type'] = $val->menu_type;                                
+                                $parent1['menu_icon'] = $val->menu_icon;
 
                                 $dtAkses[$val->menu_parent]['data1'][] = $parent1;
                             }
