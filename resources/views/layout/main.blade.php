@@ -308,7 +308,7 @@
 					<span class="bigger-120">
 						<span class="red bolder">SILOG </span>
 						<span class="blue bolder">Group</span>
-						&copy; 2020
+						&copy; {{ now()->format('Y')}}
 					</span>
 
 					&nbsp; &nbsp;

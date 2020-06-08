@@ -2175,7 +2175,11 @@ pre.prettyprint {
     }
 
     .navbar.navbar-collapse:before {
+<<<<<<< HEAD
         background: #438EB9;
+=======
+        background: #006400;
+>>>>>>> 33753a01c06b344703ddaf915fa0892986cae096
         content: "";
         display: block;
         position: absolute;

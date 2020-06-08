@@ -74,6 +74,7 @@ class LoginController extends Controller
                             ['a.username', '=', $request->username]
                         ])
                         ->orderBy('c.menu_id', 'ASC')
+                        ->orderBy('c.menu_sort', 'ASC')
                         ->get();
                     //dd($hakAkses);
                     $dtAkses = [];

@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::namespace('Penjualan')->group(function () {
         Route::get('/jualdetail', 'DetailpenjualanController@index');
+<<<<<<< HEAD
 
         Route::get('/jualdetail', 'JualDetailController@index');
         Route::get('/jualretur', 'JualReturController@index');
@@ -58,6 +59,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/piutangmutasi', 'PiutangMutasiController@index');
         Route::get('/piutangaging', 'PiutangAgingController@index');
 
+=======
+>>>>>>> 33753a01c06b344703ddaf915fa0892986cae096
 
         Route::get('/koreksihargapenjualan', 'KoreksiHargapenjualanController@index');
         Route::get('/koreksihargapenjualan/search', 'KoreksiHargapenjualanController@search');
