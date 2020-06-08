@@ -26,25 +26,25 @@ Route::group(['middleware' => ['auth', 'checkLink:menu']], function () {
     });
 });
 
-Route::group(['middleware' => ['auth', 'checkLink:role']], function () { 
+Route::group(['middleware' => ['auth', 'checkLink:role']], function () {
     Route::namespace('Role')->group(function () {
         Route::resource('/role', 'RoleController');
     });
 });
 
-Route::group(['middleware' => ['auth', 'checkLink:menurole']], function () { 
+Route::group(['middleware' => ['auth', 'checkLink:menurole']], function () {
     Route::namespace('Menurole')->group(function () {
         Route::resource('/menurole', 'MenuroleController');
     });
 });
 
-Route::group(['middleware' => ['auth', 'checkLink:user']], function () { 
+Route::group(['middleware' => ['auth', 'checkLink:user']], function () {
     Route::namespace('User')->group(function () {
         Route::resource('/user', 'UserController');
     });
 });
 
-Route::group(['middleware' => ['auth', 'checkLink:userrole']], function () { 
+Route::group(['middleware' => ['auth', 'checkLink:userrole']], function () {
     Route::namespace('Userrole')->group(function () {
         Route::resource('/userrole', 'UserroleController');
     });
@@ -52,12 +52,9 @@ Route::group(['middleware' => ['auth', 'checkLink:userrole']], function () {
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/', 'PagesController@home');      
+    Route::get('/', 'PagesController@home');
 
     Route::namespace('Penjualan')->group(function () {
-        Route::get('/jualdetail', 'DetailpenjualanController@index');
-<<<<<<< HEAD
-
         Route::get('/jualdetail', 'JualDetailController@index');
         Route::get('/jualretur', 'JualReturController@index');
         Route::get('/jualkoreksiharga', 'JualKoreksiHargaController@index');
@@ -68,12 +65,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/piutangkartu', 'PiutangKartuController@index');
         Route::get('/piutangmutasi', 'PiutangMutasiController@index');
         Route::get('/piutangaging', 'PiutangAgingController@index');
-
-=======
->>>>>>> 33753a01c06b344703ddaf915fa0892986cae096
-
-        Route::get('/koreksihargapenjualan', 'KoreksiHargapenjualanController@index');
-        Route::get('/koreksihargapenjualan/search', 'KoreksiHargapenjualanController@search');
     });
 
     Route::namespace('Penjualan')->group(function () {
