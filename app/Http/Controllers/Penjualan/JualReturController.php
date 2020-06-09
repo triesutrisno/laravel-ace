@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 
 
-class JualKoreksiHargaController extends Controller
+class JualReturController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +25,7 @@ class JualKoreksiHargaController extends Controller
         }
 
         if ($request->cabang !== "0") {
-            $cabangs = 'tr_jual_koreksi_harga.cabangid';
+            $cabangs = 'tr_jual_retur.cabangid';
             $cabang = $request->cabang;
         } else {
             $cabangs = null;
@@ -45,7 +45,7 @@ class JualKoreksiHargaController extends Controller
         }
 
         $menu = DB::table('menu')
-            ->where('menu_id', 10)
+            ->where('menu_id', 9)
             ->first();
 
         $update = DB::table('tmp_sync')
@@ -65,11 +65,11 @@ class JualKoreksiHargaController extends Controller
             ->orderBy('cabangnama')
             ->get();
 
-        $datas = DB::table('tr_jual_koreksi_harga')->wherebetween('tglkoreksi', [$tgl_awal, $tgl_akhir])
+        $datas = DB::table('tr_jual_retur')->wherebetween('tglretur', [$tgl_awal, $tgl_akhir])
             ->select(
                 // 'ms_wilayah.wilayahnama',
                  'ms_cabang.cabangnama',
-                // 'ms_gudang.gudangnama',
+                 'ms_gudang.gudangnama',
                  'ms_pelanggan.pelanggankode',
                  'ms_pelanggan.pelanggannama',
                  'ms_barang.barangkode',
@@ -78,23 +78,23 @@ class JualKoreksiHargaController extends Controller
                 // 'tr_piutang.nofaktur',
                 // 'tr_piutang.tglfaktur',
                 // 'tr_piutang.nofakturpajak',
-                'tr_jual_koreksi_harga.*'
+                'tr_jual_retur.*'
             )
             // ->where($wilayahs, $wilayah)
              ->where($cabangs, $cabang)
-             ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'tr_jual_koreksi_harga.cabangid')
+             ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'tr_jual_retur.cabangid')
             // ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-            // ->join('ms_gudang', 'ms_gudang.gudangid', '=', 'tr_jual.gudangid')
-             ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'tr_jual_koreksi_harga.pelangganid')
-             ->join('ms_barang', 'ms_barang.barangid', '=', 'tr_jual_koreksi_harga.barangid')
+             ->join('ms_gudang', 'ms_gudang.gudangid', '=', 'tr_jual_retur.gudangid')
+             ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'tr_jual_retur.pelangganid')
+             ->join('ms_barang', 'ms_barang.barangid', '=', 'tr_jual_retur.barangid')
             // ->leftjoin('tr_piutang', function ($join) {
             //     $join->on('tr_piutang.nospj', '=', 'tr_jual.nospj')
             //         ->where('tr_piutang.status', '=', 0);
             // })
-            ->orderBy("tr_jual_koreksi_harga.cabangid")
+            ->orderBy("tr_jual_retur.cabangid")
             ->get();
 
-        return view('penjualan.jualkoreksiharga.index', [
+        return view('penjualan.jualretur.index', [
             'menu' => $menu->menu_nama,
             'keterangan' => $menu->menu_keterangan,
             'update' => $update->modifieddate,

@@ -5,10 +5,10 @@
 <link rel="stylesheet" href="{{ asset('assets/css/chosen.min.css') }}" />
 @endpush
 
-@section('breadcrumb', $menu)
-@section('title', $menu)
-@section('subTitle', $keterangan)
-@section('subsubTitle', 'update data '.$update)
+@section('breadcrumb', $menu ?? '')
+@section('title', $menu ?? '')
+@section('subTitle', $keterangan ?? '')
+@section('subsubTitle', 'update data '.$datas)
 
 @section('container')
 <div class="row">
@@ -21,7 +21,7 @@
                     <div class="col-xs-2 col-sm-2">
                         <select class="form-control chosen-select" name="wilayah">
                             <option value="0" default>----Pilih Wilayah-----</option>
-                            @foreach($datawilayah as $wilayahs)
+                            @foreach($dataswilayah as $wilayahs)
                             <option value="{{ $wilayahs->wilayahid }}" {{ $wilayah == $wilayahs->wilayahid ? 'selected' : '' }}>{{$wilayahs->wilayahnama}}</option>
                             @endforeach
                         </select>
@@ -30,7 +30,7 @@
                     <div class="col-xs-2 col-sm-2">
                         <select class="form-control chosen-select" name="cabang">
                             <option value="0" default>----Pilih Cabang-----</option>
-                            @foreach($datacabang as $cabangs)
+                            @foreach($datascabang as $cabangs)
                             <option value="{{ $cabangs->cabangid }}" {{ $cabang == $cabangs->cabangid ? 'selected' : '' }}>{{$cabangs->cabangnama}}</option>
                             @endforeach
                         </select>
@@ -61,28 +61,34 @@
                                     </label>
                                 </th>
                                 <th>No</th>
+                                <th>Wilayah</th>
                                 <th>Cabang</th>
-                                <th>Kode Cust</th>
-                                <th>Nama Cust</th>
-                                <th>Jenis</th>
-                                <th>No Koreksi</th>
-                                <th>Faktur Jual</th>
-                                <th>FJ Baru</th>
-                                <th>Faktur Pajak</th>
+                                <th>Gudang</th>
+                                <th>Tgl SPJ</th>
                                 <th>No SPJ</th>
+                                <th>No Reff</th>
+                                <th>Jenis Kirim</th>
+                                <th>Nopol</th>
+                                <th>Kode Pelanggan</th>
+                                <th>Nama Pelanggan</th>
+                                <th>Pelanggan Shipto</th>
+                                <th>Jenis Jual</th>
                                 <th>Kode Barang</th>
                                 <th>Nama Barang</th>
-                                <th>QTY</th>
-                                <th>Tanggal Koreksi</th>
-                                <th>Harga Awal</th>
-                                <th>Harga Ganti</th>
-                                <th>Selisih</th>
-                                <th>Keterangan</th>
+                                <th>Berat</th>
+                                <th>Qty Awal</th>
+                                <th>Harga Harga</th>
+                                <th>Qty</th>
+                                <th>Berat (Kg)</th>
+                                <th>Harga</th>
                                 <th>Jumlah</th>
+                                <th>Dpp</th>
+                                <th>Hpp</th>
+                                <th>NiHpp</th>
                                 <th>Status</th>
-
-
-                                
+                                <th>No Faktur</th>
+                                <th>Tgl Faktur</th>
+                                <th>No Faktur Pajak</th>
                         </tr>
                 </thead>
 
@@ -96,31 +102,34 @@
                                 </label>
                             </td>
                             <td align="center">{{$loop->iteration}}</td>
+                            <td align="center">{{$row->wilayahnama}}</td>
                             <td align="center">{{$row->cabangnama}}</td>
-                            <td align="center">{{$row->pelanggankode}}</td>
-                            <td align="center">{{$row->pelanggannama}}</td>
-                            <td align="center">{{$row->tipekoreksi}}</td>
-                            <td align="center">{{$row->nokoreksi}}</td>
-                            <td align="center">{{$row->nofaktur}}</td>
-
-                            <td align="center">{{$row->nofakturbaru}}</td>
-                            <td align="center">{{$row->nofakturbaru}}</td>
+                            <td align="center">{{$row->gudangnama}}</td>
+                            <td align="center">{{$row->tglspj}}</td>
                             <td align="center">{{$row->nospj}}</td>
-
-                            <td align="left">{{$row->barangkode}}</td>
-                            <td align="center">{{$row->barangnama}}</td>
-
-                            <td align="center">{{$row->qtyjual}}</td>
-                            <td align="center">{{$row->tglkoreksi}}</td>
-
-                            <td align="center">{{$row->hargaawal}}</td>
-                            <td align="center">{{$row->hargaganti}}</td>
-                            
-                            <td align="center"></td>
-
-                            <td align="center">{{$row->keterangan}}</td>
-                            <td align="center">{{$row->jumlah}}</td>
-                            <td align="center">{{$row->status}}</td>
+                            <td align="center">{{$row->noreff1}}</td>
+                            <td align="center">{{$row->jeniskirim}}</td>
+                            <td align="center">{{$row->nopol}}</td>
+                            <td align="center">{{$row->pelanggankode}}</td>
+                            <td align="left">{{$row->pelanggannama}}</td>
+                            <td align="left">{{$row->pelangganshipto}}</td>
+                            <td align="center">{{ ($row->jenisjual=='1' ? 'Semen' : ($row->jenisjual=='2' ? 'Non Semen' : 'Curah')) }}</td>
+                            <td align="center">{{$row->barangkode}}</td>
+                            <td align="left">{{$row->barangnama}}</td>
+                            <td align="right">{{number_format($row->berat,2)}}</td>
+                            <td align="right">{{number_format($row->qtyawal,2)}}</td>
+                            <td align="right">{{number_format($row->hargaawal,2)}}</td>
+                            <td align="right">{{number_format($row->qty,2)}}</td>
+                            <td align="right">{{number_format($row->qty * $row->berat,2)}}</td>
+                            <td align="right">{{number_format($row->harga,2)}}</td>
+                            <td align="right">{{number_format($row->jumlah,2)}}</td>
+                            <td align="right">{{number_format($row->dpp,2)}}</td>
+                            <td align="right">{{number_format($row->hpp,2)}}</td>
+                            <td align="right">{{number_format($row->nihpp,2)}}</td>
+                            <td align="center">{{ ($row->status=='0' ? 'Penjualan' : ($row->status=='3' ? 'Void' : 'Belum SPJ Kembali')) }}</td>
+                            <td align="center">{{$row->nofaktur}}</td>
+                            <td align="center">{{$row->tglfaktur}}</td>
+                            <td align="center">{{$row->nofakturpajak}}</td>
                                
                         </tr>
                         @endforeach
