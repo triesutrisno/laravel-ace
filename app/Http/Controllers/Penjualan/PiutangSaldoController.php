@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 
-class JualBayarController extends Controller
+class PiutangSaldoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,36 +24,48 @@ class JualBayarController extends Controller
         }
 
         if ($request->cabang !== "0") {
-            $cabangs = 'tr_jual_bayar.cabangid';
+            $cabangs = 'ms_pelanggan.cabangid';
             $cabang = $request->cabang;
         } else {
             $cabangs = null;
             $cabang = null;
         }
 
-        if ($request->has('tgl_awal')) {
-            $tgl_awal = $request->tgl_awal;
+        if ($request->pelanggan !== "0") {
+            $pelanggans = 'ms_pelanggan.pelangganid';
+            $pelanggan = $request->pelanggan;
         } else {
-            $tgl_awal = now()->format('Y-m-d');
+            $pelanggans = null;
+            $pelanggan = null;
         }
 
-        if ($request->has('tgl_akhir')) {
-            $tgl_akhir = $request->tgl_akhir;
+        if ($request->has('status')) {
+            $statuss = 'ms_pelanggan.status';
+            $status = $request->status;
         } else {
-            $tgl_akhir = now()->format('Y-m-d');
+            $statuss = null;
+            $status = null;
+        }
+
+        if ($request->has('tglawal')) {
+            $tglawal = $request->tglawal;
+        } else {
+            $tglawal = now()->format('Y-m-d');
+        }
+
+        if ($request->has('tglakhir')) {
+            $tglakhir = $request->tglakhir;
+        } else {
+            $tglakhir = now()->format('Y-m-d');
         }
 
         $menu = DB::table('menu')
-            ->where('menu_id', 12)
+            ->where('menu_id', 18)
             ->first();
 
         $update = DB::table('tmp_sync')
-            ->where('nama', 'Penjualan')
+            ->orderBy('modifieddate', 'DESC')
             ->first();
-
-        $datawilayah = DB::table('ms_wilayah')
-            ->orderBy('wilayahnama')
-            ->get();
 
         $datawilayah = DB::table('ms_wilayah')
             ->orderBy('wilayahnama')
@@ -64,46 +76,69 @@ class JualBayarController extends Controller
             ->orderBy('cabangnama')
             ->get();
 
-        $datas = DB::table('tr_jual_bayar')->wherebetween('tglbayar', [$tgl_awal, $tgl_akhir])
+        $datapelanggan = DB::table('ms_pelanggan')
+            ->select(
+                'ms_cabang.cabangnama',
+                'ms_pelanggan.*'
+            )
+            ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'ms_pelanggan.cabangid')
+            ->orderBy('ms_cabang.cabangnama', 'ASC')
+            ->orderBy('ms_pelanggan.pelanggankode', 'ASC')
+            ->get();
+
+        $datasaldo = app('App\Http\Controllers\Penjualan\PiutangController')->getPiutangPelangganRange($tglawal, $tglakhir);
+
+        $datas = DB::table($datasaldo, 'datasaldo')
             ->select(
                 'ms_wilayah.wilayahnama',
                 'ms_cabang.cabangnama',
-                // 'ms_gudang.gudangnama',
                 'ms_pelanggan.pelanggankode',
                 'ms_pelanggan.pelanggannama',
-                // 'ms_barang.barangkode',
-                // 'ms_barang.barangnama',
-                // 'ms_barang.berat',
-                // 'tr_piutang.nofaktur',
-                // 'tr_piutang.tglfaktur',
-                // 'tr_piutang.nofakturpajak',
-                'tr_jual_bayar.*'
+                'datasaldo.jenisplafon',
+                'datasaldo.limitpkb',
+                'datasaldo.temponormal',
+                'datasaldo.limitpkc',
+                'datasaldo.tempotambahan',
+                'datasaldo.sawal',
+                'datasaldo.debet',
+                'datasaldo.kredit',
+                DB::raw(
+                    'datasaldo.sawal +
+                    datasaldo.debet -
+                    datasaldo.kredit sakhir'
+                )
             )
-            ->where($wilayahs, $wilayah)
+
+            ->where($pelanggans, $pelanggan)
+            ->where($statuss, $status)
             ->where($cabangs, $cabang)
-            ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'tr_jual_bayar.cabangid')
+            ->where($wilayahs, $wilayah)
+
+            ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'datasaldo.pelangganid')
+            ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'ms_pelanggan.cabangid')
             ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-            // ->join('ms_gudang', 'ms_gudang.gudangid', '=', 'tr_jual.gudangid')
-            ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'tr_jual_bayar.pelangganid')
-            // ->join('ms_barang', 'ms_barang.barangid', '=', 'tr_jual.barangid')
-            // ->leftjoin('tr_piutang', function ($join) {
-            //     $join->on('tr_piutang.nospj', '=', 'tr_jual.nospj')
-            //         ->where('tr_piutang.status', '=', 0);
-            // })
-            ->orderBy("tr_jual_bayar.cabangid")
+
+            ->orderBy('ms_wilayah.wilayahnama', 'ASC')
+            ->orderBy('ms_cabang.cabangnama', 'ASC')
+            ->orderBy('ms_pelanggan.pelanggankode', 'ASC')
+            ->orderBy('datasaldo.jenisplafon', 'DESC')
+
             ->get();
 
-        return view('penjualan.jualbayar.index', [
+        return view('penjualan.piutangsaldo.index', [
             'menu' => $menu->menu_nama,
             'keterangan' => $menu->menu_keterangan,
             'update' => $update->modifieddate,
             'datas' => $datas,
             'datawilayah' => $datawilayah,
             'datacabang' => $datacabang,
+            'datapelanggan' => $datapelanggan,
             'wilayah' => $wilayah,
+            'pelanggan' => $pelanggan,
+            'status' => $status,
             'cabang' => $cabang,
-            'tgl_awal' => $tgl_awal,
-            'tgl_akhir' => $tgl_akhir
+            'tglawal' => $tglawal,
+            'tglakhir' => $tglakhir,
         ]);
     }
 
@@ -171,48 +206,5 @@ class JualBayarController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function getGroupByFakturPeriode($tanggal)
-    {
-        $datas = DB::table('tr_jual_bayar')
-            ->select(
-                'nofaktur',
-                DB::raw('SUM(jumlah) jmlbayar'),
-            )
-            ->where('tglbayar', '<=', $tanggal)
-            ->groupBy('nofaktur');
-
-        return $datas;
-    }
-
-    public function getGroupByPelangganPeriode($tanggal)
-    {
-        $datas = DB::table('tr_jual_bayar')
-            ->select(
-                'pelangganid',
-                'jenisjual',
-                DB::raw('SUM(jumlah) jmlbayar'),
-            )
-            ->where('tglbayar', '<', $tanggal)
-            ->groupBy('pelangganid')
-            ->groupBy('jenisjual');
-
-        return $datas;
-    }
-
-    public function getGroupByPelangganRange($tglawal, $tglakhir)
-    {
-        $datas = DB::table('tr_jual_bayar')
-            ->select(
-                'pelangganid',
-                'jenisjual',
-                DB::raw('SUM(jumlah) jmlbayar'),
-            )
-            ->whereBetween('tglbayar', [$tglawal, $tglakhir])
-            ->groupBy('pelangganid')
-            ->groupBy('jenisjual');
-
-        return $datas;
     }
 }

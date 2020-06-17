@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 
-
-class JualReturController extends Controller
+class JualDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index(Request $request)
     {
         if ($request->wilayah !== "0") {
@@ -25,7 +25,7 @@ class JualReturController extends Controller
         }
 
         if ($request->cabang !== "0") {
-            $cabangs = 'tr_jual_retur.cabangid';
+            $cabangs = 'tr_jual.cabangid';
             $cabang = $request->cabang;
         } else {
             $cabangs = null;
@@ -45,7 +45,7 @@ class JualReturController extends Controller
         }
 
         $menu = DB::table('menu')
-            ->where('menu_id', 9)
+            ->where('menu_id', 10)
             ->first();
 
         $update = DB::table('tmp_sync')
@@ -65,42 +65,36 @@ class JualReturController extends Controller
             ->orderBy('cabangnama')
             ->get();
 
-        $datas = DB::table('tr_jual_retur')->wherebetween('tglretur', [$tgl_awal, $tgl_akhir])
+        $datas = DB::table('tr_jual')->wherebetween('tglspj', [$tgl_awal, $tgl_akhir])
             ->select(
-                // 'ms_wilayah.wilayahnama',
+                'ms_wilayah.wilayahnama',
                 'ms_cabang.cabangnama',
                 'ms_gudang.gudangnama',
                 'ms_pelanggan.pelanggankode',
                 'ms_pelanggan.pelanggannama',
                 'ms_barang.barangkode',
                 'ms_barang.barangnama',
-                'ms_cabang.cabangnama',
-                'ms_gudang.gudangnama',
-                'ms_pelanggan.pelanggankode',
-                'ms_pelanggan.pelanggannama',
-                'ms_barang.barangkode',
-                'ms_barang.barangnama',
-                // 'ms_barang.berat',
-                // 'tr_piutang.nofaktur',
-                // 'tr_piutang.tglfaktur',
-                // 'tr_piutang.nofakturpajak',
-                'tr_jual_retur.*'
+                'ms_barang.berat',
+                'tr_piutang.nofaktur',
+                'tr_piutang.tglfaktur',
+                'tr_piutang.nofakturpajak',
+                'tr_jual.*'
             )
-            // ->where($wilayahs, $wilayah)
+            ->where($wilayahs, $wilayah)
             ->where($cabangs, $cabang)
-            ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'tr_jual_retur.cabangid')
-            // ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-            ->join('ms_gudang', 'ms_gudang.gudangid', '=', 'tr_jual_retur.gudangid')
-            ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'tr_jual_retur.pelangganid')
-            ->join('ms_barang', 'ms_barang.barangid', '=', 'tr_jual_retur.barangid')
-            // ->leftjoin('tr_piutang', function ($join) {
-            //     $join->on('tr_piutang.nospj', '=', 'tr_jual.nospj')
-            //         ->where('tr_piutang.status', '=', 0);
-            // })
-            ->orderBy("tr_jual_retur.cabangid")
+            ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'tr_jual.cabangid')
+            ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
+            ->join('ms_gudang', 'ms_gudang.gudangid', '=', 'tr_jual.gudangid')
+            ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'tr_jual.pelangganid')
+            ->join('ms_barang', 'ms_barang.barangid', '=', 'tr_jual.barangid')
+            ->leftjoin('tr_piutang', function ($join) {
+                $join->on('tr_piutang.nospj', '=', 'tr_jual.nospj')
+                    ->where('tr_piutang.status', '=', 0);
+            })
+            ->orderBy("tr_jual.cabangid")
             ->get();
 
-        return view('penjualan.jualretur.index', [
+        return view('penjualan.jualkoreksiharga.index', [
             'menu' => $menu->menu_nama,
             'keterangan' => $menu->menu_keterangan,
             'update' => $update->modifieddate,
@@ -138,10 +132,10 @@ class JualReturController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\http\Model\Penjualan\JualDetail  $jualdetail
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(JualDetail $jualdetail)
     {
         //
     }
@@ -149,10 +143,10 @@ class JualReturController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\http\Model\Penjualan\JualDetail  $jualdetail
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(JualDetail $jualdetail)
     {
         //
     }
@@ -161,10 +155,10 @@ class JualReturController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\http\Model\Penjualan\JualDetail  $jualdetail
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, JualDetail $jualdetail)
     {
         //
     }
@@ -172,54 +166,11 @@ class JualReturController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\http\Model\Penjualan\JualDetail  $jualdetail
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(JualDetail $jualdetail)
     {
         //
-    }
-
-    public function getGroupByNospjPeriode($tanggal)
-    {
-        $datas = DB::table('tr_jual_retur')
-            ->select(
-                'nospj',
-                DB::raw('SUM(jumlah) jmlretur'),
-            )
-            ->where('tglretur', '<=', $tanggal)
-            ->groupBy('nospj');
-
-        return $datas;
-    }
-
-    public function getGroupByPelangganPeriode($tanggal)
-    {
-        $datas = DB::table('tr_jual_retur')
-            ->select(
-                'pelangganid',
-                'jenisjual',
-                DB::raw('SUM(jumlah) jmlretur'),
-            )
-            ->where('tglretur', '<', $tanggal)
-            ->groupBy('pelangganid')
-            ->groupBy('jenisjual');
-
-        return $datas;
-    }
-
-    public function getGroupByPelangganRange($tglawal, $tglakhir)
-    {
-        $datas = DB::table('tr_jual_retur')
-            ->select(
-                'pelangganid',
-                'jenisjual',
-                DB::raw('SUM(jumlah) jmlretur'),
-            )
-            ->whereBetween('tglretur', [$tglawal, $tglakhir])
-            ->groupBy('pelangganid')
-            ->groupBy('jenisjual');
-
-        return $datas;
     }
 }

@@ -50,61 +50,93 @@
             </div>
             <div class="pull-right tableTools-container"></div>
         </div>
-        
+
         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
-                <thead>
-                        <tr>
-                                <th class="center">
-                                    <label class="pos-rel">
-                                        <input type="checkbox" class="ace" />
-                                        <span class="lbl"></span>
-                                    </label>
-                                </th>
-                                <th>No</th>
-                                <th>Wilayah</th>
-                                <th>Cabang</th>
-                                <th>Kode Customer</th>
-                                <th>Customer</th>
-                                <th>No Faktur</th>
-                                <th>No Tagihan</th>
+            <thead>
+                <tr>
+                    <<<<<<< HEAD <!-- <th class="center">
+                        =======
+                        <th class="center">
+                            >>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
+                            <label class="pos-rel">
+                                <input type="checkbox" class="ace" />
+                                <span class="lbl"></span>
+                            </label>
+                            <<<<<<< HEAD </th> -->
+                                =======
+                        </th>
+                        >>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
+                        <th>No</th>
+                        <th>Wilayah</th>
+                        <th>Cabang</th>
+                        <th>Kode Customer</th>
+                        <th>Customer</th>
+                        <th>No Faktur</th>
+                        <th>No Tagihan</th>
 
-                                <th>No Invoice</th>
-                                <th>No Buku</th>
-                                <th>Jenis Bayar</th>
-                                <th>No Seri BG</th>
-                                <th>Tanggal Bayar</th>
-                                <th>Jumlah Bayar</th>
+                        <th>No Invoice</th>
+                        <th>No Buku</th>
+                        <th>Jenis Bayar</th>
+                        <th>No Seri BG</th>
+                        <th>Tanggal Bayar</th>
+                        <th>Jumlah Bayar</th>
 
-                        </tr>
-                </thead>
+                </tr>
+            </thead>
 
-                <tbody>
+            <tbody>
                 @foreach($datas as $row)
-                        <tr>
-                            <td class="center">
-                                <label class="pos-rel">
-                                    <input type="checkbox" class="ace" />
-                                    <span class="lbl"></span>
-                                </label>
-                            </td>
-                            <td align="center">{{$loop->iteration}}</td>
-                            <td align="center">{{$row->wilayahnama}}</td>
-                            <td align="center">{{$row->cabangnama}}</td>
-                            <td align="center">{{$row->pelanggankode}}</td>
-                            <td align="center">{{$row->pelanggannama}}</td>
-                            <td align="center">{{$row->nofaktur}}</td>
-                            <td align="center">{{$row->nobayar}}</td>
+                <tr>
+                    <<<<<<< HEAD <!-- <td class="center">
+                        =======
+                        <td class="center">
+                            >>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
+                            <label class="pos-rel">
+                                <input type="checkbox" class="ace" />
+                                <span class="lbl"></span>
+                            </label>
+                            <<<<<<< HEAD </td> -->
+                                =======
+                        </td>
+                        >>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
+                        <td align="center">{{$loop->iteration}}</td>
+                        <td align="center">{{$row->wilayahnama}}</td>
+                        <td align="center">{{$row->cabangnama}}</td>
+                        <td align="center">{{$row->pelanggankode}}</td>
+                        <td align="center">{{$row->pelanggannama}}</td>
+                        <td align="center">{{$row->nofaktur}}</td>
+                        <td align="center">{{$row->nobayar}}</td>
 
-                            <td align="center">{{$row->noseribg}}</td>
-                            <td align="center">{{$row->jumlah}}</td>
-                            <td align="center">{{$row->jumlah}}</td>
-                            <td align="center">{{$row->jumlah}}</td>
-                            <td align="center">{{$row->tglbayar}}</td>
-                            <td align="center">{{$row->jumlah}}</td>
-                               
-                        </tr>
-                        @endforeach
-                </tbody>
+                        <td align="center">{{$row->noseribg}}</td>
+                        <td align="center">{{$row->jumlah}}</td>
+                        <td align="center">{{$row->jumlah}}</td>
+                        <td align="center">{{$row->jumlah}}</td>
+                        <td align="center">{{$row->tglbayar}}</td>
+                        <td align="center">{{$row->jumlah}}</td>
+
+                </tr>
+                @endforeach
+            </tbody>
+            <<<<<<< HEAD <tfoot>
+                <tr>
+                    <th>No</th>
+                    <th>Wilayah</th>
+                    <th>Cabang</th>
+                    <th>Kode Customer</th>
+                    <th>Customer</th>
+                    <th>No Faktur</th>
+                    <th>No Tagihan</th>
+
+                    <th>No Invoice</th>
+                    <th>No Buku</th>
+                    <th>Jenis Bayar</th>
+                    <th>No Seri BG</th>
+                    <th>Tanggal Bayar</th>
+                    <th>Jumlah Bayar</th>
+                </tr>
+                <tfoot>
+                    =======
+                    >>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
         </table>
     </div>
 </div>
@@ -142,10 +174,76 @@
         });
     }
     $(document).ready(function() {
-        $('#dynamic-table').DataTable({
-            "scrollX": true
+        <<
+        << << < HEAD
+        $('#dynamic-table tfoot th').each(function() {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Cari ' + title + '" size="10" />');
         });
-    } );
-            
-</script>              
+
+        var table =
+            $('#dynamic-table').DataTable({
+                "scrollX": true,
+                "fixedHeader": true,
+                "fixedColumns": true,
+                "scrollY": "500px",
+                "scrollX": true,
+                "scrollCollapse": true,
+                initComplete: function() {
+                    // Apply the search
+                    this.api().columns().every(function() {
+                        var that = this;
+
+                        $('input', this.footer()).on('keyup change clear', function() {
+                            if (that.search() !== this.value) {
+                                that
+                                    .search(this.value)
+                                    .draw();
+                            }
+                        });
+                    });
+                }
+            });
+
+        new $.fn.dataTable.Buttons(table, {
+            buttons: [{
+                    "extend": "copy",
+                    "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "csv",
+                    "text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "excel",
+                    "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "pdf",
+                    "text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "print",
+                    "text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
+                    "className": "btn btn-white btn-primary btn-bold",
+                    autoPrint: false,
+                    message: 'This print was produced using the Print button for DataTables'
+                }
+            ]
+        });
+        table.buttons().container().appendTo($('.tableTools-container'));
+    });
+</script>
+=======
+$('#dynamic-table').DataTable({
+"scrollX": true
+});
+} );
+
+</script>
+>>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
 @endpush

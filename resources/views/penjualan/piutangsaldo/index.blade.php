@@ -15,11 +15,11 @@
     <div class="col-xs-12 col-sm-12">
 
         <div class="clearfix">
-            <div class="col-xs-8 col-sm-8">
-                <form method="get" action="{{url('/jualbayarbatal')}}">
+            <div class="col-xs-10 col-sm-10">
+                <form method="get" action="{{url('/piutangsaldo')}}">
 
                     <div class="col-xs-2 col-sm-2">
-                        <select class="form-control chosen-select" name="wilayah">
+                        <select class="form-control chosen-select" id="form-field-select-3" name="wilayah">
                             <option value="0" default>----Pilih Wilayah-----</option>
                             @foreach($datawilayah as $wilayahs)
                             <option value="{{ $wilayahs->wilayahid }}" {{ $wilayah == $wilayahs->wilayahid ? 'selected' : '' }}>{{$wilayahs->wilayahnama}}</option>
@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="col-xs-2 col-sm-2">
-                        <select class="form-control chosen-select" name="cabang">
+                        <select class="form-control chosen-select" id="form-field-select-3" name="cabang">
                             <option value="0" default>----Pilih Cabang-----</option>
                             @foreach($datacabang as $cabangs)
                             <option value="{{ $cabangs->cabangid }}" {{ $cabang == $cabangs->cabangid ? 'selected' : '' }}>{{$cabangs->cabangnama}}</option>
@@ -36,11 +36,28 @@
                         </select>
                     </div>
 
-                    <div class="col-xs-2 col-sm-2">
-                        <input type="text" class="form-control date-picker" placeholder="tanggal awal" name='tgl_awal' id="tgl_awal" value="{{ $tgl_awal }}">
+                    <div class="col-xs-3 col-sm-3">
+                        <select class="form-control chosen-select" id="pelanggan" name="pelanggan">
+                            <option value="0" default>----Pilih Pelanggan-----</option>
+                            @foreach($datapelanggan as $pelanggans)
+                            <option value="{{ $pelanggans->pelangganid }}" {{ $pelanggan == $pelanggans->pelangganid ? 'selected' : '' }}>{{ $pelanggans->cabangnama. ' - '.$pelanggans->pelanggankode. ' - '.$pelanggans->pelanggannama}}</option>
+                            @endforeach
+                        </select>
                     </div>
+
                     <div class="col-xs-2 col-sm-2">
-                        <input type="text" class="form-control date-picker" placeholder="tanggal akhir" name='tgl_akhir' id="tgl_akhir" value="{{ $tgl_akhir }}">
+                        <select class="form-control chosen-select" id="status" name="status">
+                            <option value="1" {{ $status == 1 ? 'selected' : '' }}>Pelanggan Aktif</option>
+                            <option value="0" {{ $status == 0 ? 'selected' : '' }}>Pelanggan Non Aktif</option>
+                        </select>
+                    </div>
+
+                    <div class="col-xs-1 col-sm-1">
+                        <input type="text" class="form-control date-picker" placeholder="tglawal" name='tglawal' id="tglawal" value="{{ $tglawal }}">
+                    </div>
+
+                    <div class="col-xs-1 col-sm-1">
+                        <input type="text" class="form-control date-picker" placeholder="tglakhir" name='tglakhir' id="tglakhir" value="{{ $tglakhir }}">
                     </div>
 
                     <div class="col-xs-1 col-sm-1">
@@ -50,79 +67,63 @@
             </div>
             <div class="pull-right tableTools-container"></div>
         </div>
-
+        &nbsp;
         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
-                    <<<<<<< HEAD <!-- <th class="center">
-                        =======
-                        <th class="center">
-                            >>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                            <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                            </label>
-                            <<<<<<< HEAD </th> -->
-                                =======
-                        </th>
-                        >>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                        <th>No</th>
-                        <th>Nama Usaha</th>
-                        <th>Nama Cabang</th>
-                        <th>No Roll Back</th>
-                        <th>No FJ</th>
-                        <th>No SPJ</th>
-                        <th>Tanggal</th>
-                        <th>No Seri BG</th>
-                        <th>Total Dibayar</th>
-
+                    <th>Wilayah</th>
+                    <th>Cabang</th>
+                    <th>Kode Pelanggan</th>
+                    <th>Nama Pelanggan</th>
+                    <th>Jenis Plafon</th>
+                    <th>Limit Normal</th>
+                    <th>Tempo Normal</th>
+                    <th>Limit Tambahan</th>
+                    <th>Tempo Tambahan</th>
+                    <th>SAwal</th>
+                    <th>Debet</th>
+                    <th>Kredit</th>
+                    <th>SAKhir</th>
                 </tr>
             </thead>
 
             <tbody>
                 @foreach($datas as $row)
                 <tr>
-                    <<<<<<< HEAD <!-- <td class="center">
-                        =======
-                        <td class="center">
-                            >>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                            <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                            </label>
-                            <<<<<<< HEAD </td> -->
-                                =======
-                        </td>
-                        >>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                        <td align="center">{{$loop->iteration}}</td>
-                        <td align="center">{{$row->pelanggannama}}</td>
-                        <td align="center">{{$row->cabangnama}}</td>
-                        <td align="center">{{$row->nobatal}}</td>
-                        <td align="center">{{$row->nofaktur}}</td>
-                        <td align="center">{{$row->nospj}}</td>
-                        <td align="center">{{$row->tglbatal}}</td>
-                        <td align="center">{{$row->noseribg}}</td>
-                        <td align="center">{{$row->jumlah}}</td>
-
-
+                    <td align="center">{{$row->wilayahnama}}</td>
+                    <td align="center">{{$row->cabangnama}}</td>
+                    <td align="center">{{$row->pelanggankode}}</td>
+                    <td align="left">{{$row->pelanggannama}}</td>
+                    <td align="center">{{$row->jenisplafon}}</td>
+                    <td align="right">{{number_format($row->limitpkb,2)}}</td>
+                    <td align="right">{{number_format($row->temponormal,2)}}</td>
+                    <td align="right">{{number_format($row->limitpkc,2)}}</td>
+                    <td align="right">{{number_format($row->tempotambahan,2)}}</td>
+                    <td align="right">{{number_format($row->sawal,2)}}</td>
+                    <td align="right">{{number_format($row->debet,2)}}</td>
+                    <td align="right">{{number_format($row->kredit,2)}}</td>
+                    <td align="right">{{number_format($row->sakhir,2)}}</td>
                 </tr>
                 @endforeach
             </tbody>
-            <<<<<<< HEAD <tfoot>
+
+            <tfoot>
                 <tr>
-                    <th>No</th>
-                    <th>Nama Usaha</th>
-                    <th>Nama Cabang</th>
-                    <th>No Roll Back</th>
-                    <th>No FJ</th>
-                    <th>No SPJ</th>
-                    <th>Tanggal</th>
-                    <th>No Seri BG</th>
-                    <th>Total Dibayar</th>
+                    <th>Wilayah</th>
+                    <th>Cabang</th>
+                    <th>Kode Pelanggan</th>
+                    <th>Nama Pelanggan</th>
+                    <th>Jenis Plafon</th>
+                    <th>Limit Normal</th>
+                    <th>Tempo Normal</th>
+                    <th>Limit Tambahan</th>
+                    <th>Tempo Tambahan</th>
+                    <th>SAwal</th>
+                    <th>Debet</th>
+                    <th>Kredit</th>
+                    <th>SAKhir</th>
                 </tr>
-                </tfoot>
-                =======
-                >>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
+            </tfoot>
         </table>
     </div>
 </div>
@@ -160,8 +161,6 @@
         });
     }
     $(document).ready(function() {
-        <<
-        << << < HEAD
         $('#dynamic-table tfoot th').each(function() {
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="Cari ' + title + '" size="10" />');
@@ -169,10 +168,8 @@
 
         var table =
             $('#dynamic-table').DataTable({
-                "scrollX": true,
-                "fixedHeader": true,
-                "fixedColumns": true,
                 "scrollY": "500px",
+                "ordering": false,
                 "scrollX": true,
                 "scrollCollapse": true,
                 initComplete: function() {
@@ -224,12 +221,4 @@
         table.buttons().container().appendTo($('.tableTools-container'));
     });
 </script>
-=======
-$('#dynamic-table').DataTable({
-//"scrollX": true
-});
-} );
-
-</script>
->>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
 @endpush

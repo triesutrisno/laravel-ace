@@ -13,20 +13,8 @@ class PiutangMutasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->has('pelanggan')) {
-            $pelanggan = $request->pelanggan;
-        } else {
-            $pelanggan = null;
-        }
-
-        if ($request->has('nospj')) {
-            $nospj = $request->nospj;
-        } else {
-            $nospj = null;
-        }
-
         $menu = DB::table('menu')
             ->where('menu_id', 16)
             ->first();
@@ -45,82 +33,19 @@ class PiutangMutasiController extends Controller
             ->orderBy('ms_pelanggan.pelanggankode', 'ASC')
             ->get();
 
-        $datasretur = DB::table('tr_jual_retur')
-            ->select(DB::raw(" 
-                'Retur' as keterangan,
-                tr_jual_retur.nofaktur,
-                tr_jual_retur.nospj,
-                tr_jual_retur.noretur as noreff,
-                tr_jual_retur.tglretur,
-                0 as debet,
-                SUM(tr_jual_retur.jumlah) as kredit"))
-            ->where('tr_jual_retur.nospj', $nospj)
-            ->groupBy('tr_jual_retur.nofaktur')
-            ->groupBy('tr_jual_retur.nospj')
-            ->groupBy('tr_jual_retur.noretur')
-            ->groupBy('tr_jual_retur.tglretur');
-
-        $dataskorharbl = DB::table('tr_jual_koreksi_harga')
-            ->select(DB::raw(" 
-                'Koreksi Harga' as keterangan,
-                tr_jual_koreksi_harga.nofaktur,
-                tr_jual_koreksi_harga.nospj,
-                tr_jual_koreksi_harga.nokoreksi as noreff,
-                tr_jual_koreksi_harga.tglkoreksi,
-                0 as debet,
-                SUM(tr_jual_koreksi_harga.jumlah) * -1 as kredit"))
-            ->where('tr_jual_koreksi_harga.status', 1)
-            ->where('tr_jual_koreksi_harga.tipekoreksi', 1)
-            ->where('tr_jual_koreksi_harga.nospj', $nospj)
-            ->groupBy('tr_jual_koreksi_harga.nofaktur')
-            ->groupBy('tr_jual_koreksi_harga.nospj')
-            ->groupBy('tr_jual_koreksi_harga.nokoreksi')
-            ->groupBy('tr_jual_koreksi_harga.tglkoreksi');
-
-        $dataskorharbj = DB::table('tr_jual_koreksi_harga')
-            ->select(DB::raw(" 
-                'Koreksi Harga' as keterangan,
-                tr_jual_koreksi_harga.nofakturbaru,
-                tr_jual_koreksi_harga.nospj,
-                tr_jual_koreksi_harga.nokoreksi as noreff,
-                tr_jual_koreksi_harga.tglkoreksi,
-                SUM(tr_jual_koreksi_harga.jumlah) as debet,
-                0 as kredit"))
-            ->where('tr_jual_koreksi_harga.status', 1)
-            ->where('tr_jual_koreksi_harga.tipekoreksi', 0)
-            ->where('tr_jual_koreksi_harga.nospj', $nospj)
-            ->groupBy('tr_jual_koreksi_harga.nofakturbaru')
-            ->groupBy('tr_jual_koreksi_harga.nospj')
-            ->groupBy('tr_jual_koreksi_harga.nokoreksi')
-            ->groupBy('tr_jual_koreksi_harga.tglkoreksi');
-
-        $datasbayar = DB::table('tr_jual_bayar')
-            ->select(DB::raw(" 
-                'Pembayaran' as keterangan,
-                tr_jual_bayar.nofaktur,
-                tr_jual_bayar.nospj,
-                tr_jual_bayar.nobayar as noreff,
-                tr_jual_bayar.tglbayar,
-                0 as debet,
-                tr_jual_bayar.jumlah as kredit"))
-            ->where('tr_jual_bayar.jenisbayar', '<>', 4)
-            ->where('tr_jual_bayar.nospj', $nospj);
-
         $datas = DB::table("tr_piutang")
             ->select(DB::raw("
+                tr_piutang.pelangganid,
                 'Piutang' as keterangan,
-                tr_piutang.nofaktur,
                 tr_piutang.nospj,
+                tr_piutang.nofaktur,
                 '' as noreff,
                 tr_piutang.tglfaktur,
                 tr_piutang.jumlah as debet,
                 0 as kredit"))
-            ->unionAll($datasretur)
-            ->unionAll($dataskorharbj)
-            ->unionAll($dataskorharbl)
-            ->unionAll($datasbayar)
-            ->where('tr_piutang.status', 0)
-            ->where('tr_piutang.nospj', $nospj)
+            ->whereNull('tr_piutang.tglfaktur')
+            // ->wherebetween('tr_piutang.tglfaktur', ['19700101', '19700101'])
+            // ->limit(2)
             ->get();
 
         return view('penjualan.piutangmutasi.index', [
@@ -129,11 +54,12 @@ class PiutangMutasiController extends Controller
             'update' => $update->modifieddate,
             'datas' => $datas,
             'datapelanggan' => $datapelanggan,
-            // 'datacabang' => $datacabang,
-            'pelanggan' => $pelanggan,
-            'nospj' => $nospj,
-            // 'tgl_awal' => $tgl_awal,
-            // 'tgl_akhir' => $tgl_akhir
+            'pelanggan' => null,
+            'berdasarkan' => null,
+            'nofaktur' => null,
+            'nospj' => null,
+            'tgl_awal' => now()->format('Y-m-d'),
+            'tgl_akhir' => now()->format('Y-m-d')
         ]);
     }
 
@@ -164,9 +90,222 @@ class PiutangMutasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        if ($request->has('berdasarkan')) {
+            $berdasarkan = $request->berdasarkan;
+
+            if ($berdasarkan == 'dasarnospj') {
+
+                if ($request->has('nospj')) {
+                    $nospj = $request->nospj;
+
+                    $nospjs = DB::raw("nospj = '" . $nospj . "'");
+                } else {
+                    $nospj = null;
+                    $nospjs = null;
+                }
+
+                $nofaktur = null;
+                $nofakturs = null;
+                $nofakturbarus = null;
+
+                $pelanggan = null;
+                $pelanggans = null;
+
+                $tgl_awal = null;
+                $tgl_akhir = null;
+                $tglpiutang = null;
+                $tglretur = null;
+                $tglkoreksi = null;
+                $tglbayar = null;
+            } elseif ($berdasarkan == 'dasarnofaktur') {
+
+                if ($request->has('nofaktur')) {
+                    $nofaktur = $request->nofaktur;
+
+                    $nofakturs = DB::raw("nofaktur = '" . $nofaktur . "'");
+                    $nofakturbarus = DB::raw("nofakturbaru = '" . $nofaktur . "'");
+                } else {
+                    $nofaktur = null;
+                    $nofakturs = null;
+                    $nofakturbarus = null;
+                }
+
+                $nospj = null;
+                $nospjs = null;
+
+                $pelanggan = null;
+                $pelanggans = null;
+
+                $tgl_awal = null;
+                $tgl_akhir = null;
+                $tglpiutang = null;
+                $tglretur = null;
+                $tglkoreksi = null;
+                $tglbayar = null;
+            } elseif ($berdasarkan == 'dasarpelanggan') {
+
+                if ($request->has('pelanggan')) {
+                    $pelanggan = $request->pelanggan;
+                    $tgl_awal = $request->tgl_awal;
+                    $tgl_akhir = $request->tgl_akhir;
+
+                    $pelanggans = DB::raw("pelangganid = '" . $pelanggan . "'");
+
+                    $tglpiutang = DB::raw("AND tglfaktur BETWEEN '" . $tgl_awal . "' AND '" . $tgl_akhir . "'");
+                    $tglretur = DB::raw("AND tglretur BETWEEN '" . $tgl_awal . "' AND '" . $tgl_akhir . "'");
+                    $tglkoreksi = DB::raw("AND tglkoreksi BETWEEN '" . $tgl_awal . "' AND '" . $tgl_akhir . "'");
+                    $tglbayar = DB::raw("AND tglbayar BETWEEN '" . $tgl_awal . "' AND '" . $tgl_akhir . "'");
+                } else {
+                    $pelanggan = null;
+                    $pelanggans = null;
+                }
+                $nospj = null;
+                $nospjs = null;
+
+                $nofaktur = null;
+                $nofakturs = null;
+                $nofakturbarus = null;
+            }
+        } else {
+            $berdasarkan = null;
+        }
+
+        $menu = DB::table('menu')
+            ->where('menu_id', 16)
+            ->first();
+
+        $update = DB::table('tmp_sync')
+            ->orderBy('modifieddate', 'DESC')
+            ->first();
+
+        $datapelanggan = DB::table('ms_pelanggan')
+            ->select(
+                'ms_cabang.cabangnama',
+                'ms_pelanggan.*'
+            )
+            ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'ms_pelanggan.cabangid')
+            ->orderBy('ms_cabang.cabangnama', 'ASC')
+            ->orderBy('ms_pelanggan.pelanggankode', 'ASC')
+            ->get();
+
+        $datasretur = DB::table('tr_jual_retur')
+            ->select(DB::raw(" 
+                pelangganid,
+                'Retur' as keterangan,
+                nospj,
+                nofaktur,
+                noretur as noreff,
+                tglretur,
+                0 as debet,
+                SUM(jumlah) as kredit"))
+            ->whereraw($pelanggans . $tglretur . $nospjs . $nofakturs)
+            ->groupBy('pelangganid')
+            ->groupBy('nospj')
+            ->groupBy('nofaktur')
+            ->groupBy('noretur')
+            ->groupBy('tglretur');
+
+        $dataskorharbl = DB::table('tr_jual_koreksi_harga')
+            ->select(DB::raw(" 
+            pelangganid,
+            'Koreksi Harga' as keterangan,
+            nospj,
+            nofaktur,
+            nokoreksi as noreff,
+            tglkoreksi,
+            0 as debet,
+            SUM(jumlah) * -1 as kredit"))
+            ->whereraw($pelanggans . $tglkoreksi . $nospjs . $nofakturs)
+            ->where('status', 1)
+            ->where('tipekoreksi', 1)
+            ->groupBy('pelangganid')
+            ->groupBy('nospj')
+            ->groupBy('nofaktur')
+            ->groupBy('nokoreksi')
+            ->groupBy('tglkoreksi');
+
+        $dataskorharbj = DB::table('tr_jual_koreksi_harga')
+            ->select(DB::raw(" 
+                pelangganid,
+                'Koreksi Harga' as keterangan,
+                    nospj,
+                nofakturbaru,
+                nokoreksi as noreff,
+                tglkoreksi,
+                SUM(jumlah) as debet,
+                0 as kredit"))
+            ->whereraw($pelanggans . $tglkoreksi . $nospjs . $nofakturbarus)
+            ->where('status', 1)
+            ->where('tipekoreksi', 0)
+            ->groupBy('pelangganid')
+            ->groupBy('nospj')
+            ->groupBy('nofakturbaru')
+            ->groupBy('nokoreksi')
+            ->groupBy('tglkoreksi');
+
+        $datasbayar = DB::table('tr_jual_bayar')
+            ->select(DB::raw(" 
+                pelangganid,
+                'Pembayaran' as keterangan,
+                nospj,
+                nofaktur,
+                nobayar as noreff,
+                tglbayar,
+                0 as debet,
+                jumlah as kredit"))
+            ->whereraw($pelanggans . $tglbayar . $nospjs . $nofakturs)
+            ->where('jenisbayar', '<>', 4);
+
+        $dataspiutang = DB::table("tr_piutang")
+            ->select(DB::raw("
+                pelangganid,
+                'Piutang' as keterangan,
+                nospj,
+                nofaktur,
+                '' as noreff,
+                tglfaktur,
+                jumlah as debet,
+                0 as kredit"))
+            ->unionAll($datasretur)
+            ->unionAll($dataskorharbj)
+            ->unionAll($dataskorharbl)
+            ->unionAll($datasbayar)
+            ->whereraw($pelanggans . $tglpiutang . $nospjs . $nofakturs)
+            ->where('status', 0);
+
+        $datas = DB::table($dataspiutang, 'piutang')
+            ->select(
+                'ms_pelanggan.pelanggankode',
+                'ms_pelanggan.pelanggannama',
+                'keterangan',
+                'nospj',
+                'nofaktur',
+                'noreff',
+                'tglfaktur',
+                'debet',
+                'kredit',
+            )
+            ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'piutang.pelangganid')
+            ->orderBy('piutang.nospj', 'ASC')
+            ->orderBy('piutang.nofaktur', 'ASC')
+            ->orderBy('piutang.tglfaktur', 'ASC')
+            ->get();
+
+        return view('penjualan.piutangmutasi.index', [
+            'menu' => $menu->menu_nama,
+            'keterangan' => $menu->menu_keterangan,
+            'update' => $update->modifieddate,
+            'datas' => $datas,
+            'datapelanggan' => $datapelanggan,
+            'pelanggan' => $pelanggan,
+            'berdasarkan' => $berdasarkan,
+            'nospj' => $nospj,
+            'nofaktur' => $nofaktur,
+            'tgl_awal' => $tgl_awal,
+            'tgl_akhir' => $tgl_akhir
+        ]);
     }
 
     /**

@@ -54,12 +54,20 @@
         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
                 <thead>
                         <tr>
+<<<<<<< HEAD
+                                <!-- <th class="center">
+=======
                                 <th class="center">
+>>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
                                     <label class="pos-rel">
                                         <input type="checkbox" class="ace" />
                                         <span class="lbl"></span>
                                     </label>
+<<<<<<< HEAD
+                                </th> -->
+=======
                                 </th>
+>>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
                                 <th>No</th>
                                 <th>Cabang</th>
                                 <th>Code Cust</th>
@@ -83,12 +91,20 @@
                 <tbody>
                 @foreach($datas as $row)
                         <tr>
+<<<<<<< HEAD
+                            <!-- <td class="center">
+=======
                             <td class="center">
+>>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
                                 <label class="pos-rel">
                                     <input type="checkbox" class="ace" />
                                     <span class="lbl"></span>
                                 </label>
+<<<<<<< HEAD
+                            </td> -->
+=======
                             </td>
+>>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
                             <td align="center">{{$loop->iteration}}</td>
                             <td align="center">{{$row->cabangnama}}</td>
                             <td align="center">{{$row->pelanggankode}}</td>
@@ -108,6 +124,29 @@
                         </tr>
                         @endforeach
                 </tbody>
+<<<<<<< HEAD
+                <tfoot>
+                <tr>
+                                <th>No</th>
+                                <th>Cabang</th>
+                                <th>Code Cust</th>
+                                <th>Nama Cust</th>
+                                <th>Jenis</th>
+                                <th>No Koreksi</th>
+                                <th>Tgl Koreksi</th>
+                                
+                                <th>Status</th>
+                                <th>Type</th>
+                                <th>Keterangan</th>
+                                <th>No FJ</th>
+                                <th>No FJ Baru</th>
+                                <th>Total Sebelum</th>
+                                <th>Total</th>
+                                <th>Selisih</th>
+                </tr>
+                </tfoot>
+=======
+>>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
         </table>
     </div>
 </div>
@@ -145,10 +184,75 @@
         });
     }
     $(document).ready(function() {
+<<<<<<< HEAD
+        $('#dynamic-table tfoot th').each(function() {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Cari ' + title + '" size="10" />');
+        });
+
+        var table =
+            $('#dynamic-table').DataTable({
+                "scrollX": true,
+                "fixedHeader": true,
+                "fixedColumns": true,
+                "scrollY": "500px",
+                "scrollX": true,
+                "scrollCollapse": true,
+                initComplete: function() {
+                    // Apply the search
+                    this.api().columns().every(function() {
+                        var that = this;
+
+                        $('input', this.footer()).on('keyup change clear', function() {
+                            if (that.search() !== this.value) {
+                                that
+                                    .search(this.value)
+                                    .draw();
+                            }
+                        });
+                    });
+                }
+            });
+
+        new $.fn.dataTable.Buttons(table, {
+            buttons: [{
+                    "extend": "copy",
+                    "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "csv",
+                    "text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "excel",
+                    "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "pdf",
+                    "text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "print",
+                    "text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
+                    "className": "btn btn-white btn-primary btn-bold",
+                    autoPrint: false,
+                    message: 'This print was produced using the Print button for DataTables'
+                }
+            ]
+        });
+        table.buttons().container().appendTo($('.tableTools-container'));
+    });
+</script>
+=======
         $('#dynamic-table').DataTable({
             "scrollX": true
         });
     } );
             
 </script>              
+>>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
 @endpush

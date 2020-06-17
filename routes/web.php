@@ -50,65 +50,57 @@ Route::group(['middleware' => ['auth', 'checkLink:userrole']], function () {
     });
 });
 
-Route::group(['middleware' => ['auth', 'checkLink:jualdetail']], function () {
+// Route Group Penjualan
+Route::namespace('Penjualan')->group(function () {
+    // Penjualan
+    Route::group(['middleware' => ['auth', 'checkLink:jualdetail']], function () {
         Route::get('/jualdetail', 'Penjualan\JualDetailController@index');
-});
+    });
 
-Route::group(['middleware' => ['auth', 'checkLink:jualretur']], function () {
-    Route::namespace('Penjualan')->group(function () {
+    Route::group(['middleware' => ['auth', 'checkLink:jualretur']], function () {
         Route::get('/jualretur', 'JualReturController@index');
     });
-});
 
-Route::group(['middleware' => ['auth', 'checkLink:jualkoreksiharga']], function () {
-    Route::namespace('Penjualan')->group(function () {
+    Route::group(['middleware' => ['auth', 'checkLink:jualkoreksiharga']], function () {
         Route::get('/jualkoreksiharga', 'JualKoreksiHargaController@index');
     });
-});
 
-Route::group(['middleware' => ['auth', 'checkLink:jualkoreksipiutang']], function () {
-    Route::namespace('Penjualan')->group(function () {
+    Route::group(['middleware' => ['auth', 'checkLink:jualkoreksipiutang']], function () {
         Route::get('/jualkoreksipiutang', 'JualKoreksiPiutangController@index');
     });
-});
 
-Route::group(['middleware' => ['auth', 'checkLink:jualbayar']], function () {
-    Route::namespace('Penjualan')->group(function () {
+    Route::group(['middleware' => ['auth', 'checkLink:jualbayar']], function () {
         Route::get('/jualbayar', 'JualBayarController@index');
     });
-});
 
-Route::group(['middleware' => ['auth', 'checkLink:jualbayarbatal']], function () {
-    Route::namespace('Penjualan')->group(function () {
+    Route::group(['middleware' => ['auth', 'checkLink:jualbayarbatal']], function () {
         Route::get('/jualbayarbatal', 'JualBayarBatalController@index');
     });
-});
 
-Route::group(['middleware' => ['auth', 'checkLink:jualbayarlebih']], function () {
-    Route::namespace('Penjualan')->group(function () {
+    Route::group(['middleware' => ['auth', 'checkLink:jualbayarlebih']], function () {
         Route::get('/jualbayarlebih', 'JualBayarLebihController@index');
     });
-});
 
-Route::group(['middleware' => ['auth', 'checkLink:piutangkartu']], function () {
-    Route::namespace('Penjualan')->group(function () {
+    // Piutang
+    Route::group(['middleware' => ['auth', 'checkLink:piutangkartu']], function () {
         Route::get('/piutangkartu', 'PiutangKartuController@index');
     });
-});
 
-Route::group(['middleware' => ['auth', 'checkLink:piutangmutasi']], function () {
-    Route::namespace('Penjualan')->group(function () {
+    Route::group(['middleware' => ['auth', 'checkLink:piutangmutasi']], function () {
         Route::get('/piutangmutasi', 'PiutangMutasiController@index');
+        Route::get('/piutangmutasi/show', 'PiutangMutasiController@show');
+    });
+
+    Route::group(['middleware' => ['auth', 'checkLink:piutangaging']], function () {
+        Route::get('/piutangaging', 'PiutangAgingController@index');
+    });
+
+    Route::group(['middleware' => ['auth', 'checkLink:piutangsaldo']], function () {
+        Route::get('/piutangsaldo', 'Penjualan\PiutangSaldoController@index');
     });
 });
 
-Route::group(['middleware' => ['auth', 'checkLink:piutangaging']], function () {
-    Route::get('/piutangaging', 'Penjualan\PiutangAgingController@index');
-});
 
-Route::group(['middleware' => ['auth', 'checkLink:returpenjualan']], function () {
-    Route::resource('/returpenjualan', 'Penjualan\ReturpenjualanController');
-});
 
 Route::group(['middleware' => 'auth'], function () {
 

@@ -16,10 +16,27 @@
 
         <div class="clearfix">
             <div class="col-xs-8 col-sm-8">
-                <form method="get" action="{{url('/piutangmutasi')}}">
+                <form method="get" action="{{url('/piutangmutasi/show')}}">
 
-                    <div class="col-xs-4 col-sm-4">
-                        <select class="form-control chosen-select" id="form-field-select-3" name="pelanggan">
+                    <div class="col-xs-3 col-sm-3">
+                        <select class="form-control chosen-select" id="berdasarkan" name="berdasarkan">
+                            <option value="" default>----Pilih Berdasarkan-----</option>
+                            <option value="dasarnospj" {{$berdasarkan == "dasarnospj" ? 'selected' : ''}}> Cari Berdasarkan No SPJ </option>
+                            <option value="dasarnofaktur" {{$berdasarkan == "dasarnofaktur" ? 'selected' : ''}}> Cari Berdasarkan No Faktur </option>
+                            <option value="dasarpelanggan" {{$berdasarkan == "dasarpelanggan" ? 'selected' : ''}}> Cari Berdasarkan Pelanggan </option>
+                        </select>
+                    </div>
+
+                    <div class="col-xs-2 col-sm-2" id="dasarnospj">
+                        <input type="text" class="form-control" placeholder="nospj" name='nospj' id="nospj" value="{{ $nospj }}">
+                    </div>
+
+                    <div class="col-xs-2 col-sm-2" id="dasarnofaktur">
+                        <input type="text" class="form-control" placeholder="nofaktur" name='nofaktur' id="nofaktur" value="{{ $nofaktur }}">
+                    </div>
+
+                    <div class="col-xs-4 col-sm-4" id="pelanggan">
+                        <select class="form-control chosen-select" id="pelanggan" name="pelanggan">
                             <option value="0" default>----Pilih Pelanggan-----</option>
                             @foreach($datapelanggan as $pelanggans)
                             <option value="{{ $pelanggans->pelangganid }}" {{ $pelanggan == $pelanggans->pelangganid ? 'selected' : '' }}>{{ $pelanggans->cabangnama. ' - '.$pelanggans->pelanggankode. ' - '.$pelanggans->pelanggannama}}</option>
@@ -27,9 +44,13 @@
                         </select>
                     </div>
 
-                    <div class="col-xs-2 col-sm-2">
-                        <input type="text" class="form-control" placeholder="nospj" name='nospj' id="nospj" value="{{ $nospj }}">
+                    <div class="col-xs-2 col-sm-2" id="tgl_awal">
+                        <input type="text" class="form-control date-picker" placeholder="tanggal awal" name='tgl_awal' id="tgl_awal" value="{{ $tgl_awal }}">
                     </div>
+                    <div class="col-xs-2 col-sm-2" id="tgl_akhir">
+                        <input type="text" class="form-control date-picker" placeholder="tanggal akhir" name='tgl_akhir' id="tgl_akhir" value="{{ $tgl_akhir }}">
+                    </div>
+
 
                     <div class="col-xs-1 col-sm-1">
                         <button class="btn btn-sm btn-primary" type="submit" class="btn btn-primary">Cari</button>
@@ -42,9 +63,11 @@
         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
+                    <th>Kode Pelanggan</th>
+                    <th>Nama Pelanggan</th>
                     <th>Keterangan</th>
-                    <th>No Faktur</th>
                     <th>No SPJ</th>
+                    <th>No Faktur</th>
                     <th>No Reff</th>
                     <th>Tanggal</th>
                     <th>Debet</th>
@@ -55,9 +78,11 @@
             <tbody>
                 @foreach($datas as $row)
                 <tr>
+                    <td align="center">{{$row->pelanggankode}}</td>
+                    <td align="center">{{$row->pelanggannama}}</td>
                     <td align="center">{{$row->keterangan}}</td>
-                    <td align="center">{{$row->nofaktur}}</td>
                     <td align="center">{{$row->nospj}}</td>
+                    <td align="center">{{$row->nofaktur}}</td>
                     <td align="center">{{$row->noreff}}</td>
                     <td align="center">{{$row->tglfaktur}}</td>
                     <td align="right">{{number_format($row->debet,2)}}</td>
@@ -68,9 +93,11 @@
 
             <tfoot>
                 <tr>
+                    <th>Kode Pelanggan</th>
+                    <th>Nama Pelanggan</th>
                     <th>Keterangan</th>
-                    <th>No Faktur</th>
                     <th>No SPJ</th>
+                    <th>No Faktur</th>
                     <th>No Reff</th>
                     <th>Tanggal</th>
                     <th>Debet</th>
@@ -96,6 +123,61 @@
 <script src="{{ asset('assets/js/chosen.jquery.min.js') }}"></script>
 
 <script type="text/javascript">
+    $(function() {
+        $('#dasarnospj').hide();
+        $('#dasarnofaktur').hide();
+        $('#pelanggan').hide();
+        $('#tgl_awal').hide();
+        $('#tgl_akhir').hide();
+
+        $('#berdasarkan').change(function() {
+            if ($('#berdasarkan').val() == 'dasarnospj') {
+                $('#dasarnospj').show();
+                $('#nospj').show();
+
+                $('#dasarnofaktur').hide();
+                $('#nofaktur').val(null);
+
+                $('#pelanggan').hide();
+                $('#pelanggan').val(null);
+
+                $('#tgl_awal').hide();
+                $('#tgl_awal').val(null);
+
+                $('#tgl_akhir').hide();
+                $('#tgl_akhir').val(null);
+            }
+            if ($('#berdasarkan').val() == 'dasarnofaktur') {
+                $('#dasarnofaktur').show();
+                $('#nofaktur').show();
+
+                $('#dasarnospj').hide();
+                $('#nospj').val(null);
+
+                $('#pelanggan').hide();
+                $('#pelanggan').val(null);
+
+                $('#tgl_awal').hide();
+                $('#tgl_awal').val(null);
+
+                $('#tgl_akhir').hide();
+                $('#tgl_akhir').val(null);
+            }
+            if ($('#berdasarkan').val() == 'dasarpelanggan') {
+                $('#pelanggan').show();
+                $('#tgl_awal').show();
+                $('#tgl_akhir').show();
+
+                $('#dasarnospj').hide();
+                $('#nospj').val(null);
+
+                $('#dasarnofaktur').hide();
+                $('#nofaktur').val(null);
+
+            }
+        }).trigger('change');
+    });
+
     //datepicker plugin
     //link
     $('.date-picker').datepicker({

@@ -68,12 +68,18 @@ class JualKoreksiHargaController extends Controller
         $datas = DB::table('tr_jual_koreksi_harga')->wherebetween('tglkoreksi', [$tgl_awal, $tgl_akhir])
             ->select(
                 // 'ms_wilayah.wilayahnama',
-                 'ms_cabang.cabangnama',
+                'ms_cabang.cabangnama',
                 // 'ms_gudang.gudangnama',
-                 'ms_pelanggan.pelanggankode',
-                 'ms_pelanggan.pelanggannama',
-                 'ms_barang.barangkode',
-                 'ms_barang.barangnama',
+                'ms_pelanggan.pelanggankode',
+                'ms_pelanggan.pelanggannama',
+                'ms_barang.barangkode',
+                'ms_barang.barangnama',
+                'ms_cabang.cabangnama',
+                // 'ms_gudang.gudangnama',
+                'ms_pelanggan.pelanggankode',
+                'ms_pelanggan.pelanggannama',
+                'ms_barang.barangkode',
+                'ms_barang.barangnama',
                 // 'ms_barang.berat',
                 // 'tr_piutang.nofaktur',
                 // 'tr_piutang.tglfaktur',
@@ -81,12 +87,12 @@ class JualKoreksiHargaController extends Controller
                 'tr_jual_koreksi_harga.*'
             )
             // ->where($wilayahs, $wilayah)
-             ->where($cabangs, $cabang)
-             ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'tr_jual_koreksi_harga.cabangid')
+            ->where($cabangs, $cabang)
+            ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'tr_jual_koreksi_harga.cabangid')
             // ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
             // ->join('ms_gudang', 'ms_gudang.gudangid', '=', 'tr_jual.gudangid')
-             ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'tr_jual_koreksi_harga.pelangganid')
-             ->join('ms_barang', 'ms_barang.barangid', '=', 'tr_jual_koreksi_harga.barangid')
+            ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'tr_jual_koreksi_harga.pelangganid')
+            ->join('ms_barang', 'ms_barang.barangid', '=', 'tr_jual_koreksi_harga.barangid')
             // ->leftjoin('tr_piutang', function ($join) {
             //     $join->on('tr_piutang.nospj', '=', 'tr_jual.nospj')
             //         ->where('tr_piutang.status', '=', 0);
@@ -172,5 +178,75 @@ class JualKoreksiHargaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getGroupByFakturPeriode($tanggal)
+    {
+        $datas = DB::table('tr_jual_koreksi_harga')
+            ->select(
+                'nofaktur',
+                DB::raw('SUM(jumlah) jmlkorhar'),
+            )
+            ->where('status', '=', 1)
+            ->where(function ($where1) {
+                $where1->where('jeniskoreksi', '=', 0)
+                    ->whereIn('tipekoreksi', [0, 1])
+                    ->orWhere(function ($where2) {
+                        $where2->where('jeniskoreksi', '=', 1)
+                            ->where('tipekoreksi', '=', 1);
+                    });
+            })
+            ->where('tglkoreksi', '<=', $tanggal)
+            ->groupBy('nofaktur');
+
+        return $datas;
+    }
+
+    public function getGroupByFakturBaruPeriode($tanggal)
+    {
+        $datas = DB::table('tr_jual_koreksi_harga')
+            ->select(
+                'nofakturbaru',
+                DB::raw('SUM(jumlah) jmlkorhar'),
+            )
+            ->where('status', '=', 1)
+            ->where('jeniskoreksi', '=', 1)
+            ->where('tipekoreksi', '=', 0)
+            ->where('tglkoreksi', '<=', $tanggal)
+            ->groupBy('nofakturbaru');
+
+        return $datas;
+    }
+
+    public function getGroupByPelangganPeriode($tanggal)
+    {
+        $datas = DB::table('tr_jual_koreksi_harga')
+            ->select(
+                'pelangganid',
+                'jenisjual',
+                DB::raw('SUM(jumlah) jmlkorhar'),
+            )
+            ->where('status', '=', 1)
+            ->where('tglkoreksi', '<', $tanggal)
+            ->groupBy('pelangganid')
+            ->groupBy('jenisjual');
+
+        return $datas;
+    }
+
+    public function getGroupByPelangganRange($tglawal, $tglakhir)
+    {
+        $datas = DB::table('tr_jual_koreksi_harga')
+            ->select(
+                'pelangganid',
+                'jenisjual',
+                DB::raw('SUM(jumlah) jmlkorhar'),
+            )
+            ->where('status', '=', 1)
+            ->whereBetween('tglkoreksi', [$tglawal, $tglakhir])
+            ->groupBy('pelangganid')
+            ->groupBy('jenisjual');
+
+        return $datas;
     }
 }
