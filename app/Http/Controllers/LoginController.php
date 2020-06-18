@@ -39,7 +39,7 @@ class LoginController extends Controller
         //]);        
 
         $client = new Client();
-        $response = $client->request('POST', 'http://119.252.168.253/api_siwa/userpass', 
+        $response = $client->request('POST', 'http://172.30.131.22/api_siwa/userpass', 
             [
             // $response = $client->request('POST', 'http://localhost/api_siwa/userpass', [
             'form_params' => [
