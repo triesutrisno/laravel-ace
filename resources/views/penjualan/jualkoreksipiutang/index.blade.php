@@ -50,110 +50,78 @@
             </div>
             <div class="pull-right tableTools-container"></div>
         </div>
-        
+
         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
-                <thead>
-                        <tr>
-<<<<<<< HEAD
-                                <!-- <th class="center">
-=======
-                                <th class="center">
->>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                                    <label class="pos-rel">
-                                        <input type="checkbox" class="ace" />
-                                        <span class="lbl"></span>
-                                    </label>
-<<<<<<< HEAD
-                                </th> -->
-=======
-                                </th>
->>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                                <th>No</th>
-                                <th>Cabang</th>
-                                <th>Code Cust</th>
-                                <th>Nama Cust</th>
-                                <th>Jenis</th>
-                                <th>No Koreksi</th>
-                                <th>Tgl Koreksi</th>
-                                
-                                <th>Status</th>
-                                <th>Type</th>
-                                <th>Keterangan</th>
-                                <th>No FJ</th>
-                                <th>No FJ Baru</th>
-                                <th>Total Sebelum</th>
-                                <th>Total</th>
-                                <th>Selisih</th>
-                                
-                        </tr>
-                </thead>
-
-                <tbody>
-                @foreach($datas as $row)
-                        <tr>
-<<<<<<< HEAD
-                            <!-- <td class="center">
-=======
-                            <td class="center">
->>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                                <label class="pos-rel">
-                                    <input type="checkbox" class="ace" />
-                                    <span class="lbl"></span>
-                                </label>
-<<<<<<< HEAD
-                            </td> -->
-=======
-                            </td>
->>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                            <td align="center">{{$loop->iteration}}</td>
-                            <td align="center">{{$row->cabangnama}}</td>
-                            <td align="center">{{$row->pelanggankode}}</td>
-                            <td align="center">{{$row->pelanggannama}}</td>
-                            <td align="center">{{$row->jenisjual}}</td>
-                            <td align="center">{{$row->nokoreksi}}</td>
-                            <td align="center">{{$row->tglkoreksi}}</td>
-
-                            <td align="center">{{$row->status}}</td>
-                            <td align="center">{{$row->status}}</td>
-                            <td align="center">{{$row->keterangan}}</td>
-                            <td align="center">{{$row->nofaktur}}</td>
-                            <td align="center">{{$row->nofaktur}}</td>
-                            <td align="center">{{$row->jumlahawal}}</td>
-                            <td align="center">{{$row->jumlahganti}}</td>
-                            <td align="center">{{$row->jumlah}}</td>
-                        </tr>
-                        @endforeach
-                </tbody>
-<<<<<<< HEAD
-                <tfoot>
+            <thead>
                 <tr>
-                                <th>No</th>
-                                <th>Cabang</th>
-                                <th>Code Cust</th>
-                                <th>Nama Cust</th>
-                                <th>Jenis</th>
-                                <th>No Koreksi</th>
-                                <th>Tgl Koreksi</th>
-                                
-                                <th>Status</th>
-                                <th>Type</th>
-                                <th>Keterangan</th>
-                                <th>No FJ</th>
-                                <th>No FJ Baru</th>
-                                <th>Total Sebelum</th>
-                                <th>Total</th>
-                                <th>Selisih</th>
+                    <th>No</th>
+                    <th>Cabang</th>
+                    <th>Code Cust</th>
+                    <th>Nama Cust</th>
+                    <th>Jenis</th>
+                    <th>No Koreksi</th>
+                    <th>Tgl Koreksi</th>
+                    <th>Status</th>
+                    <th>Type</th>
+                    <th>Keterangan</th>
+                    <th>No FJ</th>
+                    <th>No FJ Baru</th>
+                    <th>Total Sebelum</th>
+                    <th>Total</th>
+                    <th>Selisih</th>
+
                 </tr>
-                </tfoot>
-=======
->>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
+            </thead>
+
+            <tbody>
+                @foreach($datas as $row)
+                <tr>
+                    <td align="center">{{$loop->iteration}}</td>
+                    <td align="center">{{$row->cabangnama}}</td>
+                    <td align="center">{{$row->pelanggankode}}</td>
+                    <td align="left">{{$row->pelanggannama}}</td>
+                    <td align="center">{{$row->jeniskoreksi==0 ? 'Bulan Jalan' : 'Bulan Lalu'}}</td>
+                    <td align="center">{{$row->nokoreksi}}</td>
+                    <td align="center">{{$row->tglkoreksi}}</td>
+                    <td align="center">{{ ($row->status==0 ? 'Belum Approve' : ($row->status==1 ? 'Sudah Approve' : 'Ditolak')) }}</td>
+                    <td align="center">{{$row->tipekoreksi==0 ? 'Naik' : 'Turun'}}</td>
+                    <td align="center">{{$row->keterangan}}</td>
+                    <td align="center">{{$row->nofaktur}}</td>
+                    <td align="center">{{$row->nofaktur}}</td>
+                    <td align="right">{{number_format($row->jumlahawal,2)}}</td>
+                    <td align="right">{{number_format($row->jumlahganti,2)}}</td>
+                    <td align="right">{{number_format($row->jumlah,2)}}</td>
+                </tr>
+                @endforeach
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <th>No</th>
+                    <th>Cabang</th>
+                    <th>Code Cust</th>
+                    <th>Nama Cust</th>
+                    <th>Jenis</th>
+                    <th>No Koreksi</th>
+                    <th>Tgl Koreksi</th>
+
+                    <th>Status</th>
+                    <th>Type</th>
+                    <th>Keterangan</th>
+                    <th>No FJ</th>
+                    <th>No FJ Baru</th>
+                    <th>Total Sebelum</th>
+                    <th>Total</th>
+                    <th>Selisih</th>
+                </tr>
+            </tfoot>
+
         </table>
     </div>
 </div>
 @endsection
 
 @push('scripts')
-
 <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/dataTables.select.min.js') }}"></script>
@@ -184,7 +152,6 @@
         });
     }
     $(document).ready(function() {
-<<<<<<< HEAD
         $('#dynamic-table tfoot th').each(function() {
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="Cari ' + title + '" size="10" />');
@@ -247,12 +214,4 @@
         table.buttons().container().appendTo($('.tableTools-container'));
     });
 </script>
-=======
-        $('#dynamic-table').DataTable({
-            "scrollX": true
-        });
-    } );
-            
-</script>              
->>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
 @endpush

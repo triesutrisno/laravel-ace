@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth', 'checkLink:userrole']], function () {
 Route::namespace('Penjualan')->group(function () {
     // Penjualan
     Route::group(['middleware' => ['auth', 'checkLink:jualdetail']], function () {
-        Route::get('/jualdetail', 'Penjualan\JualDetailController@index');
+        Route::get('/jualdetail', 'JualDetailController@index');
     });
 
     Route::group(['middleware' => ['auth', 'checkLink:jualretur']], function () {
@@ -80,8 +80,10 @@ Route::namespace('Penjualan')->group(function () {
     Route::group(['middleware' => ['auth', 'checkLink:jualbayarlebih']], function () {
         Route::get('/jualbayarlebih', 'JualBayarLebihController@index');
     });
+});
 
-    // Piutang
+// Route Group Penjualan
+Route::namespace('Penjualan')->group(function () {
     Route::group(['middleware' => ['auth', 'checkLink:piutangkartu']], function () {
         Route::get('/piutangkartu', 'PiutangKartuController@index');
     });
@@ -96,7 +98,7 @@ Route::namespace('Penjualan')->group(function () {
     });
 
     Route::group(['middleware' => ['auth', 'checkLink:piutangsaldo']], function () {
-        Route::get('/piutangsaldo', 'Penjualan\PiutangSaldoController@index');
+        Route::get('/piutangsaldo', 'PiutangSaldoController@index');
     });
 });
 

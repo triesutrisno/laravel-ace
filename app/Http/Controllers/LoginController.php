@@ -39,15 +39,18 @@ class LoginController extends Controller
         //]);        
 
         $client = new Client();
-        $response = $client->request('POST', 'http://119.252.168.253/api_siwa/userpass', 
+        $response = $client->request(
+            'POST',
+            'http://172.30.131.22/api_siwa/userpass',
             [
-            // $response = $client->request('POST', 'http://localhost/api_siwa/userpass', [
-            'form_params' => [
-                'SID-API-KEY' => 'SIWA-DWH-2020',
-                'username' => $request->username,
-                'password' => $request->password,
-            ],
-        ]);
+                // $response = $client->request('POST', 'http://localhost/api_siwa/userpass', [
+                'form_params' => [
+                    'SID-API-KEY' => 'SIWA-DWH-2020',
+                    'username' => $request->username,
+                    'password' => $request->password,
+                ],
+            ]
+        );
 
         $dtAPi = json_decode($response->getBody()->getContents(), true);
         $responStatus = $response->getStatusCode();
@@ -58,7 +61,7 @@ class LoginController extends Controller
             #if(Auth::attempt($request->only('username','password'))){
             #}
 
-            $getUser = Login::where(['username' => $request->username, 'deleted_at'=>NULL])->first();
+            $getUser = Login::where(['username' => $request->username, 'deleted_at' => NULL])->first();
             //dd($getUser);
             if ($getUser === null) {
                 return redirect('login')->with('pesan', 'User tidak terdaftar diportal !');
@@ -91,7 +94,7 @@ class LoginController extends Controller
                                 $parent1['menu_id'] = $val->menu_id;
                                 $parent1['menu_nama'] = $val->menu_nama;
                                 $parent1['menu_link'] = $val->menu_link;
-                                $parent1['menu_type'] = $val->menu_type;                                
+                                $parent1['menu_type'] = $val->menu_type;
                                 $parent1['menu_icon'] = $val->menu_icon;
 
                                 $dtAkses[$val->menu_parent]['data1'][] = $parent1;

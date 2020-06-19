@@ -50,75 +50,85 @@
             </div>
             <div class="pull-right tableTools-container"></div>
         </div>
-        
+
         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
-                <thead>
-                        <tr>
-                                <th class="center">
-                                    <label class="pos-rel">
-                                        <input type="checkbox" class="ace" />
-                                        <span class="lbl"></span>
-                                    </label>
-                                </th>
-                                <th>No</th>
-                                <th>No retur</th>
-                                <th>Cabang</th>
-                                <th>Gudang</th>
-                                <th>Tgl</th>
-                                <th>No Ref</th>
-                                <th>Faktur Jual</th>
-                                <th>Faktur Pajak</th>
-                                <th>Kode</th>
-                                <th>Pelanggan</th>
-                                <th>Kode Barang</th>
-                                <th>Nama Barang</th>
-                                <th>Qty Jual</th>
-                                <th>Qty Retur</th>
-                                <th>Harga</th>
-                                <th>Total</th>
-                                <th>HPP</th>
-                                <th>NIHPP</th>
-                                <th>Ket</th>
-                                <th>Jenis</th>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>No retur</th>
+                    <th>Cabang</th>
+                    <th>Gudang</th>
+                    <th>Tgl</th>
+                    <th>No Ref</th>
+                    <th>Faktur Jual</th>
+                    <th>Faktur Pajak</th>
+                    <th>Kode</th>
+                    <th>Pelanggan</th>
+                    <th>Kode Barang</th>
+                    <th>Nama Barang</th>
+                    <th>Qty Jual</th>
+                    <th>Qty Retur</th>
+                    <th>Harga</th>
+                    <th>Total</th>
+                    <th>HPP</th>
+                    <th>NIHPP</th>
+                    <th>Ket</th>
+                    <th>Jenis</th>
+                </tr>
+            </thead>
 
-                        </tr>
-                </thead>
-
-                <tbody>
+            <tbody>
                 @foreach($datas as $row)
-                        <tr>
-                            <td class="center">
-                                <label class="pos-rel">
-                                    <input type="checkbox" class="ace" />
-                                    <span class="lbl"></span>
-                                </label>
-                            </td>
-                            <td align="center">{{$loop->iteration}}</td>
-                            <td align="center">{{$row->noretur}}</td>
-                            <td align="center">{{$row->cabangnama}}</td>
-                            <td align="center">{{$row->gudangnama}}</td>
-                            <td align="center">{{$row->tglretur}}</td>
-                            <td align="center"></td>
-                            <td align="center">{{$row->nofaktur}}</td>
-                            <td align="center"></td>
-                            <td align="center">{{$row->pelanggankode}}</td>
-                            <td align="center">{{$row->pelanggannama}}</td>
-                            <td align="center">{{$row->barangkode}}</td>
-                            <td align="center">{{$row->barangnama}}</td>
+                <tr>
+                    <td align="center">{{$loop->iteration}}</td>
+                    <td align="center">{{$row->noretur}}</td>
+                    <td align="center">{{$row->cabangnama}}</td>
+                    <td align="center">{{$row->gudangnama}}</td>
+                    <td align="center">{{$row->tglretur}}</td>
+                    <td align="center">{{$row->nospj}}</td>
+                    <td align="center">{{$row->nofaktur}}</td>
+                    <td align="center">{{$row->nofakturpajak}}</td>
+                    <td align="center">{{$row->pelanggankode}}</td>
+                    <td align="left">{{$row->pelanggannama}}</td>
+                    <td align="center">{{$row->barangkode}}</td>
+                    <td align="left">{{$row->barangnama}}</td>
+                    <td align="right">{{number_format($row->qtyjual,2)}}</td>
+                    <td align="right">{{number_format($row->qtyretur,2)}}</td>
+                    <td align="right">{{number_format($row->harga,2)}}</td>
+                    <td align="right">{{number_format($row->jumlah,2)}}</td>
+                    <td align="right">{{number_format($row->dpp,2)}}</td>
+                    <td align="right">{{number_format($row->nihpp,2)}}</td>
+                    <td align="center">{{$row->keterangan}}</td>
+                    <td align="center">{{$row->jenisretur}}</td>
+                </tr>
+                @endforeach
+            </tbody>
 
-                            <td align="center">{{$row->qtyjual}}</td>
-                            <td align="center">{{$row->qtyretur}}</td>
-                            <td align="center">{{$row->harga}}</td>
-                            <td align="center">{{$row->jumlah}}</td>
-                            <td align="center">{{$row->dpp}}</td>
-                            <td align="center">{{$row->nihpp}}</td>
-                            <td align="center">{{$row->keterangan}}</td>
-                            <td align="center">{{$row->jenisjual}}</td>
+            <tfoot>
+                <tr>
+                    <th>No</th>
+                    <th>No retur</th>
+                    <th>Cabang</th>
+                    <th>Gudang</th>
+                    <th>Tgl</th>
+                    <th>No Ref</th>
+                    <th>Faktur Jual</th>
+                    <th>Faktur Pajak</th>
+                    <th>Kode</th>
+                    <th>Pelanggan</th>
+                    <th>Kode Barang</th>
+                    <th>Nama Barang</th>
+                    <th>Qty Jual</th>
+                    <th>Qty Retur</th>
+                    <th>Harga</th>
+                    <th>Total</th>
+                    <th>HPP</th>
+                    <th>NIHPP</th>
+                    <th>Ket</th>
+                    <th>Jenis</th>
 
-                               
-                        </tr>
-                        @endforeach
-                </tbody>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>
@@ -156,10 +166,66 @@
         });
     }
     $(document).ready(function() {
-        $('#dynamic-table').DataTable({
-            "scrollX": true
+        $('#dynamic-table tfoot th').each(function() {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Cari ' + title + '" size="10" />');
         });
-    } );
-            
-</script>              
+
+        var table =
+            $('#dynamic-table').DataTable({
+                "scrollX": true,
+                "fixedHeader": true,
+                "fixedColumns": true,
+                "scrollY": "500px",
+                "scrollX": true,
+                "scrollCollapse": true,
+                initComplete: function() {
+                    // Apply the search
+                    this.api().columns().every(function() {
+                        var that = this;
+
+                        $('input', this.footer()).on('keyup change clear', function() {
+                            if (that.search() !== this.value) {
+                                that
+                                    .search(this.value)
+                                    .draw();
+                            }
+                        });
+                    });
+                }
+            });
+
+        new $.fn.dataTable.Buttons(table, {
+            buttons: [{
+                    "extend": "copy",
+                    "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "csv",
+                    "text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "excel",
+                    "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "pdf",
+                    "text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "print",
+                    "text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
+                    "className": "btn btn-white btn-primary btn-bold",
+                    autoPrint: false,
+                    message: 'This print was produced using the Print button for DataTables'
+                }
+            ]
+        });
+        table.buttons().container().appendTo($('.tableTools-container'));
+    });
+</script>
 @endpush

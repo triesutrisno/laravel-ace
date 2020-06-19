@@ -48,7 +48,7 @@ class JualBayarController extends Controller
             ->first();
 
         $update = DB::table('tmp_sync')
-            ->where('nama', 'Penjualan')
+            ->where('nama', 'Penjualan Bayar')
             ->first();
 
         $datawilayah = DB::table('ms_wilayah')
@@ -68,28 +68,28 @@ class JualBayarController extends Controller
             ->select(
                 'ms_wilayah.wilayahnama',
                 'ms_cabang.cabangnama',
-                // 'ms_gudang.gudangnama',
                 'ms_pelanggan.pelanggankode',
                 'ms_pelanggan.pelanggannama',
-                // 'ms_barang.barangkode',
-                // 'ms_barang.barangnama',
-                // 'ms_barang.berat',
-                // 'tr_piutang.nofaktur',
-                // 'tr_piutang.tglfaktur',
-                // 'tr_piutang.nofakturpajak',
+                'tr_piutang.noinvoice',
+                DB::raw("CASE
+                    WHEN tr_jual_bayar.jenisbayar=1 THEN 'Tunai'
+                    WHEN tr_jual_bayar.jenisbayar=2 THEN 'Transfer Cabang'
+                    WHEN tr_jual_bayar.jenisbayar=3 THEN 'BG'
+                    WHEN tr_jual_bayar.jenisbayar=4 THEN 'Kembali Utuh'
+                    WHEN tr_jual_bayar.jenisbayar=5 THEN 'Deposit'
+                    WHEN tr_jual_bayar.jenisbayar=6 THEN 'Via Langsung'
+                    WHEN tr_jual_bayar.jenisbayar=7 THEN 'Kompensansi'
+                    WHEN tr_jual_bayar.jenisbayar=8 THEN ''
+                    END jenisbayar2
+                "),
                 'tr_jual_bayar.*'
             )
             ->where($wilayahs, $wilayah)
             ->where($cabangs, $cabang)
             ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'tr_jual_bayar.cabangid')
             ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-            // ->join('ms_gudang', 'ms_gudang.gudangid', '=', 'tr_jual.gudangid')
             ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'tr_jual_bayar.pelangganid')
-            // ->join('ms_barang', 'ms_barang.barangid', '=', 'tr_jual.barangid')
-            // ->leftjoin('tr_piutang', function ($join) {
-            //     $join->on('tr_piutang.nospj', '=', 'tr_jual.nospj')
-            //         ->where('tr_piutang.status', '=', 0);
-            // })
+            ->leftjoin('tr_piutang', 'tr_piutang.nofaktur', '=', 'tr_jual_bayar.nofaktur')
             ->orderBy("tr_jual_bayar.cabangid")
             ->get();
 

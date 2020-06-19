@@ -54,61 +54,35 @@
         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
-                    <<<<<<< HEAD <!-- <th class="center">
-                        =======
-                        <th class="center">
-                            >>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                            <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                            </label>
-                            <<<<<<< HEAD </th> -->
-                                =======
-                        </th>
-                        >>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                        <th>No</th>
-                        <th>Nama Usaha</th>
-                        <th>Nama Cabang</th>
-                        <th>No Roll Back</th>
-                        <th>No FJ</th>
-                        <th>No SPJ</th>
-                        <th>Tanggal</th>
-                        <th>No Seri BG</th>
-                        <th>Total Dibayar</th>
-
+                    <th>No</th>
+                    <th>Nama Usaha</th>
+                    <th>Nama Cabang</th>
+                    <th>No Roll Back</th>
+                    <th>No FJ</th>
+                    <th>No SPJ</th>
+                    <th>Tanggal</th>
+                    <th>No Seri BG</th>
+                    <th>Total Dibayar</th>
                 </tr>
             </thead>
 
             <tbody>
                 @foreach($datas as $row)
                 <tr>
-                    <<<<<<< HEAD <!-- <td class="center">
-                        =======
-                        <td class="center">
-                            >>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                            <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                            </label>
-                            <<<<<<< HEAD </td> -->
-                                =======
-                        </td>
-                        >>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                        <td align="center">{{$loop->iteration}}</td>
-                        <td align="center">{{$row->pelanggannama}}</td>
-                        <td align="center">{{$row->cabangnama}}</td>
-                        <td align="center">{{$row->nobatal}}</td>
-                        <td align="center">{{$row->nofaktur}}</td>
-                        <td align="center">{{$row->nospj}}</td>
-                        <td align="center">{{$row->tglbatal}}</td>
-                        <td align="center">{{$row->noseribg}}</td>
-                        <td align="center">{{$row->jumlah}}</td>
-
-
+                    <td align="center">{{$loop->iteration}}</td>
+                    <td align="left">{{$row->pelanggannama}}</td>
+                    <td align="center">{{$row->cabangnama}}</td>
+                    <td align="center">{{$row->nobatal}}</td>
+                    <td align="center">{{$row->nofaktur}}</td>
+                    <td align="center">{{$row->nospj}}</td>
+                    <td align="center">{{$row->tglbatal}}</td>
+                    <td align="center">{{$row->noseribg}}</td>
+                    <td align="right">{{number_format($row->jumlah,2)}}</td>
                 </tr>
                 @endforeach
             </tbody>
-            <<<<<<< HEAD <tfoot>
+
+            <tfoot>
                 <tr>
                     <th>No</th>
                     <th>Nama Usaha</th>
@@ -120,9 +94,8 @@
                     <th>No Seri BG</th>
                     <th>Total Dibayar</th>
                 </tr>
-                </tfoot>
-                =======
-                >>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
+            </tfoot>
+
         </table>
     </div>
 </div>
@@ -160,8 +133,6 @@
         });
     }
     $(document).ready(function() {
-        <<
-        << << < HEAD
         $('#dynamic-table tfoot th').each(function() {
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="Cari ' + title + '" size="10" />');
@@ -224,12 +195,4 @@
         table.buttons().container().appendTo($('.tableTools-container'));
     });
 </script>
-=======
-$('#dynamic-table').DataTable({
-//"scrollX": true
-});
-} );
-
-</script>
->>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
 @endpush

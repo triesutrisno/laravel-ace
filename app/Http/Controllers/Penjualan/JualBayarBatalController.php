@@ -48,7 +48,7 @@ class JualBayarBatalController extends Controller
             ->first();
 
         $update = DB::table('tmp_sync')
-            ->where('nama', 'Penjualan')
+            ->where('nama', 'Penjualan Bayar Batal')
             ->first();
 
         $datawilayah = DB::table('ms_wilayah')
@@ -66,30 +66,15 @@ class JualBayarBatalController extends Controller
 
         $datas = DB::table('tr_jual_bayar_batal')->wherebetween('tglbatal', [$tgl_awal, $tgl_akhir])
             ->select(
-                // 'ms_wilayah.wilayahnama',
                 'ms_cabang.cabangnama',
-                // 'ms_gudang.gudangnama',
-                // 'ms_pelanggan.pelanggankode',
                 'ms_pelanggan.pelanggannama',
-                // 'ms_barang.barangkode',
-                // 'ms_barang.barangnama',
-                // 'ms_barang.berat',
-                // 'tr_piutang.nofaktur',
-                // 'tr_piutang.tglfaktur',
-                // 'tr_piutang.nofakturpajak',
                 'tr_jual_bayar_batal.*'
             )
-            // ->where($wilayahs, $wilayah)
-            // ->where($cabangs, $cabang)
+            ->where($wilayahs, $wilayah)
+            ->where($cabangs, $cabang)
             ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'tr_jual_bayar_batal.cabangid')
-            // ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-            // ->join('ms_gudang', 'ms_gudang.gudangid', '=', 'tr_jual.gudangid')
+            ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
             ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'tr_jual_bayar_batal.pelangganid')
-            // ->join('ms_barang', 'ms_barang.barangid', '=', 'tr_jual.barangid')
-            // ->leftjoin('tr_piutang', function ($join) {
-            //     $join->on('tr_piutang.nospj', '=', 'tr_jual.nospj')
-            //         ->where('tr_piutang.status', '=', 0);
-            // })
             ->orderBy("tr_jual_bayar_batal.cabangid")
             ->get();
 

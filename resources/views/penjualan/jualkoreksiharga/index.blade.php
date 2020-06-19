@@ -50,133 +50,92 @@
             </div>
             <div class="pull-right tableTools-container"></div>
         </div>
-        
+
         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
-                <thead>
-                        <tr>
-<<<<<<< HEAD
-                                <!-- <th class="center">
-=======
-                                <th class="center">
->>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                                    <label class="pos-rel">
-                                        <input type="checkbox" class="ace" />
-                                        <span class="lbl"></span>
-                                    </label>
-<<<<<<< HEAD
-                                </th> -->
-=======
-                                </th>
->>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                                <th>No</th>
-                                <th>Cabang</th>
-                                <th>Kode Cust</th>
-                                <th>Nama Cust</th>
-                                <th>Jenis</th>
-                                <th>No Koreksi</th>
-                                <th>Faktur Jual</th>
-                                <th>FJ Baru</th>
-                                <th>Faktur Pajak</th>
-                                <th>No SPJ</th>
-                                <th>Kode Barang</th>
-                                <th>Nama Barang</th>
-                                <th>QTY</th>
-                                <th>Tanggal Koreksi</th>
-                                <th>Harga Awal</th>
-                                <th>Harga Ganti</th>
-                                <th>Selisih</th>
-                                <th>Keterangan</th>
-                                <th>Jumlah</th>
-                                <th>Status</th>
-
-
-                                
-                        </tr>
-                </thead>
-
-                <tbody>
-                @foreach($datas as $row)
-                        <tr>
-<<<<<<< HEAD
-                            <!-- <td class="center">
-=======
-                            <td class="center">
->>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                                <label class="pos-rel">
-                                    <input type="checkbox" class="ace" />
-                                    <span class="lbl"></span>
-                                </label>
-<<<<<<< HEAD
-                            </td> -->
-=======
-                            </td>
->>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
-                            <td align="center">{{$loop->iteration}}</td>
-                            <td align="center">{{$row->cabangnama}}</td>
-                            <td align="center">{{$row->pelanggankode}}</td>
-                            <td align="center">{{$row->pelanggannama}}</td>
-                            <td align="center">{{$row->tipekoreksi}}</td>
-                            <td align="center">{{$row->nokoreksi}}</td>
-                            <td align="center">{{$row->nofaktur}}</td>
-
-                            <td align="center">{{$row->nofakturbaru}}</td>
-                            <td align="center">{{$row->nofakturbaru}}</td>
-                            <td align="center">{{$row->nospj}}</td>
-
-                            <td align="left">{{$row->barangkode}}</td>
-                            <td align="center">{{$row->barangnama}}</td>
-
-                            <td align="center">{{$row->qtyjual}}</td>
-                            <td align="center">{{$row->tglkoreksi}}</td>
-
-                            <td align="center">{{$row->hargaawal}}</td>
-                            <td align="center">{{$row->hargaganti}}</td>
-                            
-                            <td align="center"></td>
-
-                            <td align="center">{{$row->keterangan}}</td>
-                            <td align="center">{{$row->jumlah}}</td>
-                            <td align="center">{{$row->status}}</td>
-                               
-                        </tr>
-                        @endforeach
-                </tbody>
-<<<<<<< HEAD
-                <tfoot>
+            <thead>
                 <tr>
-                                <th>No</th>
-                                <th>Cabang</th>
-                                <th>Kode Cust</th>
-                                <th>Nama Cust</th>
-                                <th>Jenis</th>
-                                <th>No Koreksi</th>
-                                <th>Faktur Jual</th>
-                                <th>FJ Baru</th>
-                                <th>Faktur Pajak</th>
-                                <th>No SPJ</th>
-                                <th>Kode Barang</th>
-                                <th>Nama Barang</th>
-                                <th>QTY</th>
-                                <th>Tanggal Koreksi</th>
-                                <th>Harga Awal</th>
-                                <th>Harga Ganti</th>
-                                <th>Selisih</th>
-                                <th>Keterangan</th>
-                                <th>Jumlah</th>
-                                <th>Status</th>
+                    <th>No</th>
+                    <th>Cabang</th>
+                    <th>Kode Cust</th>
+                    <th>Nama Cust</th>
+                    <th>Jenis</th>
+                    <th>No Koreksi</th>
+                    <th>Faktur Jual</th>
+                    <th>Faktur Jual Baru</th>
+                    <th>Faktur Pajak</th>
+                    <th>No SPJ</th>
+                    <th>Kode Barang</th>
+                    <th>Nama Barang</th>
+                    <th>Qty</th>
+                    <th>Tanggal Koreksi</th>
+                    <th>Harga Awal</th>
+                    <th>Harga Ganti</th>
+                    <th>Selisih</th>
+                    <th>Keterangan</th>
+                    <th>Jumlah</th>
+                    <th>Status</th>
                 </tr>
-                </tfoot>
-=======
->>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
+            </thead>
+
+            <tbody>
+                @foreach($datas as $row)
+                <tr>
+                    <td align="center">{{$loop->iteration}}</td>
+                    <td align="center">{{$row->cabangnama}}</td>
+                    <td align="center">{{$row->pelanggankode}}</td>
+                    <td align="left">{{$row->pelanggannama}}</td>
+                    <td align="center">{{$row->jeniskoreksi==0 ? 'Bulan Jalan' : 'Bulan Lalu'}}</td>
+                    <td align="center">{{$row->nokoreksi}}</td>
+                    <td align="center">{{$row->nofaktur}}</td>
+                    <td align="center">{{$row->nofakturbaru}}</td>
+                    <td align="center">{{$row->nofakturpajak}}</td>
+                    <td align="center">{{$row->nospj}}</td>
+                    <td align="left">{{$row->barangkode}}</td>
+                    <td align="left">{{$row->barangnama}}</td>
+                    <td align="right">{{number_format($row->qtyjual,2)}}</td>
+                    <td align="center">{{$row->tglkoreksi}}</td>
+                    <td align="right">{{number_format($row->hargaawal,2)}}</td>
+                    <td align="right">{{number_format($row->hargaganti,2)}}</td>
+                    <td align="right">{{number_format($row->hargaganti - $row->hargaawal,2)}}</td>
+                    <td align="right">{{$row->keterangan}}</td>
+                    <td align="right">{{number_format($row->jumlah,2)}}</td>
+                    <td align="center">{{ ($row->status==0 ? 'Belum Approve' : ($row->status==1 ? 'Sudah Approve' : 'Ditolak')) }}</td>
+
+                </tr>
+                @endforeach
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>No</th>
+                    <th>Cabang</th>
+                    <th>Kode Cust</th>
+                    <th>Nama Cust</th>
+                    <th>Jenis</th>
+                    <th>No Koreksi</th>
+                    <th>Faktur Jual</th>
+                    <th>Faktur Jual Baru</th>
+                    <th>Faktur Pajak</th>
+                    <th>No SPJ</th>
+                    <th>Kode Barang</th>
+                    <th>Nama Barang</th>
+                    <th>Qty</th>
+                    <th>Tanggal Koreksi</th>
+                    <th>Harga Awal</th>
+                    <th>Harga Ganti</th>
+                    <th>Selisih</th>
+                    <th>Keterangan</th>
+                    <th>Jumlah</th>
+                    <th>Status</th>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>
 @endsection
 
 @push('scripts')
-<<<<<<< HEAD
-
-<script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.dataTables.min.js') }}">
+</script>
 <script src="{{ asset('assets/js/jquery.dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('assets/js/dataTables.buttons.min.js') }}"></script>
@@ -187,20 +146,6 @@
 <script src="{{ asset('assets/js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('assets/js/chosen.jquery.min.js') }}"></script>
 
-=======
-
-<script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.dataTables.bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/js/dataTables.select.min.js') }}"></script>
-<script src="{{ asset('assets/js/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('assets/js/buttons.flash.min.js') }}"></script>
-<script src="{{ asset('assets/js/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('assets/js/buttons.print.min.js') }}"></script>
-<script src="{{ asset('assets/js/buttons.colVis.min.js') }}"></script>
-<script src="{{ asset('assets/js/bootstrap-datepicker.min.js') }}"></script>
-<script src="{{ asset('assets/js/chosen.jquery.min.js') }}"></script>
-
->>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
 <script type="text/javascript">
     //datepicker plugin
     //link
@@ -220,7 +165,7 @@
         });
     }
     $(document).ready(function() {
-<<<<<<< HEAD
+
         $('#dynamic-table tfoot th').each(function() {
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="Cari ' + title + '" size="10" />');
@@ -283,12 +228,4 @@
         table.buttons().container().appendTo($('.tableTools-container'));
     });
 </script>
-=======
-        $('#dynamic-table').DataTable({
-            "scrollX": true
-        });
-    } );
-            
-</script>              
->>>>>>> 8fe9fe9131de5c21ace0702fcc6bcd993bdf6a12
 @endpush

@@ -50,68 +50,54 @@
             </div>
             <div class="pull-right tableTools-container"></div>
         </div>
-        
+
         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
-                <thead>
-                        <tr>
-                                <!-- <th class="center">
-                                    <label class="pos-rel">
-                                        <input type="checkbox" class="ace" />
-                                        <span class="lbl"></span>
-                                    </label>
-                                </th> -->
-                                <th>No</th>
-                                <th>NO Deposit</th>
-                                <th>ID Customer</th>
-                                <th>Nama Usaha</th>
-                                <th>Kode Customer</th>
-                                <th>Nominal</th>
-                                <th>Tanggal</th>
-                                <th>No SPJ</th>
-                                <th>No FJ </th>
-                                <th>Nama Cabang</th>
-
-                        </tr>
-                </thead>
-
-                <tbody>
-                @foreach($datas as $row)
-                        <tr>
-                            <!-- <td class="center">
-                                <label class="pos-rel">
-                                    <input type="checkbox" class="ace" />
-                                    <span class="lbl"></span>
-                                </label>
-                            </td> -->
-                            <td align="center">{{$loop->iteration}}</td>
-                            <td align="center">{{$row->nolebih}}</td>
-                            <td align="center">{{$row->pelangganid}}</td>
-                            <td align="center">{{$row->pelanggannama}}</td>
-                            <td align="center">{{$row->pelanggankode}}</td>
-                            <td align="center">{{$row->jumlah}}</td>
-                            <td align="center">{{$row->tgllebih}}</td>
-                            <td align="center">{{$row->nospj}}</td>
-                            <td align="center">{{$row->nofaktur}}</td>
-                            <td align="center">{{$row->cabangnama}}</td>
-                            
-                               
-                        </tr>
-                        @endforeach
-                </tbody>
-                <tfoot>
+            <thead>
                 <tr>
-                                <th>No</th>
-                                <th>NO Deposit</th>
-                                <th>ID Customer</th>
-                                <th>Nama Usaha</th>
-                                <th>Kode Customer</th>
-                                <th>Nominal</th>
-                                <th>Tanggal</th>
-                                <th>No SPJ</th>
-                                <th>No FJ </th>
-                                <th>Nama Cabang</th>
+                    <th>No</th>
+                    <th>NO Deposit</th>
+                    <th>ID Customer</th>
+                    <th>Nama Usaha</th>
+                    <th>Kode Customer</th>
+                    <th>Nominal</th>
+                    <th>Tanggal</th>
+                    <th>No SPJ</th>
+                    <th>No FJ </th>
+                    <th>Nama Cabang</th>
+
                 </tr>
-                </tfoot>
+            </thead>
+
+            <tbody>
+                @foreach($datas as $row)
+                <tr>
+                    <td align="center">{{$loop->iteration}}</td>
+                    <td align="center">{{$row->nolebih}}</td>
+                    <td align="center">{{$row->pelangganid}}</td>
+                    <td align="left">{{$row->pelanggannama}}</td>
+                    <td align="center">{{$row->pelanggankode}}</td>
+                    <td align="right">{{number_format($row->jumlah,2)}}</td>
+                    <td align="center">{{$row->tgllebih}}</td>
+                    <td align="center">{{$row->nospj}}</td>
+                    <td align="center">{{$row->nofaktur}}</td>
+                    <td align="center">{{$row->cabangnama}}</td>
+                </tr>
+                @endforeach
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>No</th>
+                    <th>NO Deposit</th>
+                    <th>ID Customer</th>
+                    <th>Nama Usaha</th>
+                    <th>Kode Customer</th>
+                    <th>Nominal</th>
+                    <th>Tanggal</th>
+                    <th>No SPJ</th>
+                    <th>No FJ </th>
+                    <th>Nama Cabang</th>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>
