@@ -165,7 +165,7 @@ class PiutangAgingController extends Controller
             ->where($statuss, $status)
             ->where($wilayahs, $wilayah)
 
-            // ->where('datapiutang.sisapiutang', '<>', 0)
+            ->where('datapiutang.sisapiutang', '<>', 0)
 
             ->orderBy('ms_wilayah.wilayahnama', 'ASC')
             ->orderBy('ms_cabang.cabangnama', 'ASC')
