@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta charset="utf-8" />
-	<title>SILOG GROUP</title>
+	<title>PORTAL SID</title>
 
 	<meta name="description" content="overview &amp; stats" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -62,7 +62,7 @@
 			<div class="navbar-header pull-left">
 				<a href="{{url('/')}}" class="navbar-brand">
 					<small>
-						PT Semen Indonesia Distributor
+						<img src="assetsAuth/img/sid.png" alt="SEMEN INDONESIA DISTRIBUTOR" height="25px">
 					</small>
 				</a>
 			</div>
@@ -213,17 +213,17 @@
 					<b class="arrow"></b>
 				</li>
 				@php
-                                $path = explode("/",\Request::path());
+				$path = explode("/",\Request::path());
 				$hakAkses = Session::get('hakAkses');
 				foreach ($hakAkses as $key => $val){
-                                foreach ($val['data1'] as $keys => $datae){
-                                    if($path[0]==$datae['menu_link']){
-                                        $active = "active open";
-                                        break;  
-                                    }else{
-                                        $active = "";
-                                    }
-                                }
+				foreach ($val['data1'] as $keys => $datae){
+				if($path[0]==$datae['menu_link']){
+				$active = "active open";
+				break;
+				}else{
+				$active = "";
+				}
+				}
 				echo "
 				<li class='".$active."'>
 					<a href='#' class='dropdown-toggle'>
@@ -233,11 +233,11 @@
 					</a>
 
 					<b class='arrow'></b>";
-                                        
-					if(isset($val['data1'])){                                        
+
+					if(isset($val['data1'])){
 					echo"<ul class='submenu'>";
 						foreach ($val['data1'] as $key2 => $val2){
-                                                $aktif = $path[0]==$val2['menu_link'] ? 'active' : '';
+						$aktif = $path[0]==$val2['menu_link'] ? 'active' : '';
 						echo"
 						<li class='".$aktif."'>
 							<a href='".url("/$val2[menu_link]")."'>

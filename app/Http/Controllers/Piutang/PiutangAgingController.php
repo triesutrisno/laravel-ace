@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Penjualan;
+namespace App\Http\Controllers\Piutang;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -84,7 +84,7 @@ class PiutangAgingController extends Controller
         }
 
         $menu = DB::table('menu')
-            ->where('menu_id', 17)
+            ->where('menu_id', 18)
             ->first();
 
         $update = DB::table('tmp_sync')
@@ -110,7 +110,7 @@ class PiutangAgingController extends Controller
             ->orderBy('ms_pelanggan.pelanggankode', 'ASC')
             ->get();
 
-        $datapiutang = app('App\Http\Controllers\Penjualan\PiutangController')->getPiutangPeriode($tanggal);
+        $datapiutang = app('App\Http\Controllers\Piutang\PiutangController')->getPiutangPeriode($tanggal);
 
         $datas = DB::table($datapiutang, 'datapiutang')
             ->select(
@@ -165,7 +165,7 @@ class PiutangAgingController extends Controller
             ->where($statuss, $status)
             ->where($wilayahs, $wilayah)
 
-            ->where('datapiutang.sisapiutang', '<>', 0)
+            // ->where('datapiutang.sisapiutang', '<>', 0)
 
             ->orderBy('ms_wilayah.wilayahnama', 'ASC')
             ->orderBy('ms_cabang.cabangnama', 'ASC')
@@ -174,7 +174,7 @@ class PiutangAgingController extends Controller
             ->orderBy('datapiutang.umur', 'DESC')
             ->get();
 
-        return view('penjualan.piutangaging.index', [
+        return view('piutang.piutangaging.index', [
             'menu' => $menu->menu_nama,
             'keterangan' => $menu->menu_keterangan,
             'update' => $update->modifieddate,

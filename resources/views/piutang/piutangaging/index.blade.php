@@ -98,6 +98,13 @@
                     <th>Jenis</th>
                     <th>Tempo</th>
                     <th>Umur</th>
+                    <!-- <th>Jml Piutang</th>
+                    <th>Jml Retur</th>
+                    <th>Jml KorHar</th>
+                    <th>Jml KorPiu</th>
+                    <th>Jml Bayar</th>
+                    <th>Jml Bayar Batal</th>
+                    <th>Jml Bayar Lebih</th> -->
                     <th>Sisa Piutang</th>
                     <th>Belum Tempo</th>
                     <th>{{ 'JT 1 - '.$range1 }}</th>
@@ -122,6 +129,13 @@
                     <td align="center">{{$row->jenisplafon}}</td>
                     <td align="center">{{$row->temponormal}}</td>
                     <td align="center">{{$row->umur}}</td>
+                    <!-- <td align="right">{{number_format($row->jmlpiutang,2)}}</td>
+                    <td align="right">{{number_format($row->jmlretur,2)}}</td>
+                    <td align="right">{{number_format($row->jmlkorhar,2)}}</td>
+                    <td align="right">{{number_format($row->jmlkorpiu,2)}}</td>
+                    <td align="right">{{number_format($row->jmlbayar,2)}}</td>
+                    <td align="right">{{number_format($row->jmlbayarbatal,2)}}</td>
+                    <td align="right">{{number_format($row->jmlbayarlebih,2)}}</td> -->
                     <td align="right">{{number_format($row->sisapiutang,2)}}</td>
                     <td align="right">{{number_format($row->belum,2)}}</td>
                     <td align="right">{{number_format($row->jumlah1,2)}}</td>
@@ -146,6 +160,13 @@
                     <th>Jenis</th>
                     <th>Tempo</th>
                     <th>Umur</th>
+                    <!-- <th>Jml Piutang</th>
+                    <th>Jml Retur</th>
+                    <th>Jml KorHar</th>
+                    <th>Jml KorPiu</th>
+                    <th>Jml Bayar</th>
+                    <th>Jml Bayar Batal</th>
+                    <th>Jml Bayar Lebih</th> -->
                     <th>Sisa Piutang</th>
                     <th>Belum Tempo</th>
                     <th>{{ 'JT 1 - '.$range1 }}</th>

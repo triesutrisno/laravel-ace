@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Penjualan;
+namespace App\Http\Controllers\Piutang;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -26,7 +26,7 @@ class PiutangKartuController extends Controller
         $tanggal = now()->format('Y-m-d');
 
         $menu = DB::table('menu')
-            ->where('menu_id', 15)
+            ->where('menu_id', 16)
             ->first();
 
         $update = DB::table('tmp_sync')
@@ -43,7 +43,7 @@ class PiutangKartuController extends Controller
             ->orderBy('ms_pelanggan.pelanggankode', 'ASC')
             ->get();
 
-        $datapiutang = app('App\Http\Controllers\Penjualan\PiutangController')->getPiutangPeriode($tanggal);
+        $datapiutang = app('App\Http\Controllers\Piutang\PiutangController')->getPiutangPeriode($tanggal);
 
         $datas = DB::table($datapiutang, 'datapiutang')
             ->select(
@@ -69,7 +69,7 @@ class PiutangKartuController extends Controller
             ->orderBy('datapiutang.umur', 'DESC')
             ->get();
 
-        return view('penjualan.piutangkartu.index', [
+        return view('piutang.piutangkartu.index', [
             'menu' => $menu->menu_nama,
             'keterangan' => $menu->menu_keterangan,
             'update' => $update->modifieddate,

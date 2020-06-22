@@ -83,7 +83,7 @@ Route::namespace('Penjualan')->group(function () {
 });
 
 // Route Group Penjualan
-Route::namespace('Penjualan')->group(function () {
+Route::namespace('Piutang')->group(function () {
     Route::group(['middleware' => ['auth', 'checkLink:piutangkartu']], function () {
         Route::get('/piutangkartu', 'PiutangKartuController@index');
     });

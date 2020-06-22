@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Penjualan;
+namespace App\Http\Controllers\Piutang;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,11 +16,11 @@ class PiutangMutasiController extends Controller
     public function index()
     {
         $menu = DB::table('menu')
-            ->where('menu_id', 16)
+            ->where('menu_id', 17)
             ->first();
 
         $update = DB::table('tmp_sync')
-            ->where('nama', 'Penjualan')
+            ->orderBy('modifieddate', 'DESC')
             ->first();
 
         $datapelanggan = DB::table('ms_pelanggan')
@@ -48,7 +48,7 @@ class PiutangMutasiController extends Controller
             // ->limit(2)
             ->get();
 
-        return view('penjualan.piutangmutasi.index', [
+        return view('piutang.piutangmutasi.index', [
             'menu' => $menu->menu_nama,
             'keterangan' => $menu->menu_keterangan,
             'update' => $update->modifieddate,
@@ -173,7 +173,7 @@ class PiutangMutasiController extends Controller
         }
 
         $menu = DB::table('menu')
-            ->where('menu_id', 16)
+            ->where('menu_id', 17)
             ->first();
 
         $update = DB::table('tmp_sync')
@@ -293,7 +293,7 @@ class PiutangMutasiController extends Controller
             ->orderBy('piutang.tglfaktur', 'ASC')
             ->get();
 
-        return view('penjualan.piutangmutasi.index', [
+        return view('piutang.piutangmutasi.index', [
             'menu' => $menu->menu_nama,
             'keterangan' => $menu->menu_keterangan,
             'update' => $update->modifieddate,

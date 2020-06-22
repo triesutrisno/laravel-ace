@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Penjualan;
+namespace App\Http\Controllers\Piutang;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -144,7 +144,7 @@ class PiutangController extends Controller
                 COALESCE(jbl.jmllebih,0) sisasaldo')
             )
 
-            ->leftjoinsub(app('App\Http\Controllers\Penjualan\PiutangController')->getGroupByPelangganPeriode($tanggal), 'piu', function ($join) {
+            ->leftjoinsub(app('App\Http\Controllers\Piutang\PiutangController')->getGroupByPelangganPeriode($tanggal), 'piu', function ($join) {
                 $join->on('ms_pelanggan_plafon.pelangganid', '=', 'piu.pelangganid')
                     ->on('ms_pelanggan_plafon.jenisplafon', '=', 'piu.jenisjual');
             })
@@ -219,7 +219,7 @@ class PiutangController extends Controller
             )
 
             // periode
-            ->leftjoinsub(app('App\Http\Controllers\Penjualan\PiutangController')->getGroupByPelangganPeriode($tglawal), 'piu1', function ($join) {
+            ->leftjoinsub(app('App\Http\Controllers\Piutang\PiutangController')->getGroupByPelangganPeriode($tglawal), 'piu1', function ($join) {
                 $join->on('ms_pelanggan_plafon.pelangganid', '=', 'piu1.pelangganid')
                     ->on('ms_pelanggan_plafon.jenisplafon', '=', 'piu1.jenisjual');
             })
@@ -255,7 +255,7 @@ class PiutangController extends Controller
             })
 
             // range
-            ->leftjoinsub(app('App\Http\Controllers\Penjualan\PiutangController')->getGroupByPelangganRange($tglawal, $tglakhir), 'piu2', function ($join) {
+            ->leftjoinsub(app('App\Http\Controllers\Piutang\PiutangController')->getGroupByPelangganRange($tglawal, $tglakhir), 'piu2', function ($join) {
                 $join->on('ms_pelanggan_plafon.pelangganid', '=', 'piu2.pelangganid')
                     ->on('ms_pelanggan_plafon.jenisplafon', '=', 'piu2.jenisjual');
             })

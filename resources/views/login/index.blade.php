@@ -2,7 +2,7 @@
 <html lang="en" class="fullscreen-bg">
 
 <head>
-	<title>SILOG GROUP - Login</title>
+	<title>PORTAL SID</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -27,7 +27,7 @@
 					<div class="left">
 						<div class="content">
 							<div class="header">
-								<div class="logo text-center"><img src="assetsAuth/img/silogGroup.png" width="150" height="30" alt="SILOG GROUP"></div>
+								<div class="logo text-center"><img src="assetsAuth/img/sid.png" height="70px" alt="SEMEN INDONESIA DISTRIBUTOR"></div>
 								<p class="lead">Login Sistem</p>
 							</div>
 							@if (session('pesan'))
@@ -61,7 +61,7 @@
 					<div class="right">
 						<div class="overlay"></div>
 						<div class="content text">
-							<h1 class="heading">SEMEN INDONESIA LOGISTIK GROUP</h1>
+							<h1 class="heading">PORTAL SEMEN INDONESIA DISTRIBUTOR</h1>
 							<p>by SILOG GROUP &copy; 2020</p>
 						</div>
 					</div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Penjualan;
+namespace App\Http\Controllers\Piutang;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -60,7 +60,7 @@ class PiutangSaldoController extends Controller
         }
 
         $menu = DB::table('menu')
-            ->where('menu_id', 18)
+            ->where('menu_id', 19)
             ->first();
 
         $update = DB::table('tmp_sync')
@@ -86,7 +86,7 @@ class PiutangSaldoController extends Controller
             ->orderBy('ms_pelanggan.pelanggankode', 'ASC')
             ->get();
 
-        $datasaldo = app('App\Http\Controllers\Penjualan\PiutangController')->getPiutangPelangganRange($tglawal, $tglakhir);
+        $datasaldo = app('App\Http\Controllers\Piutang\PiutangController')->getPiutangPelangganRange($tglawal, $tglakhir);
 
         $datas = DB::table($datasaldo, 'datasaldo')
             ->select(
@@ -125,7 +125,7 @@ class PiutangSaldoController extends Controller
 
             ->get();
 
-        return view('penjualan.piutangsaldo.index', [
+        return view('piutang.piutangsaldo.index', [
             'menu' => $menu->menu_nama,
             'keterangan' => $menu->menu_keterangan,
             'update' => $update->modifieddate,
