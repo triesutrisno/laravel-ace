@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 
-class JualDetailController extends Controller
+class JualDetailController_Aris extends Controller
 {
     /**
      * Display a listing of the resource.
