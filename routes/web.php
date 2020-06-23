@@ -100,6 +100,10 @@ Route::namespace('Piutang')->group(function () {
     Route::group(['middleware' => ['auth', 'checkLink:piutangsaldo']], function () {
         Route::get('/piutangsaldo', 'PiutangSaldoController@index');
     });
+
+    Route::group(['middleware' => ['auth', 'checkLink:piutangcek']], function () {
+        Route::get('/piutangcek', 'PiutangCekController@index');
+    });
 });
 
 

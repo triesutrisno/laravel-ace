@@ -16340,7 +16340,6 @@ ul.attachment-list>li {
 .dataTables_filter,
 .dataTables_paginate {
     text-align: right;
-    display: none;
 }
 
 .well.search-area {

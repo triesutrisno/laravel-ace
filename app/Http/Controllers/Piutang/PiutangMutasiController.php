@@ -119,6 +119,8 @@ class PiutangMutasiController extends Controller
                 $tglretur = null;
                 $tglkoreksi = null;
                 $tglbayar = null;
+                $tglbatal = null;
+                $tgllebih = null;
             } elseif ($berdasarkan == 'dasarnofaktur') {
 
                 if ($request->has('nofaktur')) {
@@ -144,6 +146,8 @@ class PiutangMutasiController extends Controller
                 $tglretur = null;
                 $tglkoreksi = null;
                 $tglbayar = null;
+                $tglbatal = null;
+                $tgllebih = null;
             } elseif ($berdasarkan == 'dasarpelanggan') {
 
                 if ($request->has('pelanggan')) {
@@ -157,6 +161,8 @@ class PiutangMutasiController extends Controller
                     $tglretur = DB::raw("AND tglretur BETWEEN '" . $tgl_awal . "' AND '" . $tgl_akhir . "'");
                     $tglkoreksi = DB::raw("AND tglkoreksi BETWEEN '" . $tgl_awal . "' AND '" . $tgl_akhir . "'");
                     $tglbayar = DB::raw("AND tglbayar BETWEEN '" . $tgl_awal . "' AND '" . $tgl_akhir . "'");
+                    $tglbatal = DB::raw("AND tglbatal BETWEEN '" . $tgl_awal . "' AND '" . $tgl_akhir . "'");
+                    $tgllebih = DB::raw("AND tgllebih BETWEEN '" . $tgl_awal . "' AND '" . $tgl_akhir . "'");
                 } else {
                     $pelanggan = null;
                     $pelanggans = null;
@@ -258,6 +264,30 @@ class PiutangMutasiController extends Controller
             ->whereraw($pelanggans . $tglbayar . $nospjs . $nofakturs)
             ->where('jenisbayar', '<>', 4);
 
+        $datasbatal = DB::table('tr_jual_bayar_batal')
+            ->select(DB::raw(" 
+                pelangganid,
+                'Pembayaran' as keterangan,
+                nospj,
+                nofaktur,
+                nobatal as noreff,
+                tglbatal,
+                jumlah as debet,
+                0 as kredit"))
+            ->whereraw($pelanggans . $tglbatal . $nospjs . $nofakturs);
+
+        $dataslebih = DB::table('tr_jual_bayar_lebih')
+            ->select(DB::raw(" 
+                pelangganid,
+                'Pembayaran' as keterangan,
+                nospj,
+                nofaktur,
+                nolebih as noreff,
+                tgllebih,
+                jumlah as debet,
+                0 as kredit"))
+            ->whereraw($pelanggans . $tgllebih . $nospjs . $nofakturs);
+
         $dataspiutang = DB::table("tr_piutang")
             ->select(DB::raw("
                 pelangganid,
@@ -272,6 +302,8 @@ class PiutangMutasiController extends Controller
             ->unionAll($dataskorharbj)
             ->unionAll($dataskorharbl)
             ->unionAll($datasbayar)
+            ->unionAll($datasbatal)
+            ->unionAll($dataslebih)
             ->whereraw($pelanggans . $tglpiutang . $nospjs . $nofakturs)
             ->where('status', 0);
 
