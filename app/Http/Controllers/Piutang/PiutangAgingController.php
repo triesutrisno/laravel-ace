@@ -251,7 +251,7 @@ class PiutangAgingController extends Controller
             //->orderBy('cabangnama')
             ->get();
         //dd($datacabang);
-        $output = "<option value=''>Silakan Pilih</option>";
+        $output = "<option value='0'>Silakan Pilih</option>";
         foreach($datacabang as $dt){
             $output .= "<option value='".$dt->cabangid."'>".$dt->cabangnama."</option>";
         }
@@ -271,7 +271,7 @@ class PiutangAgingController extends Controller
             ->orderBy('ms_pelanggan.pelanggankode', 'ASC')
             ->get();
         //dd($datacabang);
-        $output = "<option value=''>Silakan Pilih</option>";
+        $output = "<option value='0'>Silakan Pilih</option>";
         foreach($datapelanggan as $dt){
             $output .= "<option value='".$dt->pelangganid."'>".$dt->pelanggannama."</option>";
         }
