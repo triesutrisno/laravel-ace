@@ -93,22 +93,7 @@ class PiutangAgingController extends Controller
 
         $datawilayah = DB::table('ms_wilayah')
             ->orderBy('wilayahnama')
-            ->get();
-
-        $datacabang = DB::table('ms_cabang')
-            ->where('cabangid', '!=', 0)
-            ->orderBy('cabangnama')
-            ->get();
-
-        $datapelanggan = DB::table('ms_pelanggan')
-            ->select(
-                'ms_cabang.cabangnama',
-                'ms_pelanggan.*'
-            )
-            ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'ms_pelanggan.cabangid')
-            ->orderBy('ms_cabang.cabangnama', 'ASC')
-            ->orderBy('ms_pelanggan.pelanggankode', 'ASC')
-            ->get();
+            ->get();        
 
         $datapiutang = app('App\Http\Controllers\Piutang\PiutangController')->getPiutangPeriode($tanggal);
 
@@ -149,7 +134,7 @@ class PiutangAgingController extends Controller
                 DB::raw("CASE
                 WHEN ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) > " . $range5 . " THEN datapiutang.sisapiutang
                 ELSE 0 END as jumlah6
-                "),
+                ")
             )
 
             ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'datapiutang.pelangganid')
@@ -180,8 +165,6 @@ class PiutangAgingController extends Controller
             'update' => $update->modifieddate,
             'datas' => $datas,
             'datawilayah' => $datawilayah,
-            'datacabang' => $datacabang,
-            'datapelanggan' => $datapelanggan,
             'wilayah' => $wilayah,
             'pelanggan' => $pelanggan,
             'status' => $status,
@@ -259,5 +242,39 @@ class PiutangAgingController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    public function cabang(Request $request)
+    {
+        $datacabang = DB::table('ms_cabang')
+            ->where('wilayahid', '=', $request->value)
+            //->orderBy('cabangnama')
+            ->get();
+        //dd($datacabang);
+        $output = "<option value=''>Silakan Pilih</option>";
+        foreach($datacabang as $dt){
+            $output .= "<option value='".$dt->cabangid."'>".$dt->cabangnama."</option>";
+        }
+        echo $output;
+    }
+    
+    public function pelanggan(Request $request)
+    {
+        $datapelanggan = DB::table('ms_pelanggan')
+            ->select(
+                'ms_cabang.cabangnama',
+                'ms_pelanggan.*'
+            )
+            ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'ms_pelanggan.cabangid')
+            ->where('ms_pelanggan.cabangid', '=', $request->value)
+            ->orderBy('ms_cabang.cabangnama', 'ASC')
+            ->orderBy('ms_pelanggan.pelanggankode', 'ASC')
+            ->get();
+        //dd($datacabang);
+        $output = "<option value=''>Silakan Pilih</option>";
+        foreach($datapelanggan as $dt){
+            $output .= "<option value='".$dt->pelangganid."'>".$dt->pelanggannama."</option>";
+        }
+        echo $output;
     }
 }

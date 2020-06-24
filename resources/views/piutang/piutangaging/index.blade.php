@@ -12,15 +12,15 @@
 
 @section('container')
 <div class="row">
-    <div class="col-xs-12 col-sm-12">
+    <div class="col-lg-12 col-sm-12">
 
         <div class="clearfix">
-            <div class="col-xs-10 col-sm-10">
+            <div class="col-lg-10 col-sm-10">
                 <form method="get" action="{{url('/piutangaging')}}">
 
-                    <div class="col-xs-10 col-sm-10">
-                        <div class="col-xs-2 col-sm-2">
-                            <select class="form-control chosen-select" id="form-field-select-3" name="wilayah">
+                    <div class="col-lg-12 col-sm-12">
+                        <div class="col-lg-3 col-sm-12">
+                            <select class="form-control deepdrop" id="form-field-select-3" name="wilayah" data-dependent="cabang">
                                 <option value="0" default>----Pilih Wilayah-----</option>
                                 @foreach($datawilayah as $wilayahs)
                                 <option value="{{ $wilayahs->wilayahid }}" {{ $wilayah == $wilayahs->wilayahid ? 'selected' : '' }}>{{$wilayahs->wilayahnama}}</option>
@@ -28,25 +28,19 @@
                             </select>
                         </div>
 
-                        <div class="col-xs-2 col-sm-2">
-                            <select class="form-control chosen-select" id="form-field-select-3" name="cabang">
-                                <option value="0" default>----Pilih Cabang-----</option>
-                                @foreach($datacabang as $cabangs)
-                                <option value="{{ $cabangs->cabangid }}" {{ $cabang == $cabangs->cabangid ? 'selected' : '' }}>{{$cabangs->cabangnama}}</option>
-                                @endforeach
+                        <div class="col-lg-3 col-sm-12">
+                            <select name="cabang" id="cabang" class="form-control deepdrop" data-dependent="pelanggan">
+                                <option value="">Silakan Pilih</option>
                             </select>
                         </div>
 
-                        <div class="col-xs-3 col-sm-3">
-                            <select class="form-control chosen-select" id="pelanggan" name="pelanggan">
-                                <option value="0" default>----Pilih Pelanggan-----</option>
-                                @foreach($datapelanggan as $pelanggans)
-                                <option value="{{ $pelanggans->pelangganid }}" {{ $pelanggan == $pelanggans->pelangganid ? 'selected' : '' }}>{{ $pelanggans->cabangnama. ' - '.$pelanggans->pelanggankode. ' - '.$pelanggans->pelanggannama}}</option>
-                                @endforeach
+                        <div class="col-lg-4 col-sm-12">
+                            <select name="pelanggan" id="pelanggan" class="form-control">
+                                <option value="0">----Pilih Pelanggan-----</option>
                             </select>
                         </div>
 
-                        <div class="col-xs-2 col-sm-2">
+                        <div class="col-lg-2 col-sm-2">
                             <select class="form-control chosen-select" id="status" name="status">
                                 <option value="1" {{ $status == 1 ? 'selected' : '' }}>Pelanggan Aktif</option>
                                 <option value="0" {{ $status == 0 ? 'selected' : '' }}>Pelanggan Non Aktif</option>
@@ -55,8 +49,8 @@
 
                     </div>
                     <br>&nbsp;
-                    <div class="col-xs-10 col-sm-10">
-                        <div class="col-xs-2 col-sm-2">
+                    <div class="col-lg-12 col-sm-12">
+                        <div class="col-lg-2 col-sm-2">
                             <input type="text" class="form-control date-picker" placeholder="tanggal" name='tanggal' id="tanggal" value="{{ $tanggal }}">
                         </div>
 
@@ -193,6 +187,24 @@
         });
     }
     $(document).ready(function() {
+        $(".deepdrop").change(function(){
+            //alert('Alhamdulillah');
+            if($(this).val() != ''){                
+                var  value = $(this).val();
+                var dependent = $(this).data('dependent');
+                //var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url : "{{ url('/') }}/"+dependent,
+                    method : "GET",
+                    data : {value:value},
+                    success : function(result){
+                        //alert(dependent);
+                        $('#'+dependent).html(result);
+                    }
+                })
+            }
+        });
+        
         $('#dynamic-table tfoot th').each(function() {
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="Cari ' + title + '" size="10" />');
