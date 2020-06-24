@@ -86,6 +86,7 @@ Route::namespace('Penjualan')->group(function () {
 Route::namespace('Piutang')->group(function () {
     Route::get('/cabang', 'PiutangAgingController@cabang');
     Route::get('/pelanggan', 'PiutangAgingController@pelanggan');
+    
     Route::group(['middleware' => ['auth', 'checkLink:piutangkartu']], function () {
         Route::get('/piutangkartu', 'PiutangKartuController@index');
     });
@@ -97,6 +98,10 @@ Route::namespace('Piutang')->group(function () {
 
     Route::group(['middleware' => ['auth', 'checkLink:piutangaging']], function () {
         Route::get('/piutangaging', 'PiutangAgingController@index');
+    });
+    
+    Route::group(['middleware' => ['auth', 'checkLink:piutangaging']], function () {
+        Route::get('/caripiutangaging', 'PiutangAgingController@cari');
     });
 
     Route::group(['middleware' => ['auth', 'checkLink:piutangsaldo']], function () {

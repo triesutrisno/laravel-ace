@@ -16,7 +16,7 @@
 
         <div class="clearfix">
             <div class="col-lg-10 col-sm-10">
-                <form method="get" action="{{url('/piutangaging')}}">
+                <form method="get" action="{{url('/caripiutangaging')}}">
 
                     <div class="col-lg-12 col-sm-12">
                         <div class="col-lg-3 col-sm-12">
@@ -30,11 +30,14 @@
 
                         <div class="col-lg-3 col-sm-12">
                             <select name="cabang" id="cabang" class="form-control deepdrop" data-dependent="pelanggan">
-                                <option value="0">Pilih Cabang</option>
+                                <option value="" default>Pilih Cabang</option>
                                 @foreach($datacabang as $cabangs)
                                 <option value="{{ $cabangs->cabangid }}" {{ $cabang == $cabangs->cabangid ? 'selected' : '' }}>{{$cabangs->cabangnama}}</option>
                                 @endforeach
                             </select>
+                            @error('cabang')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="col-lg-4 col-sm-12">

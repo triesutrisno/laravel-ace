@@ -14,7 +14,139 @@ class PiutangAgingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
+    {        
+        if ($request->wilayah !== "0") {
+            $wilayahs = 'ms_wilayah.wilayahid';
+            $wilayah = $request->wilayah;
+            $wilayah2 = $request->wilayah;
+        } else {
+            $wilayahs = null;
+            $wilayah = null;
+            $wilayah2 = 0;
+        }
+
+        if ($request->cabang !== null) {
+            $cabangs = 'ms_cabang.cabangid';
+            $cabang = $request->cabang;
+            $cabang2 = $request->cabang;
+        } else {
+            $cabangs = null;
+            $cabang = null;
+            $cabang2 = 0;
+        }
+
+        if ($request->pelanggan !== "0") {
+            $pelanggans = 'ms_pelanggan.pelangganid';
+            $pelanggan = $request->pelanggan;
+        } else {
+            $pelanggans = null;
+            $pelanggan = null;
+        }
+
+        if ($request->has('status')) {
+            $statuss = 'ms_pelanggan.status';
+            $status = $request->status;
+        } else {
+            $statuss = null;
+            $status = null;
+        }
+
+        if ($request->has('tanggal')) {
+            $tanggal = $request->tanggal;
+        } else {
+            $tanggal = now()->format('Y-m-d');
+        }
+
+        if ($request->has('range1')) {
+            $range1 = $request->range1;
+        } else {
+            $range1 = 30;
+        }
+
+        if ($request->has('range2')) {
+            $range2 = $request->range2;
+        } else {
+            $range2 = 60;
+        }
+
+        if ($request->has('range3')) {
+            $range3 = $request->range3;
+        } else {
+            $range3 = 90;
+        }
+
+        if ($request->has('range4')) {
+            $range4 = $request->range4;
+        } else {
+            $range4 = 180;
+        }
+
+        if ($request->has('range5')) {
+            $range5 = $request->range5;
+        } else {
+            $range5 = 360;
+        }
+
+        $menu = DB::table('menu')
+            ->where('menu_id', 18)
+            ->first();
+
+        $update = DB::table('tmp_sync')
+            ->orderBy('modifieddate', 'DESC')
+            ->first();
+
+        $datawilayah = DB::table('ms_wilayah')
+            ->orderBy('wilayahnama')
+            ->get();        
+        
+        
+        if($wilayah==null){
+            $datacabang = DB::table('ms_cabang')->where('cabangid', '!=', '0')->get();
+        }else{
+            $datacabang = DB::table('ms_cabang')->where('wilayahid', '=', $wilayah2)->get();
+        }
+        //dd($datacabang);
+        
+        $datapelanggan = DB::table('ms_pelanggan')
+            ->select(
+                'ms_cabang.cabangnama',
+                'ms_pelanggan.*'
+            )
+            ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'ms_pelanggan.cabangid')
+            ->where('ms_pelanggan.cabangid', '=', $cabang2)
+            ->orderBy('ms_cabang.cabangnama', 'ASC')
+            ->orderBy('ms_pelanggan.pelanggankode', 'ASC')
+            ->get();
+
+        $datapiutang = app('App\Http\Controllers\Piutang\PiutangController')->getPiutangPeriode($tanggal);
+
+        return view('piutang.piutangaging.index', [
+            'menu' => $menu->menu_nama,
+            'keterangan' => $menu->menu_keterangan,
+            'update' => $update->modifieddate,
+            'datas' => array(),
+            'datawilayah' => $datawilayah,
+            'wilayah' => $wilayah,
+            'datacabang' =>$datacabang,
+            'datapelanggan' =>$datapelanggan,
+            'pelanggan' => $pelanggan,
+            'status' => $status,
+            'cabang' => $cabang,
+            'tanggal' => $tanggal,
+            'range1' => $range1,
+            'range2' => $range2,
+            'range3' => $range3,
+            'range4' => $range4,
+            'range5' => $range5,
+        ]);
+    }
+    
+    public function cari(Request $request)
     {
+        $request->validate([
+               'cabang' => 'required',
+        ]);
+        
         if ($request->wilayah !== "0") {
             $wilayahs = 'ms_wilayah.wilayahid';
             $wilayah = $request->wilayah;
@@ -99,10 +231,13 @@ class PiutangAgingController extends Controller
             ->orderBy('wilayahnama')
             ->get();        
         
-        $datacabang = DB::table('ms_cabang')
-            ->where('wilayahid', '=', $wilayah2)
-            //->orderBy('cabangnama')
-            ->get();
+        
+        if($wilayah==null){
+            $datacabang = DB::table('ms_cabang')->where('cabangid', '!=', '0')->get();
+        }else{
+            $datacabang = DB::table('ms_cabang')->where('wilayahid', '=', $wilayah2)->get();
+        }
+        //dd($datacabang);
         
         $datapelanggan = DB::table('ms_pelanggan')
             ->select(
