@@ -403,10 +403,18 @@ class PiutangAgingController extends Controller
     
     public function cabang(Request $request)
     {
-        $datacabang = DB::table('ms_cabang')
-            ->where('wilayahid', '=', $request->value)
-            //->orderBy('cabangnama')
-            ->get();
+        if($request->value!='0'){
+            $datacabang = DB::table('ms_cabang')
+                ->where('wilayahid', '=', $request->value)
+                //->orderBy('cabangnama')
+                ->get();
+        }else{
+            $datacabang = DB::table('ms_cabang')
+                ->where('cabangid', '!=', '0')
+                //->orderBy('cabangnama')
+                ->get();
+        }
+        
         //dd($datacabang);
         $output = "<option value='0'>Silakan Pilih</option>";
         foreach($datacabang as $dt){
