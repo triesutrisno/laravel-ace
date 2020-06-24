@@ -68,7 +68,8 @@
 			</div>
 			<div class="navbar-buttons navbar-header pull-right" role="navigation">
 				<ul class="nav ace-nav">
-					<li class="prImary dropdown-modal">
+					<!--
+                                        <li class="prImary dropdown-modal">
 						<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 							<i class="ace-icon fa fa-bell icon-animated-bell"></i>
 							<span class="badge badge-important">8</span>
@@ -135,8 +136,8 @@
 							</li>
 						</ul>
 					</li>
-
-					<li class="light-blue dropdown-modal">
+                                        -->
+					<li class="light-green dropdown-modal">
 						<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 							<img class="nav-user-photo" src="{{ asset('assets/images/avatars/user.jpg') }}" alt="Jason's Photo" />
 							<span class="user-info">
