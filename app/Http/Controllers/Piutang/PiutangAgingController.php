@@ -18,17 +18,21 @@ class PiutangAgingController extends Controller
         if ($request->wilayah !== "0") {
             $wilayahs = 'ms_wilayah.wilayahid';
             $wilayah = $request->wilayah;
+            $wilayah2 = $request->wilayah;
         } else {
             $wilayahs = null;
             $wilayah = null;
+            $wilayah2 = 0;
         }
 
         if ($request->cabang !== "0") {
             $cabangs = 'ms_cabang.cabangid';
             $cabang = $request->cabang;
+            $cabang2 = $request->cabang;
         } else {
             $cabangs = null;
             $cabang = null;
+            $cabang2 = 0;
         }
 
         if ($request->pelanggan !== "0") {
@@ -94,6 +98,22 @@ class PiutangAgingController extends Controller
         $datawilayah = DB::table('ms_wilayah')
             ->orderBy('wilayahnama')
             ->get();        
+        
+        $datacabang = DB::table('ms_cabang')
+            ->where('wilayahid', '=', $wilayah2)
+            //->orderBy('cabangnama')
+            ->get();
+        
+        $datapelanggan = DB::table('ms_pelanggan')
+            ->select(
+                'ms_cabang.cabangnama',
+                'ms_pelanggan.*'
+            )
+            ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'ms_pelanggan.cabangid')
+            ->where('ms_pelanggan.cabangid', '=', $cabang2)
+            ->orderBy('ms_cabang.cabangnama', 'ASC')
+            ->orderBy('ms_pelanggan.pelanggankode', 'ASC')
+            ->get();
 
         $datapiutang = app('App\Http\Controllers\Piutang\PiutangController')->getPiutangPeriode($tanggal);
 
@@ -166,6 +186,8 @@ class PiutangAgingController extends Controller
             'datas' => $datas,
             'datawilayah' => $datawilayah,
             'wilayah' => $wilayah,
+            'datacabang' =>$datacabang,
+            'datapelanggan' =>$datapelanggan,
             'pelanggan' => $pelanggan,
             'status' => $status,
             'cabang' => $cabang,

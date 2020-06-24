@@ -30,13 +30,19 @@
 
                         <div class="col-lg-3 col-sm-12">
                             <select name="cabang" id="cabang" class="form-control deepdrop" data-dependent="pelanggan">
-                                <option value="">Silakan Pilih</option>
+                                <option value="0">Pilih Cabang</option>
+                                @foreach($datacabang as $cabangs)
+                                <option value="{{ $cabangs->cabangid }}" {{ $cabang == $cabangs->cabangid ? 'selected' : '' }}>{{$cabangs->cabangnama}}</option>
+                                @endforeach
                             </select>
                         </div>
 
                         <div class="col-lg-4 col-sm-12">
                             <select name="pelanggan" id="pelanggan" class="form-control">
                                 <option value="0">----Pilih Pelanggan-----</option>
+                                @foreach($datapelanggan as $pelanggans)
+                                <option value="{{ $pelanggans->pelangganid }}" {{ $pelanggan == $pelanggans->pelangganid ? 'selected' : '' }}>{{ $pelanggans->cabangnama. ' - '.$pelanggans->pelanggankode. ' - '.$pelanggans->pelanggannama}}</option>
+                                @endforeach
                             </select>
                         </div>
 
