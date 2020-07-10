@@ -66,6 +66,7 @@
                     <th>Kode Pelanggan</th>
                     <th>Nama Pelanggan</th>
                     <th>Pelanggan Shipto</th>
+                    <th>Nama Sales</th>
                     <th>Jenis Jual</th>
                     <th>Kode Barang</th>
                     <th>Nama Barang</th>
@@ -101,6 +102,7 @@
                     <td align="center">{{$row->pelanggankode}}</td>
                     <td align="left">{{$row->pelanggannama}}</td>
                     <td align="left">{{$row->pelangganshipto}}</td>
+                    <td align="left">{{$row->sales}}</td>
                     <td align="center">{{ ($row->jenisjual=='1' ? 'Semen' : ($row->jenisjual=='2' ? 'Non Semen' : 'Curah')) }}</td>
                     <td align="center">{{$row->barangkode}}</td>
                     <td align="left">{{$row->barangnama}}</td>
@@ -137,6 +139,7 @@
                     <th>Kode Pelanggan</th>
                     <th>Nama Pelanggan</th>
                     <th>Pelanggan Shipto</th>
+                    <th>Nama Sales</th>
                     <th>Jenis Jual</th>
                     <th>Kode Barang</th>
                     <th>Nama Barang</th>

@@ -215,14 +215,14 @@ class PiutangMutasiController extends Controller
 
         $dataskorharbl = DB::table('tr_jual_koreksi_harga')
             ->select(DB::raw(" 
-            pelangganid,
-            'Koreksi Harga' as keterangan,
-            nospj,
-            nofaktur,
-            nokoreksi as noreff,
-            tglkoreksi,
-            0 as debet,
-            SUM(jumlah) * -1 as kredit"))
+                pelangganid,
+                'Koreksi Harga' as keterangan,
+                nospj,
+                nofaktur,
+                nokoreksi as noreff,
+                tglkoreksi,
+                0 as debet,
+                SUM(jumlah) * -1 as kredit"))
             ->whereraw($pelanggans . $tglkoreksi . $nospjs . $nofakturs)
             ->where('status', 1)
             ->where('tipekoreksi', 1)
@@ -236,7 +236,7 @@ class PiutangMutasiController extends Controller
             ->select(DB::raw(" 
                 pelangganid,
                 'Koreksi Harga' as keterangan,
-                    nospj,
+                nospj,
                 nofakturbaru,
                 nokoreksi as noreff,
                 tglkoreksi,
@@ -248,6 +248,25 @@ class PiutangMutasiController extends Controller
             ->groupBy('pelangganid')
             ->groupBy('nospj')
             ->groupBy('nofakturbaru')
+            ->groupBy('nokoreksi')
+            ->groupBy('tglkoreksi');
+
+        $dataskorpiu = DB::table('tr_jual_koreksi_piutang')
+            ->select(DB::raw(" 
+                pelangganid,
+                'Koreksi Piutang' as keterangan,
+                nospj,
+                nofaktur,
+                nokoreksi as noreff,
+                tglkoreksi,
+                SUM(jumlah) as debet,
+                0 as kredit"))
+            ->whereraw($pelanggans . $tglkoreksi . $nospjs . $nofakturs)
+            ->where('status', 1)
+            ->where('tipekoreksi', 0)
+            ->groupBy('pelangganid')
+            ->groupBy('nospj')
+            ->groupBy('nofaktur')
             ->groupBy('nokoreksi')
             ->groupBy('tglkoreksi');
 
@@ -267,7 +286,7 @@ class PiutangMutasiController extends Controller
         $datasbatal = DB::table('tr_jual_bayar_batal')
             ->select(DB::raw(" 
                 pelangganid,
-                'Pembayaran' as keterangan,
+                'Batal Bayar' as keterangan,
                 nospj,
                 nofaktur,
                 nobatal as noreff,
@@ -279,7 +298,7 @@ class PiutangMutasiController extends Controller
         $dataslebih = DB::table('tr_jual_bayar_lebih')
             ->select(DB::raw(" 
                 pelangganid,
-                'Pembayaran' as keterangan,
+                'Lebih Bayar' as keterangan,
                 nospj,
                 nofaktur,
                 nolebih as noreff,
@@ -301,6 +320,7 @@ class PiutangMutasiController extends Controller
             ->unionAll($datasretur)
             ->unionAll($dataskorharbj)
             ->unionAll($dataskorharbl)
+            ->unionAll($dataskorpiu)
             ->unionAll($datasbayar)
             ->unionAll($datasbatal)
             ->unionAll($dataslebih)

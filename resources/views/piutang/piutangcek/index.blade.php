@@ -73,15 +73,15 @@
                     <td align="center">{{$row->jenisplafon}}</td>
                     <td align="center">{{$row->temponormal}}</td>
                     <td align="center">{{$row->umur}}</td>
-                    <td align="right">{{number_format($row->jumlah,2)}}</td>
-                    <td align="right">{{number_format($row->jmlretur,2)}}</td>
-                    <td align="right">{{number_format($row->jmlkorhar1,2)}}</td>
-                    <td align="right">{{number_format($row->jmlkorhar2,2)}}</td>
-                    <td align="right">{{number_format($row->jmlkorpiu,2)}}</td>
-                    <td align="right">{{number_format($row->jmlbayar,2)}}</td>
-                    <td align="right">{{number_format($row->jmlbatal,2)}}</td>
-                    <td align="right">{{number_format($row->jmllebih,2)}}</td>
-                    <td align="right">{{number_format($row->sisapiutang,2)}}</td>
+                    <td align="right">{{$row->jumlah,2}}</td>
+                    <td align="right">{{$row->jmlretur,2}}</td>
+                    <td align="right">{{$row->jmlkorhar1,2}}</td>
+                    <td align="right">{{$row->jmlkorhar2,2}}</td>
+                    <td align="right">{{$row->jmlkorpiu,2}}</td>
+                    <td align="right">{{$row->jmlbayar,2}}</td>
+                    <td align="right">{{$row->jmlbatal,2}}</td>
+                    <td align="right">{{$row->jmllebih,2}}</td>
+                    <td align="right">{{$row->sisapiutang,2}}</td>
                 </tr>
                 @endforeach
             </tbody>

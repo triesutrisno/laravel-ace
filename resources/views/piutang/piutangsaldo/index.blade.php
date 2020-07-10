@@ -47,7 +47,7 @@
 
                     <div class="col-xs-2 col-sm-2">
                         <select class="form-control chosen-select" id="status" name="status">
-                            <option value="1" {{ $status == 1 ? 'selected' : '' }}>Pelanggan Aktif</option>
+                            <option value="1" {{ $status == 1 ? 'selected' : '' }} default>Pelanggan Aktif</option>
                             <option value="0" {{ $status == 0 ? 'selected' : '' }}>Pelanggan Non Aktif</option>
                         </select>
                     </div>
