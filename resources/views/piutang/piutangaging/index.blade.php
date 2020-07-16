@@ -19,8 +19,8 @@
                 <form method="get" action="{{url('/piutangaging')}}">
 
                     <div class="col-lg-12 col-sm-12">
-                        <div class="col-xs-2 col-sm-2">
-                            <select class="form-control chosen-select" id="form-field-select-3" name="wilayah">
+                        <div class="col-lg-3 col-sm-12">
+                            <select class="form-control deepdrop chosen-select" id="form-field-select-3" name="wilayah" data-dependent="cabang">
                                 <option value="0" default>----Pilih Wilayah-----</option>
                                 @foreach($datawilayah as $wilayahs)
                                 <option value="{{ $wilayahs->wilayahid }}" {{ $wilayah == $wilayahs->wilayahid ? 'selected' : '' }}>{{$wilayahs->wilayahnama}}</option>
@@ -28,18 +28,21 @@
                             </select>
                         </div>
 
-                        <div class="col-xs-2 col-sm-2">
-                            <select class="form-control chosen-select" id="form-field-select-3" name="cabang">
-                                <option value="0" default>----Pilih Cabang-----</option>
+                        <div class="col-lg-3 col-sm-12">
+                            <select name="cabang" id="cabang" class="form-control deepdrop chosen-select" data-dependent="pelanggan">
+                                <option value="" default>Pilih Cabang</option>
                                 @foreach($datacabang as $cabangs)
                                 <option value="{{ $cabangs->cabangid }}" {{ $cabang == $cabangs->cabangid ? 'selected' : '' }}>{{$cabangs->cabangnama}}</option>
                                 @endforeach
                             </select>
+                            @error('cabang')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <div class="col-xs-3 col-sm-3">
-                            <select class="form-control chosen-select" id="pelanggan" name="pelanggan">
-                                <option value="0" default>----Pilih Pelanggan-----</option>
+                        <div class="col-lg-4 col-sm-12">
+                            <select name="pelanggan" id="pelanggan" class="form-control">
+                                <option value="0">----Pilih Pelanggan-----</option>
                                 @foreach($datapelanggan as $pelanggans)
                                 <option value="{{ $pelanggans->pelangganid }}" {{ $pelanggan == $pelanggans->pelangganid ? 'selected' : '' }}>{{ $pelanggans->cabangnama. ' - '.$pelanggans->pelanggankode. ' - '.$pelanggans->pelanggannama}}</option>
                                 @endforeach
@@ -93,9 +96,10 @@
                     <th>Kode Pelanggan</th>
                     <th>Nama Pelanggan</th>
                     <th>No Faktur</th>
-                    <!-- <th>No SPJ</th> -->
-                    <th>Jenis</th>
+                    <th>No SPJ</th>
                     <th>Tgl Faktur</th>
+                    <th>Tgl Tempo</th>
+                    <th>Jenis</th>
                     <th>Tempo</th>
                     <th>Umur</th>
                     <th>Sisa Piutang</th>
@@ -117,9 +121,10 @@
                     <td align="center">{{$row->pelanggankode}}</td>
                     <td align="left">{{$row->pelanggannama}}</td>
                     <td align="center">{{$row->nofaktur}}</td>
-                    <!-- <td align="center">{{$row->nospj}}</td> -->
-                    <td align="center">{{$row->jenisplafon}}</td>
+                    <td align="center">{{$row->nospj}}</td>
                     <td align="center">{{$row->tglfaktur}}</td>
+                    <td align="center">{{$row->tgltempo}}</td>
+                    <td align="center">{{$row->jenisplafon}}</td>
                     <td align="center">{{$row->temponormal}}</td>
                     <td align="center">{{$row->umur}}</td>
                     <td align="right">{{number_format($row->sisapiutang,2)}}</td>
@@ -141,9 +146,10 @@
                     <th>Kode Pelanggan</th>
                     <th>Nama Pelanggan</th>
                     <th>No Faktur</th>
-                    <!-- <th>No SPJ</th> -->
-                    <th>Jenis</th>
+                    <th>No SPJ</th>
                     <th>Tgl Faktur</th>
+                    <th>Tgl Tempo</th>
+                    <th>Jenis</th>
                     <th>Tempo</th>
                     <th>Umur</th>
                     <th>Sisa Piutang</th>
