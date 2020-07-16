@@ -41,7 +41,7 @@
                         </div>
 
                         <div class="col-lg-4 col-sm-12">
-                            <select name="pelanggan" id="pelanggan" class="form-control">
+                            <select name="pelanggan" id="pelanggan" class="form-control chosen-select">
                                 <option value="0">----Pilih Pelanggan-----</option>
                                 @foreach($datapelanggan as $pelanggans)
                                 <option value="{{ $pelanggans->pelangganid }}" {{ $pelanggan == $pelanggans->pelangganid ? 'selected' : '' }}>{{ $pelanggans->cabangnama. ' - '.$pelanggans->pelanggankode. ' - '.$pelanggans->pelanggannama}}</option>
