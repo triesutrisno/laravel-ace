@@ -30,7 +30,7 @@
 
                         <div class="col-lg-3 col-sm-12">
                             <select name="cabang" id="cabang" class="form-control deepdrop chosen-select" data-dependent="pelanggan">
-                                <option value="" default>Pilih Cabang</option>
+                                <option value="0" default>Pilih Cabang</option>
                                 @foreach($datacabang as $cabangs)
                                 <option value="{{ $cabangs->cabangid }}" {{ $cabang == $cabangs->cabangid ? 'selected' : '' }}>{{$cabangs->cabangnama}}</option>
                                 @endforeach
