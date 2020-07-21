@@ -84,7 +84,7 @@ class PiutangAgingController extends Controller
         }
 
         $menu = DB::table('menu')
-            ->where('menu_id', 17)
+            ->where('menu_id', 18)
             ->first();
 
         $update = DB::table('tmp_sync')
