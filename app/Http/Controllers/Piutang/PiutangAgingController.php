@@ -127,23 +127,23 @@ class PiutangAgingController extends Controller
                 "),
 
                 DB::raw("CASE
-                WHEN ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) > 0 AND datapiutang.umur<=" . $range1 . " THEN datapiutang.sisapiutang
+                WHEN ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) > 0 AND ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) <=" . $range1 . " THEN datapiutang.sisapiutang
                 ELSE 0 END as jumlah1
                 "),
                 DB::raw("CASE
-                WHEN ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) > " . $range1 . " AND datapiutang.umur<=" . $range2 . " THEN datapiutang.sisapiutang
+                WHEN ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) > " . $range1 . " AND ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) <=" . $range2 . " THEN datapiutang.sisapiutang
                 ELSE 0 END as jumlah2
                 "),
                 DB::raw("CASE
-                WHEN ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) > " . $range2 . " AND datapiutang.umur<=" . $range3 . " THEN datapiutang.sisapiutang
+                WHEN ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) > " . $range2 . " AND ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) <=" . $range3 . " THEN datapiutang.sisapiutang
                 ELSE 0 END as jumlah3
                 "),
                 DB::raw("CASE
-                WHEN ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) > " . $range3 . " AND datapiutang.umur<=" . $range4 . " THEN datapiutang.sisapiutang
+                WHEN ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) > " . $range3 . " AND ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) <=" . $range4 . " THEN datapiutang.sisapiutang
                 ELSE 0 END as jumlah4
                 "),
                 DB::raw("CASE
-                WHEN ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) > " . $range4 . " AND datapiutang.umur<=" . $range5 . " THEN datapiutang.sisapiutang
+                WHEN ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) > " . $range4 . " AND ( datapiutang.umur - ms_pelanggan_plafon.temponormal ) <=" . $range5 . " THEN datapiutang.sisapiutang
                 ELSE 0 END as jumlah5
                 "),
                 DB::raw("CASE

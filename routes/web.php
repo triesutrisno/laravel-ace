@@ -50,6 +50,22 @@ Route::group(['middleware' => ['auth', 'checkLink:userrole']], function () {
     });
 });
 
+// Route Group Master
+Route::namespace('Master')->group(function () {
+    // Penjualan
+    Route::group(['middleware' => ['auth', 'checkLink:cabgud']], function () {
+        Route::get('/cabgud', 'CabangGudangController@index');
+    });
+
+    Route::group(['middleware' => ['auth', 'checkLink:barang']], function () {
+        Route::get('/barang', 'BarangController@index');
+    });
+
+    Route::group(['middleware' => ['auth', 'checkLink:pelanggan']], function () {
+        Route::get('/pelanggan', 'PelangganController@index');
+    });
+});
+
 // Route Group Penjualan
 Route::namespace('Penjualan')->group(function () {
     // Penjualan
@@ -84,9 +100,7 @@ Route::namespace('Penjualan')->group(function () {
 
 // Route Group Penjualan
 Route::namespace('Piutang')->group(function () {
-    Route::get('/cabang', 'PiutangAgingController@cabang');
-    Route::get('/pelanggan', 'PiutangAgingController@pelanggan');
-    
+
     Route::group(['middleware' => ['auth', 'checkLink:piutangkartu']], function () {
         Route::get('/piutangkartu', 'PiutangKartuController@index');
     });
@@ -99,7 +113,7 @@ Route::namespace('Piutang')->group(function () {
     Route::group(['middleware' => ['auth', 'checkLink:piutangaging']], function () {
         Route::get('/piutangaging', 'PiutangAgingController@index');
     });
-    
+
     Route::group(['middleware' => ['auth', 'checkLink:piutangaging']], function () {
         Route::get('/caripiutangaging', 'PiutangAgingController@cari');
     });
