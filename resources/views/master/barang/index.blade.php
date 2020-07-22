@@ -22,8 +22,8 @@
                         <select class="form-control chosen-select" id="jenis" name="jenis">
                             <option value="0" default>----Pilih Jenis Barang-----</option>
                             <option value="1" {{ $jenis == 1 ? 'selected' : '' }}>Semen</option>
-                            <option value="2" {{ $jenis == 0 ? 'selected' : '' }}>Non Semen</option>
-                            <option value="6" {{ $jenis == 0 ? 'selected' : '' }}>Curah</option>
+                            <option value="2" {{ $jenis == 2 ? 'selected' : '' }}>Non Semen</option>
+                            <option value="6" {{ $jenis == 6 ? 'selected' : '' }}>Curah</option>
                         </select>
                     </div>
 
