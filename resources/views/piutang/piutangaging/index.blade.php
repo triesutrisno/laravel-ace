@@ -96,7 +96,6 @@
                     <th>Kode Pelanggan</th>
                     <th>Nama Pelanggan</th>
                     <th>No Faktur</th>
-                    <th>No SPJ</th>
                     <th>Tgl Faktur</th>
                     <th>Tgl Tempo</th>
                     <th>Jenis</th>
@@ -121,7 +120,6 @@
                     <td align="center">{{$row->pelanggankode}}</td>
                     <td align="left">{{$row->pelanggannama}}</td>
                     <td align="center">{{$row->nofaktur}}</td>
-                    <td align="center">{{$row->nospj}}</td>
                     <td align="center">{{$row->tglfaktur}}</td>
                     <td align="center">{{$row->tgltempo}}</td>
                     <td align="center">{{$row->jenisplafon}}</td>
@@ -146,7 +144,6 @@
                     <th>Kode Pelanggan</th>
                     <th>Nama Pelanggan</th>
                     <th>No Faktur</th>
-                    <th>No SPJ</th>
                     <th>Tgl Faktur</th>
                     <th>Tgl Tempo</th>
                     <th>Jenis</th>

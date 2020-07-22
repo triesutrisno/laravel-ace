@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth', 'checkLink:userrole']], function () {
 Route::namespace('Master')->group(function () {
     // Penjualan
     Route::group(['middleware' => ['auth', 'checkLink:cabgud']], function () {
-        Route::get('/cabgud', 'CabangGudangController@index');
+        Route::get('/cabgud', 'CabgudController@index');
     });
 
     Route::group(['middleware' => ['auth', 'checkLink:barang']], function () {
