@@ -96,9 +96,9 @@
                     <th>Kode Pelanggan</th>
                     <th>Nama Pelanggan</th>
                     <th>No Faktur</th>
+                    <th>Jenis</th>
                     <th>Tgl Faktur</th>
                     <th>Tgl Tempo</th>
-                    <th>Jenis</th>
                     <th>Tempo</th>
                     <th>Umur</th>
                     <th>Sisa Piutang</th>
@@ -120,9 +120,9 @@
                     <td align="center">{{$row->pelanggankode}}</td>
                     <td align="left">{{$row->pelanggannama}}</td>
                     <td align="center">{{$row->nofaktur}}</td>
+                    <td align="center">{{$row->jenisplafon}}</td>
                     <td align="center">{{$row->tglfaktur}}</td>
                     <td align="center">{{$row->tgltempo}}</td>
-                    <td align="center">{{$row->jenisplafon}}</td>
                     <td align="center">{{$row->temponormal}}</td>
                     <td align="center">{{$row->umur}}</td>
                     <td align="right">{{number_format($row->sisapiutang,2)}}</td>
@@ -144,9 +144,9 @@
                     <th>Kode Pelanggan</th>
                     <th>Nama Pelanggan</th>
                     <th>No Faktur</th>
+                    <th>Jenis</th>
                     <th>Tgl Faktur</th>
                     <th>Tgl Tempo</th>
-                    <th>Jenis</th>
                     <th>Tempo</th>
                     <th>Umur</th>
                     <th>Sisa Piutang</th>
