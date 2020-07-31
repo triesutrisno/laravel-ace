@@ -51,10 +51,20 @@
                     <th>Nama Wilayah</th>
                     <th>Nama Cabang</th>
                     <th>Kode Pelanggan</th>
+                    <th>Induk Pelanggan</th>
                     <th>Nama Pelanggan</th>
                     <th>Alamat Pelanggan</th>
+                    <th>Nama Pemilik</th>
                     <th>Alamat Email</th>
-                    <th>No HP</th>
+                    <th>No HP Aktif</th>
+                    <th>No KTP</th>
+                    <th>No NPWP</th>
+                    <th>No SPPKP</th>
+                    <th>Nama SPPKP</th>
+                    <th>Alamat SPPKP</th>
+                    <th>Tgl Daftar</th>
+                    <th>Kode Bisnis Kokoh</th>
+                    <th>Kode SAP SIG</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -66,10 +76,20 @@
                     <td align="left">{{$row->wilayahnama}}</td>
                     <td align="left">{{$row->cabangnama}}</td>
                     <td align="center">{{$row->pelanggankode}}</td>
+                    <td align="center">{{$row->pelangganinduk}}</td>
                     <td align="left">{{$row->pelanggannama}}</td>
                     <td align="left">{{$row->pelangganalamat}}</td>
+                    <td align="left">{{$row->pelangganpemilik}}</td>
                     <td align="left">{{$row->pelangganemail}}</td>
                     <td align="left">{{$row->pelangganhp}}</td>
+                    <td align="left">{{$row->pelangganktp}}</td>
+                    <td align="left">{{$row->pelanggannpwp}}</td>
+                    <td align="left">{{$row->pelanggansppkp}}</td>
+                    <td align="left">{{$row->pelanggansppkpnama}}</td>
+                    <td align="left">{{$row->pelanggansppkpalamat}}</td>
+                    <td align="left">{{$row->pelanggandaftar}}</td>
+                    <td align="left">{{$row->biskokode}}</td>
+                    <td align="left">{{$row->sapkode}}</td>
                     <td align="center">{{$row->status==0 ? 'Non Aktif' : 'Aktif'}}</td>
                 </tr>
                 @endforeach
@@ -81,10 +101,20 @@
                     <th>Nama Wilayah</th>
                     <th>Nama Cabang</th>
                     <th>Kode Pelanggan</th>
+                    <th>Induk Pelanggan</th>
                     <th>Nama Pelanggan</th>
                     <th>Alamat Pelanggan</th>
+                    <th>Nama Pemilik</th>
                     <th>Alamat Email</th>
-                    <th>No HP</th>
+                    <th>No HP Aktif</th>
+                    <th>No KTP</th>
+                    <th>No NPWP</th>
+                    <th>No SPPKP</th>
+                    <th>Nama SPPKP</th>
+                    <th>Alamat SPPKP</th>
+                    <th>Tgl Daftar</th>
+                    <th>Kode Bisnis Kokoh</th>
+                    <th>Kode SAP SIG</th>
                     <th>Status</th>
                 </tr>
             </tfoot>

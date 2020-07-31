@@ -15,40 +15,6 @@
     <div class="col-xs-12 col-sm-12">
 
         <div class="clearfix">
-            <div class="col-xs-8 col-sm-8">
-                <form method="get" action="{{url('/barang')}}">
-
-                    <div class="col-lg-3 col-sm-3">
-                        <select class="form-control chosen-select" id="barang" name="barang">
-                            <option value="9" default>----Pilih Barang-----</option>
-                            <option value="0" {{ $barang == 0 ? 'selected' : '' }}>Gudang</option>
-                            <option value="1" {{ $barang == 1 ? 'selected' : '' }}>Supplier</option>
-                        </select>
-                    </div>
-
-                    <div class="col-lg-3 col-sm-3">
-                        <select class="form-control chosen-select" id="jenis" name="jenis">
-                            <option value="0" default>----Pilih Jenis Barang-----</option>
-                            <option value="1" {{ $jenis == 1 ? 'selected' : '' }}>Semen</option>
-                            <option value="2" {{ $jenis == 2 ? 'selected' : '' }}>Non Semen</option>
-                            <option value="6" {{ $jenis == 6 ? 'selected' : '' }}>Curah</option>
-                        </select>
-                    </div>
-
-                    <div class="col-xs-3 col-sm-3">
-                        <select class="form-control chosen-select" name="grup">
-                            <option value="0" default>----Pilih Grup Barang-----</option>
-                            @foreach($datagrup as $grups)
-                            <option value="{{ $grups->grupid }}" {{ $grup == $grups->grupid ? 'selected' : '' }}>{{$grups->grupnama}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="col-xs-1 col-sm-1">
-                        <button class="btn btn-sm btn-primary" type="submit" class="btn btn-primary">Cari</button>
-                    </div>
-                </form>
-            </div>
             <div class="pull-right tableTools-container"></div>
         </div>
 
@@ -56,16 +22,17 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Tipe Barang</th>
-                    <th>Barang</th>
-                    <th>Jenis Barang</th>
-                    <th>Kode Grup</th>
-                    <th>Nama Grup</th>
-                    <th>Kode Barang</th>
-                    <th>Nama Barang</th>
-                    <th>Berat</th>
-                    <th>Satuan</th>
-                    <th>Kode Reff</th>
+                    <th>Nama Grup Barang</th>
+                    <th>COA Persediaan Baik</th>
+                    <th>COA Persediaan Rijek</th>
+                    <th>COA COGS</th>
+                    <th>COA Penjualan</th>
+                    <th>COA Intransit</th>
+                    <th>COA Intransit Penjualan</th>
+                    <th>COA Intransit Cabang</th>
+                    <th>COA Bongkar</th>
+                    <th>COA Muat</th>
+                    <th>COA Pok</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -74,16 +41,17 @@
                 @foreach($datas as $row)
                 <tr>
                     <td align="center">{{$loop->iteration}}</td>
-                    <td align="center">{{ $row->tipe=='1' ? 'Dagang' : 'Non Dagang' }}</td>
-                    <td align="center">{{ $row->jenis=='0' ? 'Gudang' : 'Supplier' }}</td>
-                    <td align="center">{{ ($row->kategoriid=='1' ? 'Semen' : ($row->kategoriid=='2' ? 'Non Semen' : 'Curah')) }}</td>
-                    <td align="center">{{$row->grupid}}</td>
                     <td align="left">{{$row->grupnama}}</td>
-                    <td align="center">{{$row->barangkode}}</td>
-                    <td align="left">{{$row->barangnama}}</td>
-                    <td align="center">{{$row->berat}}</td>
-                    <td align="center">{{$row->satuan}}</td>
-                    <td align="center">{{$row->supplierreff}}</td>
+                    <td align="center">{{$row->coapersediaanbaik}}</td>
+                    <td align="center">{{$row->coapersediaanrijek}}</td>
+                    <td align="center">{{$row->coacogs}}</td>
+                    <td align="center">{{$row->coapenjualan}}</td>
+                    <td align="center">{{$row->coaintransit}}</td>
+                    <td align="center">{{$row->coaintransitjual}}</td>
+                    <td align="center">{{$row->coaintransitcabang}}</td>
+                    <td align="center">{{$row->coabongkar}}</td>
+                    <td align="center">{{$row->coamuat}}</td>
+                    <td align="center">{{$row->coapok}}</td>
                     <td align="center">{{$row->status==0 ? 'Non Aktif' : 'Aktif'}}</td>
                 </tr>
                 @endforeach
@@ -92,16 +60,17 @@
             <tfoot>
                 <tr>
                     <th>No</th>
-                    <th>Tipe Barang</th>
-                    <th>Barang</th>
-                    <th>Jenis Barang</th>
-                    <th>Kode Grup</th>
-                    <th>Nama Grup</th>
-                    <th>Kode Barang</th>
-                    <th>Nama Barang</th>
-                    <th>Berat</th>
-                    <th>Satuan</th>
-                    <th>Kode Reff</th>
+                    <th>Nama Grup Barang</th>
+                    <th>COA Persediaan Baik</th>
+                    <th>COA Persediaan Rijek</th>
+                    <th>COA COGS</th>
+                    <th>COA Penjualan</th>
+                    <th>COA Intransit</th>
+                    <th>COA Intransit Penjualan</th>
+                    <th>COA Intransit Cabang</th>
+                    <th>COA Bongkar</th>
+                    <th>COA Muat</th>
+                    <th>COA Pok</th>
                     <th>Status</th>
 
                 </tr>

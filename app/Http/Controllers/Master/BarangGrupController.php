@@ -6,74 +6,35 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 
-class BarangController extends Controller
+class BarangGrupController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->barang !== "9") {
-            $barangs = 'ms_barang.jenis';
-            $barang = $request->barang;
-        } else {
-            $barangs = null;
-            $barang = null;
-        }
-
-        if ($request->jenis !== "0") {
-            $jeniss = 'ms_barang.kategoriid';
-            $jenis = $request->jenis;
-        } else {
-            $jeniss = null;
-            $jenis = null;
-        }
-
-        if ($request->grup !== "0") {
-            $grups = 'ms_barang_grup.grupid';
-            $grup = $request->grup;
-        } else {
-            $grups = null;
-            $grup = null;
-        }
-
         $menu = DB::table('menu')
-            ->where('menu_id', 23)
+            ->where('menu_id', 25)
             ->first();
 
         $update = DB::table('tmp_sync')
-            ->where('nama', 'Barang')
+            ->where('nama', 'Barang Grup')
             ->first();
 
-        $datagrup = DB::table('ms_barang_grup')
-            ->orderBy('grupnama')
-            ->get();
-
-        $datas = DB::table('ms_barang')
+        $datas = DB::table('ms_barang_grup')
             ->select(
-                'ms_barang_grup.grupid',
-                'ms_barang_grup.grupnama',
-                'ms_barang.*',
+                'ms_barang_grup.*',
             )
-            ->where($barangs, $barang)
-            ->where($jeniss, $jenis)
-            ->where($grups, $grup)
-            ->join('ms_barang_grup', 'ms_barang_grup.grupid', '=', 'ms_barang.grupid')
             ->orderBy("ms_barang_grup.grupnama", "ASC")
-            ->orderBy("ms_barang.barangnama", "ASC")
             ->get();
 
-        return view('master.barang.index', [
+        return view('master.baranggrup.index', [
             'menu' => $menu->menu_nama,
             'keterangan' => $menu->menu_keterangan,
             'update' => $update->modifieddate,
             'datas' => $datas,
-            'datagrup' => $datagrup,
-            'barang' => $barang,
-            'jenis' => $jenis,
-            'grup' => $grup,
         ]);
     }
 

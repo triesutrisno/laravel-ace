@@ -60,6 +60,9 @@ Route::namespace('Master')->group(function () {
     Route::group(['middleware' => ['auth', 'checkLink:barang']], function () {
         Route::get('/barang', 'BarangController@index');
     });
+    Route::group(['middleware' => ['auth', 'checkLink:baranggrup']], function () {
+        Route::get('/baranggrup', 'BarangGrupController@index');
+    });
 
     Route::group(['middleware' => ['auth', 'checkLink:pelanggan']], function () {
         Route::get('/pelanggan', 'PelangganController@index');
