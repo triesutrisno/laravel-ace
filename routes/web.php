@@ -99,6 +99,19 @@ Route::namespace('Penjualan')->group(function () {
     Route::group(['middleware' => ['auth', 'checkLink:jualbayarlebih']], function () {
         Route::get('/jualbayarlebih', 'JualBayarLebihController@index');
     });
+
+    // summary
+    Route::group(['middleware' => ['auth', 'checkLink:jualsummary']], function () {
+        Route::get('/jualsummary', 'JualSummaryController@index');
+    });
+
+    Route::group(['middleware' => ['auth', 'checkLink:jualtrend']], function () {
+        Route::get('/jualtrend', 'JualTrendController@index');
+    });
+
+    Route::group(['middleware' => ['auth', 'checkLink:jualpelanggan']], function () {
+        Route::get('/jualpelanggan', 'JualPelangganController@index');
+    });
 });
 
 // Route Group Penjualan

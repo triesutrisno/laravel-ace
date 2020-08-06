@@ -102,7 +102,7 @@
                     <td align="center">{{$row->pelanggankode}}</td>
                     <td align="left">{{$row->pelanggannama}}</td>
                     <td align="left">{{$row->pelangganshipto}}</td>
-                    <td align="left">{{$row->sales}}</td>
+                    <td align="left">{{$row->pegawainama}}</td>
                     <td align="center">{{ ($row->jenisjual=='1' ? 'Semen' : ($row->jenisjual=='2' ? 'Non Semen' : 'Curah')) }}</td>
                     <td align="center">{{$row->barangkode}}</td>
                     <td align="left">{{$row->barangnama}}</td>

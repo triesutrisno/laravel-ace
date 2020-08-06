@@ -75,6 +75,7 @@ class JualDetailController extends Controller
                 'ms_barang.barangkode',
                 'ms_barang.barangnama',
                 'ms_barang.berat',
+                'ms_pegawai.pegawainama',
                 'tr_piutang.nofaktur',
                 'tr_piutang.tglfaktur',
                 'tr_piutang.nofakturpajak',
@@ -87,6 +88,7 @@ class JualDetailController extends Controller
             ->join('ms_gudang', 'ms_gudang.gudangid', '=', 'tr_jual.gudangid')
             ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'tr_jual.pelangganid')
             ->join('ms_barang', 'ms_barang.barangid', '=', 'tr_jual.barangid')
+            ->join('ms_pegawai', 'ms_pegawai.pegawaiid', '=', 'tr_jual.salesid')
             ->leftjoin('tr_piutang', function ($join) {
                 $join->on('tr_piutang.nospj', '=', 'tr_jual.nospj')
                     ->where('tr_piutang.status', '=', 0);

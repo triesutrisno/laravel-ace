@@ -259,14 +259,14 @@ class PiutangMutasiController extends Controller
                 nofaktur,
                 nokoreksi as noreff,
                 tglkoreksi,
-                SUM(jumlah) as debet,
-                0 as kredit"))
+                CASE WHEN tipekoreksi=0 THEN SUM(jumlah) ELSE 0 END as debet,
+                CASE WHEN tipekoreksi=1 THEN SUM(jumlah) * -1 ELSE 0 END as kredit"))
             ->whereraw($pelanggans . $tglkoreksi . $nospjs . $nofakturs)
             ->where('status', 1)
-            ->where('tipekoreksi', 0)
             ->groupBy('pelangganid')
             ->groupBy('nospj')
             ->groupBy('nofaktur')
+            ->groupBy('tipekoreksi')
             ->groupBy('nokoreksi')
             ->groupBy('tglkoreksi');
 
