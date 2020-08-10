@@ -11,7 +11,7 @@
             <th>Nama Cabang</th>
             <th>Kode Pelanggan</th>
             <th>Nama Pelanggan</th>
-            <th>Qty Berat (Ton)</th>
+            <th>Qty Berat (KG)</th>
             <th>Jumlah</th>
             <th>Dpp</th>
             <th>PPn</th>
@@ -47,7 +47,7 @@
             <th>Nama Cabang</th>
             <th>Kode Pelanggan</th>
             <th>Nama Pelanggan</th>
-            <th>Qty Berat (Ton)</th>
+            <th>Qty Berat (KG)</th>
             <th>Jumlah</th>
             <th>Dpp</th>
             <th>PPn</th>
@@ -72,7 +72,7 @@
             <th>Kode Pelanggan</th>
             <th>Nama Pelanggan</th>
             <th>Jenis Barang</th>
-            <th>Qty Berat (Ton)</th>
+            <th>Qty Berat (KG)</th>
             <th>Jumlah</th>
             <th>Dpp</th>
             <th>PPn</th>
@@ -110,7 +110,7 @@
             <th>Kode Pelanggan</th>
             <th>Nama Pelanggan</th>
             <th>Jenis Barang</th>
-            <th>Qty Berat (Ton)</th>
+            <th>Qty Berat (KG)</th>
             <th>Jumlah</th>
             <th>Dpp</th>
             <th>PPn</th>
@@ -136,7 +136,7 @@
             <th>Nama Pelanggan</th>
             <th>Jenis Barang</th>
             <th>Grup Barang</th>
-            <th>Qty Berat (Ton)</th>
+            <th>Qty Berat (KG)</th>
             <th>Jumlah</th>
             <th>Dpp</th>
             <th>PPn</th>
@@ -176,7 +176,7 @@
             <th>Nama Pelanggan</th>
             <th>Jenis Barang</th>
             <th>Grup Barang</th>
-            <th>Qty Berat (Ton)</th>
+            <th>Qty Berat (KG)</th>
             <th>Jumlah</th>
             <th>Dpp</th>
             <th>PPn</th>
@@ -205,7 +205,7 @@
             <th>Kode Barang</th>
             <th>Nama Barang</th>
             <th>Qty Total</th>
-            <th>Qty Berat (Ton)</th>
+            <th>Qty Berat (KG)</th>
             <th>Jumlah</th>
             <th>Dpp</th>
             <th>PPn</th>
@@ -251,7 +251,7 @@
             <th>Kode Barang</th>
             <th>Nama Barang</th>
             <th>Qty Total</th>
-            <th>Qty Berat (Ton)</th>
+            <th>Qty Berat (KG)</th>
             <th>Jumlah</th>
             <th>Dpp</th>
             <th>PPn</th>

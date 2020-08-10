@@ -45,6 +45,14 @@ class JualSummaryController extends Controller
             $pelanggan = null;
         }
 
+        if ($request->sales !== "0") {
+            $saless = 'ms_pegawai.pegawaiid';
+            $sales = $request->sales;
+        } else {
+            $saless = null;
+            $sales = null;
+        }
+
         if ($request->grupbarang !== "0") {
             $grupbarangs = 'ms_barang_grup.grupid';
             $grupbarang = $request->grupbarang;
@@ -92,412 +100,191 @@ class JualSummaryController extends Controller
             ->orderBy('ms_pelanggan.pelanggankode', 'ASC')
             ->get();
 
+        $datasales = DB::table('ms_pegawai')
+            ->select(
+                'ms_cabang.cabangnama',
+                'ms_pegawai.*'
+            )
+            ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'ms_pegawai.cabangid')
+            ->whereIn('ms_pegawai.jabatanid', [2, 74, 86])
+            ->where('ms_pegawai.status', '=', 1)
+            ->orderBy('ms_cabang.cabangnama', 'ASC')
+            ->orderBy('ms_pegawai.pegawainama', 'ASC')
+            ->get();
+
         $datagrupbarang = DB::table('ms_barang_grup')
             ->orderBy('grupnama')
             ->get();
 
-        if ($berdasarkan == 'dasar_wilayah') {
-
-            $datas1 = DB::table('gr_jual')->wherebetween('tglspj', [$tgl_awal, $tgl_akhir])
+        if ($berdasarkan == 'dasar_barang') {
+            // dasar barang
+            $datas1 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_jenisbarang($tgl_awal, $tgl_akhir), 'gr_jual_barang')
                 ->select(
-                    'ms_wilayah.wilayahnama',
-                    DB::raw('SUM(gr_jual.qty * ms_barang.berat) qtyberat'),
-                    DB::raw('SUM(gr_jual.jumlah) jumlah'),
-                    DB::raw('SUM(gr_jual.dpp) dpp'),
-                    DB::raw('SUM(gr_jual.nihpp) nihpp'),
-                    DB::raw('SUM(gr_jual.dpp) - SUM(gr_jual.nihpp) gcm'),
+                    'gr_jual_barang.*',
                 )
                 ->where($wilayahs, $wilayah)
-
-                ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'gr_jual.cabangid')
-                ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-                ->join('ms_barang', 'ms_barang.barangid', '=', 'gr_jual.barangid')
-
-                ->groupBy('ms_wilayah.wilayahnama')
-
-                ->orderBy("ms_wilayah.wilayahnama", "ASC")
 
                 ->get();
 
-            $datas2 = DB::table('gr_jual')->wherebetween('tglspj', [$tgl_awal, $tgl_akhir])
+            $datas2 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_grupbarang($tgl_awal, $tgl_akhir), 'gr_jual_barang')
                 ->select(
-                    'ms_wilayah.wilayahnama',
-                    'ms_barang.kategoriid',
-                    DB::raw('SUM(gr_jual.qty * ms_barang.berat) qtyberat'),
-                    DB::raw('SUM(gr_jual.jumlah) jumlah'),
-                    DB::raw('SUM(gr_jual.dpp) dpp'),
-                    DB::raw('SUM(gr_jual.nihpp) nihpp'),
-                    DB::raw('SUM(gr_jual.dpp) - SUM(gr_jual.nihpp) gcm'),
+                    'gr_jual_barang.*',
                 )
-
                 ->where($wilayahs, $wilayah)
-
-                ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'gr_jual.cabangid')
-                ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-                ->join('ms_barang', 'ms_barang.barangid', '=', 'gr_jual.barangid')
-
-                ->groupBy('ms_wilayah.wilayahnama')
-                ->groupBy('ms_barang.kategoriid')
-
-                ->orderBy("ms_wilayah.wilayahnama", "ASC")
-                ->orderBy("ms_barang.kategoriid", "ASC")
 
                 ->get();
 
-            $datas3 = DB::table('gr_jual')->wherebetween('tglspj', [$tgl_awal, $tgl_akhir])
+            $datas3 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_barang($tgl_awal, $tgl_akhir), 'gr_jual_barang')
                 ->select(
-                    'ms_wilayah.wilayahnama',
-                    'ms_barang.kategoriid',
-                    'ms_barang_grup.grupnama',
-                    DB::raw('SUM(gr_jual.qty * ms_barang.berat) qtyberat'),
-                    DB::raw('SUM(gr_jual.jumlah) jumlah'),
-                    DB::raw('SUM(gr_jual.dpp) dpp'),
-                    DB::raw('SUM(gr_jual.nihpp) nihpp'),
-                    DB::raw('SUM(gr_jual.dpp) - SUM(gr_jual.nihpp) gcm'),
+                    'gr_jual_barang.*',
                 )
-
                 ->where($wilayahs, $wilayah)
-
-                ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'gr_jual.cabangid')
-                ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-                ->join('ms_barang', 'ms_barang.barangid', '=', 'gr_jual.barangid')
-                ->join('ms_barang_grup', 'ms_barang_grup.grupid', '=', 'ms_barang.grupid')
-
-                ->groupBy('ms_wilayah.wilayahnama')
-                ->groupBy('ms_barang.kategoriid')
-                ->groupBy('ms_barang_grup.grupnama')
-
-                ->orderBy("ms_wilayah.wilayahnama", "ASC")
-                ->orderBy("ms_barang.kategoriid", "ASC")
-                ->orderBy("ms_barang_grup.grupnama", "ASC")
 
                 ->get();
 
-            $datas4 = DB::table('gr_jual')->wherebetween('tglspj', [$tgl_awal, $tgl_akhir])
+            $datas4 = null;
+        } elseif ($berdasarkan == 'dasar_wilayah') {
+            // dasar wilayah
+            $datas1 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_wilayah($tgl_awal, $tgl_akhir), 'gr_jual_wilayah')
                 ->select(
-                    'ms_wilayah.wilayahnama',
-                    'ms_barang.kategoriid',
-                    'ms_barang_grup.grupnama',
-                    'ms_barang.barangkode',
-                    'ms_barang.barangnama',
-                    DB::raw('SUM(gr_jual.qty) qty'),
-                    DB::raw('SUM(gr_jual.qty * ms_barang.berat) qtyberat'),
-                    DB::raw('SUM(gr_jual.jumlah) jumlah'),
-                    DB::raw('SUM(gr_jual.dpp) dpp'),
-                    DB::raw('SUM(gr_jual.nihpp) nihpp'),
-                    DB::raw('SUM(gr_jual.dpp) - SUM(gr_jual.nihpp) gcm'),
+                    'gr_jual_wilayah.*',
                 )
-
                 ->where($wilayahs, $wilayah)
 
-                ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'gr_jual.cabangid')
-                ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-                ->join('ms_barang', 'ms_barang.barangid', '=', 'gr_jual.barangid')
-                ->join('ms_barang_grup', 'ms_barang_grup.grupid', '=', 'ms_barang.grupid')
+                ->get();
 
-                ->groupBy('ms_wilayah.wilayahnama')
-                ->groupBy('ms_barang.kategoriid')
-                ->groupBy('ms_barang_grup.grupnama')
-                ->groupBy('ms_barang.barangkode')
-                ->groupBy('ms_barang.barangnama')
+            $datas2 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_wilayah_jenisbarang($tgl_awal, $tgl_akhir), 'gr_jual_wilayah')
+                ->select(
+                    'gr_jual_wilayah.*',
+                )
+                ->where($wilayahs, $wilayah)
 
-                ->orderBy("ms_wilayah.wilayahnama", "ASC")
-                ->orderBy("ms_barang.kategoriid", "ASC")
-                ->orderBy("ms_barang_grup.grupnama", "ASC")
-                ->orderBy("ms_barang.barangkode", "ASC")
-                ->orderBy("ms_barang.barangnama", "ASC")
+                ->get();
+
+            $datas3 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_wilayah_grupbarang($tgl_awal, $tgl_akhir), 'gr_jual_wilayah')
+                ->select(
+                    'gr_jual_wilayah.*',
+                )
+                ->where($wilayahs, $wilayah)
+
+                ->get();
+
+            $datas4 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_wilayah_barang($tgl_awal, $tgl_akhir), 'gr_jual_wilayah')
+                ->select(
+                    'gr_jual_wilayah.*',
+                )
+                ->where($wilayahs, $wilayah)
 
                 ->get();
         } elseif ($berdasarkan == 'dasar_cabang') {
-
-            $datas1 = DB::table('gr_jual')->wherebetween('tglspj', [$tgl_awal, $tgl_akhir])
+            // dasar cabang
+            $datas1 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_cabang($tgl_awal, $tgl_akhir), 'gr_jual_cabang')
                 ->select(
-                    'ms_wilayah.wilayahnama',
-                    'ms_cabang.cabangnama',
-                    DB::raw('SUM(gr_jual.qty * ms_barang.berat) qtyberat'),
-                    DB::raw('SUM(gr_jual.jumlah) jumlah'),
-                    DB::raw('SUM(gr_jual.dpp) dpp'),
-                    DB::raw('SUM(gr_jual.nihpp) nihpp'),
-                    DB::raw('SUM(gr_jual.dpp) - SUM(gr_jual.nihpp) gcm'),
+                    'gr_jual_cabang.*',
                 )
-
                 ->where($wilayahs, $wilayah)
                 ->where($cabangs, $cabang)
-
-                ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'gr_jual.cabangid')
-                ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-                ->join('ms_barang', 'ms_barang.barangid', '=', 'gr_jual.barangid')
-
-                ->groupBy('ms_wilayah.wilayahnama')
-                ->groupBy('ms_cabang.cabangnama')
-
-                ->orderBy("ms_wilayah.wilayahnama", "ASC")
-                ->orderBy("ms_cabang.cabangnama", "ASC")
 
                 ->get();
 
-            $datas2 = DB::table('gr_jual')->wherebetween('tglspj', [$tgl_awal, $tgl_akhir])
+            $datas2 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_cabang_jenisbarang($tgl_awal, $tgl_akhir), 'gr_jual_cabang')
                 ->select(
-                    'ms_wilayah.wilayahnama',
-                    'ms_cabang.cabangnama',
-                    'ms_barang.kategoriid',
-                    DB::raw('SUM(gr_jual.qty * ms_barang.berat) qtyberat'),
-                    DB::raw('SUM(gr_jual.jumlah) jumlah'),
-                    DB::raw('SUM(gr_jual.dpp) dpp'),
-                    DB::raw('SUM(gr_jual.nihpp) nihpp'),
-                    DB::raw('SUM(gr_jual.dpp) - SUM(gr_jual.nihpp) gcm'),
+                    'gr_jual_cabang.*',
                 )
-
                 ->where($wilayahs, $wilayah)
                 ->where($cabangs, $cabang)
-
-                ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'gr_jual.cabangid')
-                ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-                ->join('ms_barang', 'ms_barang.barangid', '=', 'gr_jual.barangid')
-                ->join('ms_barang_grup', 'ms_barang_grup.grupid', '=', 'ms_barang.grupid')
-
-                ->groupBy('ms_wilayah.wilayahnama')
-                ->groupBy('ms_cabang.cabangnama')
-                ->groupBy('ms_barang.kategoriid')
-
-                ->orderBy("ms_wilayah.wilayahnama", "ASC")
-                ->orderBy("ms_cabang.cabangnama", "ASC")
-                ->orderBy("ms_barang.kategoriid", "ASC")
 
                 ->get();
 
-            $datas3 = DB::table('gr_jual')->wherebetween('tglspj', [$tgl_awal, $tgl_akhir])
+            $datas3 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_cabang_grupbarang($tgl_awal, $tgl_akhir), 'gr_jual_cabang')
                 ->select(
-                    'ms_wilayah.wilayahnama',
-                    'ms_cabang.cabangnama',
-                    'ms_barang.kategoriid',
-                    'ms_barang_grup.grupnama',
-                    DB::raw('SUM(gr_jual.qty * ms_barang.berat) qtyberat'),
-                    DB::raw('SUM(gr_jual.jumlah) jumlah'),
-                    DB::raw('SUM(gr_jual.dpp) dpp'),
-                    DB::raw('SUM(gr_jual.nihpp) nihpp'),
-                    DB::raw('SUM(gr_jual.dpp) - SUM(gr_jual.nihpp) gcm'),
+                    'gr_jual_cabang.*',
                 )
-
                 ->where($wilayahs, $wilayah)
                 ->where($cabangs, $cabang)
-
-                ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'gr_jual.cabangid')
-                ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-                ->join('ms_barang', 'ms_barang.barangid', '=', 'gr_jual.barangid')
-                ->join('ms_barang_grup', 'ms_barang_grup.grupid', '=', 'ms_barang.grupid')
-
-                ->groupBy('ms_wilayah.wilayahnama')
-                ->groupBy('ms_cabang.cabangnama')
-                ->groupBy('ms_barang.kategoriid')
-                ->groupBy('ms_barang_grup.grupnama')
-
-                ->orderBy("ms_wilayah.wilayahnama", "ASC")
-                ->orderBy("ms_cabang.cabangnama", "ASC")
-                ->orderBy("ms_barang.kategoriid", "ASC")
-                ->orderBy("ms_barang_grup.grupnama", "ASC")
 
                 ->get();
 
-            $datas4 = DB::table('gr_jual')->wherebetween('tglspj', [$tgl_awal, $tgl_akhir])
+            $datas4 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_cabang_barang($tgl_awal, $tgl_akhir), 'gr_jual_cabang')
                 ->select(
-                    'ms_wilayah.wilayahnama',
-                    'ms_cabang.cabangnama',
-                    'ms_barang.kategoriid',
-                    'ms_barang_grup.grupnama',
-                    'ms_barang.barangkode',
-                    'ms_barang.barangnama',
-                    DB::raw('SUM(gr_jual.qty) qty'),
-                    DB::raw('SUM(gr_jual.qty * ms_barang.berat) qtyberat'),
-                    DB::raw('SUM(gr_jual.jumlah) jumlah'),
-                    DB::raw('SUM(gr_jual.dpp) dpp'),
-                    DB::raw('SUM(gr_jual.nihpp) nihpp'),
-                    DB::raw('SUM(gr_jual.dpp) - SUM(gr_jual.nihpp) gcm'),
+                    'gr_jual_cabang.*',
                 )
-
                 ->where($wilayahs, $wilayah)
                 ->where($cabangs, $cabang)
-
-                ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'gr_jual.cabangid')
-                ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-                ->join('ms_barang', 'ms_barang.barangid', '=', 'gr_jual.barangid')
-                ->join('ms_barang_grup', 'ms_barang_grup.grupid', '=', 'ms_barang.grupid')
-
-                ->groupBy('ms_wilayah.wilayahnama')
-                ->groupBy('ms_cabang.cabangnama')
-                ->groupBy('ms_barang.kategoriid')
-                ->groupBy('ms_barang_grup.grupnama')
-                ->groupBy('ms_barang.barangkode')
-                ->groupBy('ms_barang.barangnama')
-
-                ->orderBy("ms_wilayah.wilayahnama", "ASC")
-                ->orderBy("ms_cabang.cabangnama", "ASC")
-                ->orderBy("ms_barang.kategoriid", "ASC")
-                ->orderBy("ms_barang_grup.grupnama", "ASC")
-                ->orderBy("ms_barang.barangkode", "ASC")
-                ->orderBy("ms_barang.barangnama", "ASC")
 
                 ->get();
         } elseif ($berdasarkan == 'dasar_pelanggan') {
-
-            $datas1 = DB::table('gr_jual_pelanggan')->wherebetween('tglspj', [$tgl_awal, $tgl_akhir])
+            // dasar pelanggan
+            $datas1 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_pelanggan($tgl_awal, $tgl_akhir), 'gr_jual_pelanggan')
                 ->select(
-                    'ms_wilayah.wilayahnama',
-                    'ms_cabang.cabangnama',
-                    'ms_pelanggan.pelanggankode',
-                    'ms_pelanggan.pelanggannama',
-                    DB::raw('SUM(gr_jual_pelanggan.qty * ms_barang.berat) qtyberat'),
-                    DB::raw('SUM(gr_jual_pelanggan.jumlah) jumlah'),
-                    DB::raw('SUM(gr_jual_pelanggan.dpp) dpp'),
-                    DB::raw('SUM(gr_jual_pelanggan.nihpp) nihpp'),
-                    DB::raw('SUM(gr_jual_pelanggan.dpp) - SUM(gr_jual_pelanggan.nihpp) gcm'),
+                    'gr_jual_pelanggan.*',
                 )
-
-                ->where('gr_jual_pelanggan.qty', '!=', '0')
-                ->where($cabangs, $cabang)
+                ->where($cabang, $cabang)
                 ->where($pelanggans, $pelanggan)
-
-                ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'gr_jual_pelanggan.pelangganid')
-                ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'ms_pelanggan.cabangid')
-                ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-                ->join('ms_barang', 'ms_barang.barangid', '=', 'gr_jual_pelanggan.barangid')
-
-                ->groupBy('ms_wilayah.wilayahnama')
-                ->groupBy('ms_cabang.cabangnama')
-                ->groupBy('ms_pelanggan.pelanggankode')
-                ->groupBy('ms_pelanggan.pelanggannama')
-
-                ->orderBy("ms_wilayah.wilayahnama", "ASC")
-                ->orderBy("ms_cabang.cabangnama", "ASC")
-                ->orderBy("ms_pelanggan.pelanggankode", "ASC")
-                ->orderBy("ms_pelanggan.pelanggannama", "ASC")
 
                 ->get();
 
-            $datas2 = DB::table('gr_jual_pelanggan')->wherebetween('tglspj', [$tgl_awal, $tgl_akhir])
+            $datas2 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_pelanggan_jenisbarang($tgl_awal, $tgl_akhir), 'gr_jual_pelanggan')
                 ->select(
-                    'ms_wilayah.wilayahnama',
-                    'ms_cabang.cabangnama',
-                    'ms_pelanggan.pelanggankode',
-                    'ms_pelanggan.pelanggannama',
-                    'ms_barang.kategoriid',
-                    DB::raw('SUM(gr_jual_pelanggan.qty * ms_barang.berat) qtyberat'),
-                    DB::raw('SUM(gr_jual_pelanggan.jumlah) jumlah'),
-                    DB::raw('SUM(gr_jual_pelanggan.dpp) dpp'),
-                    DB::raw('SUM(gr_jual_pelanggan.nihpp) nihpp'),
-                    DB::raw('SUM(gr_jual_pelanggan.dpp) - SUM(gr_jual_pelanggan.nihpp) gcm'),
+                    'gr_jual_pelanggan.*',
                 )
-
-                ->where('gr_jual_pelanggan.qty', '!=', '0')
-                ->where($cabangs, $cabang)
+                ->where($cabang, $cabang)
                 ->where($pelanggans, $pelanggan)
-
-                ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'gr_jual_pelanggan.pelangganid')
-                ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'ms_pelanggan.cabangid')
-                ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-                ->join('ms_barang', 'ms_barang.barangid', '=', 'gr_jual_pelanggan.barangid')
-                ->join('ms_barang_grup', 'ms_barang_grup.grupid', '=', 'ms_barang.grupid')
-
-                ->groupBy('ms_wilayah.wilayahnama')
-                ->groupBy('ms_cabang.cabangnama')
-                ->groupBy('ms_pelanggan.pelanggankode')
-                ->groupBy('ms_pelanggan.pelanggannama')
-                ->groupBy('ms_barang.kategoriid')
-
-                ->orderBy("ms_wilayah.wilayahnama", "ASC")
-                ->orderBy("ms_cabang.cabangnama", "ASC")
-                ->orderBy("ms_pelanggan.pelanggankode", "ASC")
-                ->orderBy("ms_pelanggan.pelanggannama", "ASC")
-                ->orderBy("ms_barang.kategoriid", "ASC")
 
                 ->get();
 
-            $datas3 = DB::table('gr_jual_pelanggan')->wherebetween('tglspj', [$tgl_awal, $tgl_akhir])
+            $datas3 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_pelanggan_grupbarang($tgl_awal, $tgl_akhir), 'gr_jual_pelanggan')
                 ->select(
-                    'ms_wilayah.wilayahnama',
-                    'ms_cabang.cabangnama',
-                    'ms_pelanggan.pelanggankode',
-                    'ms_pelanggan.pelanggannama',
-                    'ms_barang.kategoriid',
-                    'ms_barang_grup.grupnama',
-                    DB::raw('SUM(gr_jual_pelanggan.qty * ms_barang.berat) qtyberat'),
-                    DB::raw('SUM(gr_jual_pelanggan.jumlah) jumlah'),
-                    DB::raw('SUM(gr_jual_pelanggan.dpp) dpp'),
-                    DB::raw('SUM(gr_jual_pelanggan.nihpp) nihpp'),
-                    DB::raw('SUM(gr_jual_pelanggan.dpp) - SUM(gr_jual_pelanggan.nihpp) gcm'),
+                    'gr_jual_pelanggan.*',
                 )
-
-                ->where('gr_jual_pelanggan.qty', '!=', '0')
-                ->where($cabangs, $cabang)
+                ->where($cabang, $cabang)
                 ->where($pelanggans, $pelanggan)
-
-                ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'gr_jual_pelanggan.pelangganid')
-                ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'ms_pelanggan.cabangid')
-                ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-                ->join('ms_barang', 'ms_barang.barangid', '=', 'gr_jual_pelanggan.barangid')
-                ->join('ms_barang_grup', 'ms_barang_grup.grupid', '=', 'ms_barang.grupid')
-
-                ->groupBy('ms_wilayah.wilayahnama')
-                ->groupBy('ms_cabang.cabangnama')
-                ->groupBy('ms_pelanggan.pelanggankode')
-                ->groupBy('ms_pelanggan.pelanggannama')
-                ->groupBy('ms_barang.kategoriid')
-                ->groupBy('ms_barang_grup.grupnama')
-
-                ->orderBy("ms_wilayah.wilayahnama", "ASC")
-                ->orderBy("ms_cabang.cabangnama", "ASC")
-                ->orderBy("ms_pelanggan.pelanggankode", "ASC")
-                ->orderBy("ms_pelanggan.pelanggannama", "ASC")
-                ->orderBy("ms_barang.kategoriid", "ASC")
-                ->orderBy("ms_barang_grup.grupnama", "ASC")
 
                 ->get();
 
-            $datas4 = DB::table('gr_jual_pelanggan')->wherebetween('tglspj', [$tgl_awal, $tgl_akhir])
+            $datas4 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_pelanggan_barang($tgl_awal, $tgl_akhir), 'gr_jual_pelanggan')
                 ->select(
-                    'ms_wilayah.wilayahnama',
-                    'ms_cabang.cabangnama',
-                    'ms_pelanggan.pelanggankode',
-                    'ms_pelanggan.pelanggannama',
-                    'ms_barang.kategoriid',
-                    'ms_barang_grup.grupnama',
-                    'ms_barang.barangkode',
-                    'ms_barang.barangnama',
-                    DB::raw('SUM(gr_jual_pelanggan.qty) qty'),
-                    DB::raw('SUM(gr_jual_pelanggan.qty * ms_barang.berat) qtyberat'),
-                    DB::raw('SUM(gr_jual_pelanggan.jumlah) jumlah'),
-                    DB::raw('SUM(gr_jual_pelanggan.dpp) dpp'),
-                    DB::raw('SUM(gr_jual_pelanggan.nihpp) nihpp'),
-                    DB::raw('SUM(gr_jual_pelanggan.dpp) - SUM(gr_jual_pelanggan.nihpp) gcm'),
+                    'gr_jual_pelanggan.*',
                 )
-
-                ->where('gr_jual_pelanggan.qty', '!=', '0')
-                ->where($cabangs, $cabang)
+                ->where($cabang, $cabang)
                 ->where($pelanggans, $pelanggan)
 
-                ->join('ms_pelanggan', 'ms_pelanggan.pelangganid', '=', 'gr_jual_pelanggan.pelangganid')
-                ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'ms_pelanggan.cabangid')
-                ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
-                ->join('ms_barang', 'ms_barang.barangid', '=', 'gr_jual_pelanggan.barangid')
-                ->join('ms_barang_grup', 'ms_barang_grup.grupid', '=', 'ms_barang.grupid')
+                ->get();
+        } elseif ($berdasarkan == 'dasar_sales') {
+            // dasar sales
+            $datas1 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_sales($tgl_awal, $tgl_akhir), 'gr_jual_sales')
+                ->select(
+                    'gr_jual_sales.*',
+                )
+                ->where($cabangs, $cabang)
+                ->where($saless, $sales)
 
-                ->groupBy('ms_wilayah.wilayahnama')
-                ->groupBy('ms_cabang.cabangnama')
-                ->groupBy('ms_pelanggan.pelanggankode')
-                ->groupBy('ms_pelanggan.pelanggannama')
-                ->groupBy('ms_barang.kategoriid')
-                ->groupBy('ms_barang_grup.grupnama')
-                ->groupBy('ms_barang.barangkode')
-                ->groupBy('ms_barang.barangnama')
+                ->get();
 
-                ->orderBy("ms_wilayah.wilayahnama", "ASC")
-                ->orderBy("ms_cabang.cabangnama", "ASC")
-                ->orderBy("ms_pelanggan.pelanggankode", "ASC")
-                ->orderBy("ms_pelanggan.pelanggannama", "ASC")
-                ->orderBy("ms_barang.kategoriid", "ASC")
-                ->orderBy("ms_barang_grup.grupnama", "ASC")
-                ->orderBy("ms_barang.barangkode", "ASC")
-                ->orderBy("ms_barang.barangnama", "ASC")
+            $datas2 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_sales_jenisbarang($tgl_awal, $tgl_akhir), 'gr_jual_sales')
+                ->select(
+                    'gr_jual_sales.*',
+                )
+                ->where($cabangs, $cabang)
+                ->where($saless, $sales)
+
+                ->get();
+
+            $datas3 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_sales_grupbarang($tgl_awal, $tgl_akhir), 'gr_jual_sales')
+                ->select(
+                    'gr_jual_sales.*',
+                )
+                ->where($cabangs, $cabang)
+                ->where($saless, $sales)
+
+                ->get();
+
+            $datas4 = DB::table(app('App\Http\Controllers\Penjualan\JualController')->gr_jual_sales_barang($tgl_awal, $tgl_akhir), 'gr_jual_sales')
+                ->select(
+                    'gr_jual_sales.*',
+                )
+                ->where($cabangs, $cabang)
+                ->where($saless, $sales)
 
                 ->get();
         } else {
@@ -519,11 +306,13 @@ class JualSummaryController extends Controller
             'datacabang' => $datacabang,
             'datapelanggan' => $datapelanggan,
             'datagrupbarang' => $datagrupbarang,
+            'datasales' => $datasales,
             'berdasarkan' => $berdasarkan,
+            'grupbarang' => $grupbarang,
             'wilayah' => $wilayah,
             'cabang' => $cabang,
             'pelanggan' => $pelanggan,
-            'grupbarang' => $grupbarang,
+            'sales' => $sales,
             'tgl_awal' => $tgl_awal,
             'tgl_akhir' => $tgl_akhir
         ]);

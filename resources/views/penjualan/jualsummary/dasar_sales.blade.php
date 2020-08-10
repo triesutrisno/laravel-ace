@@ -9,6 +9,8 @@
             <th>No</th>
             <th>Nama Wilayah</th>
             <th>Nama Cabang</th>
+            <th>NIK Sales</th>
+            <th>Nama Sales</th>
             <th>Qty Berat (KG)</th>
             <th>Jumlah</th>
             <th>Dpp</th>
@@ -25,6 +27,8 @@
             <td align="center">{{ $loop->iteration }}</td>
             <td align="left">{{ $row->wilayahnama }}</td>
             <td align="left">{{ $row->cabangnama }}</td>
+            <td align="left">{{ $row->pegawainik }}</td>
+            <td align="left">{{ $row->pegawainama }}</td>
             <td align="right">{{ number_format($row->qtyberat,2) }}</td>
             <td align="right">{{ number_format($row->jumlah,2) }}</td>
             <td align="right">{{ number_format($row->dpp,2) }}</td>
@@ -41,6 +45,8 @@
             <th>No</th>
             <th>Nama Wilayah</th>
             <th>Nama Cabang</th>
+            <th>NIK Sales</th>
+            <th>Nama Sales</th>
             <th>Qty Berat (KG)</th>
             <th>Jumlah</th>
             <th>Dpp</th>
@@ -63,6 +69,8 @@
             <th>No</th>
             <th>Nama Wilayah</th>
             <th>Nama Cabang</th>
+            <th>NIK Sales</th>
+            <th>Nama Sales</th>
             <th>Jenis Barang</th>
             <th>Qty Berat (KG)</th>
             <th>Jumlah</th>
@@ -80,6 +88,8 @@
             <td align="center">{{ $loop->iteration }}</td>
             <td align="left">{{ $row->wilayahnama }}</td>
             <td align="left">{{ $row->cabangnama }}</td>
+            <td align="left">{{ $row->pegawainik }}</td>
+            <td align="left">{{ $row->pegawainama }}</td>
             <td align="left">{{ ($row->kategoriid=='1' ? 'Semen' : ($row->kategoriid=='2' ? 'Non Semen' : 'Curah')) }}</td>
             <td align="right">{{ number_format($row->qtyberat,2) }}</td>
             <td align="right">{{ number_format($row->jumlah,2) }}</td>
@@ -97,6 +107,8 @@
             <th>No</th>
             <th>Nama Wilayah</th>
             <th>Nama Cabang</th>
+            <th>NIK Sales</th>
+            <th>Nama Sales</th>
             <th>Jenis Barang</th>
             <th>Qty Berat (KG)</th>
             <th>Jumlah</th>
@@ -120,6 +132,8 @@
             <th>No</th>
             <th>Nama Wilayah</th>
             <th>Nama Cabang</th>
+            <th>NIK Sales</th>
+            <th>Nama Sales</th>
             <th>Jenis Barang</th>
             <th>Grup Barang</th>
             <th>Qty Berat (KG)</th>
@@ -138,6 +152,8 @@
             <td align="center">{{ $loop->iteration }}</td>
             <td align="left">{{ $row->wilayahnama }}</td>
             <td align="left">{{ $row->cabangnama }}</td>
+            <td align="left">{{ $row->pegawainik }}</td>
+            <td align="left">{{ $row->pegawainama }}</td>
             <td align="left">{{ ($row->kategoriid=='1' ? 'Semen' : ($row->kategoriid=='2' ? 'Non Semen' : 'Curah')) }}</td>
             <td align="left">{{ $row->grupnama }}</td>
             <td align="right">{{ number_format($row->qtyberat,2) }}</td>
@@ -156,6 +172,8 @@
             <th>No</th>
             <th>Nama Wilayah</th>
             <th>Nama Cabang</th>
+            <th>NIK Sales</th>
+            <th>Nama Sales</th>
             <th>Jenis Barang</th>
             <th>Grup Barang</th>
             <th>Qty Berat (KG)</th>
@@ -180,6 +198,8 @@
             <th>No</th>
             <th>Nama Wilayah</th>
             <th>Nama Cabang</th>
+            <th>NIK Sales</th>
+            <th>Nama Sales</th>
             <th>Jenis Barang</th>
             <th>Grup Barang</th>
             <th>Kode Barang</th>
@@ -201,6 +221,8 @@
             <td align="center">{{ $loop->iteration }}</td>
             <td align="left">{{ $row->wilayahnama }}</td>
             <td align="left">{{ $row->cabangnama }}</td>
+            <td align="left">{{ $row->pegawainik }}</td>
+            <td align="left">{{ $row->pegawainama }}</td>
             <td align="left">{{ ($row->kategoriid=='1' ? 'Semen' : ($row->kategoriid=='2' ? 'Non Semen' : 'Curah')) }}</td>
             <td align="left">{{ $row->grupnama }}</td>
             <td align="left">{{ $row->barangkode }}</td>
@@ -222,6 +244,8 @@
             <th>No</th>
             <th>Nama Wilayah</th>
             <th>Nama Cabang</th>
+            <th>NIK Sales</th>
+            <th>Nama Sales</th>
             <th>Jenis Barang</th>
             <th>Grup Barang</th>
             <th>Kode Barang</th>

@@ -15,73 +15,113 @@
     <div class="col-xs-12 col-sm-12">
 
         <div class="clearfix">
-            <div class="col-xs-8 col-sm-8">
-                <form method="get" action="{{url('/jualsummary')}}">
+            <div class="col-xs-12 col-sm-12">
+                <form method="get" action="{{url('/jualtrend')}}">
 
+                    <div class="col-lg-12 col-sm-12">
 
-                    <div class="col-xs-3 col-sm-3">
-                        <select class="form-control chosen-select" id="berdasarkan" name="berdasarkan">
-                            <option value="" default>----Pilih Berdasarkan-----</option>
-                            <option value="dasar_wilayah" {{$berdasarkan == "dasar_wilayah" ? 'selected' : ''}}> Per Wilayah </option>
-                            <option value="dasar_cabang" {{$berdasarkan == "dasar_cabang" ? 'selected' : ''}}> Per Cabang </option>
-                            <option value="dasar_pelanggan" {{$berdasarkan == "dasar_pelanggan" ? 'selected' : ''}}> Per Pelanggan </option>
+                        <div class="col-xs-2 col-sm-2">
+                            <select class="form-control chosen-select" id="berdasarkan" name="berdasarkan">
+                                <option value="" default>----Pilih Berdasarkan-----</option>
+                                <option value="dasar_barang" {{$berdasarkan == "dasar_barang" ? 'selected' : ''}}> Per Barang </option>
+                                <option value="dasar_wilayah" {{$berdasarkan == "dasar_wilayah" ? 'selected' : ''}}> Per Wilayah </option>
+                                <option value="dasar_cabang" {{$berdasarkan == "dasar_cabang" ? 'selected' : ''}}> Per Cabang </option>
+                                <option value="dasar_pelanggan" {{$berdasarkan == "dasar_pelanggan" ? 'selected' : ''}}> Per Pelanggan </option>
+                                <option value="dasar_sales" {{$berdasarkan == "dasar_sales" ? 'selected' : ''}}> Per Sales </option>
+                            </select>
+                        </div>
 
-                        </select>
+                        <div class="col-xs-2 col-sm-2">
+                            <select class="form-control chosen-select" id="periode" name="periode">
+                                <option value="" default>----Pilih Periode-----</option>
+                                <option value="periode_bulan" {{$periode == "periode_bulan" ? 'selected' : ''}}> Bulanan </option>
+                                <option value="periode_harian" {{$periode == "periode_harian" ? 'selected' : ''}}> Harian </option>
+                            </select>
+                        </div>
+
+                        <div class="col-xs-1 col-sm-1">
+                            <select class="form-control chosen-select" id="kumulasi" name="kumulasi">
+                                <option value="" default>----Pilih Kumulasi-----</option>
+                                <option value="kumulasi_qty" {{$kumulasi == "kumulasi_qty" ? 'selected' : ''}}> Qty </option>
+                                <option value="kumulasi_qtyberat" {{$kumulasi == "kumulasi_qtyberat" ? 'selected' : ''}}> Qty Berat </option>
+                                <option value="kumulasi_jumlah" {{$kumulasi == "kumulasi_jumlah" ? 'selected' : ''}}> Jumlah </option>
+                                <option value="kumulasi_dpp" {{$kumulasi == "kumulasi_dpp" ? 'selected' : ''}}> Dpp </option>
+                            </select>
+                        </div>
+
+                        <div class="col-xs-2 col-sm-2" id="wilayah">
+                            <select class="form-control chosen-select" name="wilayah">
+                                <option value="0" default>----Pilih Wilayah-----</option>
+                                @foreach($datawilayah as $wilayahs)
+                                <option value="{{ $wilayahs->wilayahid }}" {{ $wilayah == $wilayahs->wilayahid ? 'selected' : '' }}>{{$wilayahs->wilayahnama}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-xs-2 col-sm-2" id="cabang">
+                            <select class="form-control chosen-select" name="cabang">
+                                <option value="0" default>----Pilih Cabang-----</option>
+                                @foreach($datacabang as $cabangs)
+                                <option value="{{ $cabangs->cabangid }}" {{ $cabang == $cabangs->cabangid ? 'selected' : '' }}>{{$cabangs->cabangnama}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-xs-3 col-sm-3" id="pelanggan">
+                            <select class="form-control chosen-select" id="pelanggan" name="pelanggan">
+                                <option value="0" default>----Pilih Pelanggan-----</option>
+                                @foreach($datapelanggan as $pelanggans)
+                                <option value="{{ $pelanggans->pelangganid }}" {{ $pelanggan == $pelanggans->pelangganid ? 'selected' : '' }}>{{ $pelanggans->cabangnama. ' - '.$pelanggans->pelanggankode. ' - '.$pelanggans->pelanggannama}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-xs-3 col-sm-3" id="sales">
+                            <select class="form-control chosen-select" id="sales" name="sales">
+                                <option value="0" default>----Pilih Sales-----</option>
+                                @foreach($datasales as $saless)
+                                <option value="{{ $saless->pegawaiid }}" {{ $sales == $saless->pegawaiid ? 'selected' : '' }}>{{ $saless->cabangnama. ' - '.$saless->pegawainik.' - '.$saless->pegawainama}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
+                    <br>&nbsp;
+                    <div class="col-lg-12 col-sm-12">
+                        <div class="col-xs-1 col-sm-1">
+                            <input type="text" class="form-control date-picker" placeholder="tanggal awal" name='tgl_awal' id="tgl_awal" value="{{ $tgl_awal }}">
+                        </div>
+                        <div class="col-xs-1 col-sm-1">
+                            <input type="text" class="form-control date-picker" placeholder="tanggal akhir" name='tgl_akhir' id="tgl_akhir" value="{{ $tgl_akhir }}">
+                        </div>
 
-                    <div class="col-xs-2 col-sm-2" id="wilayah">
-                        <select class="form-control chosen-select" name="wilayah">
-                            <option value="0" default>----Pilih Wilayah-----</option>
-                            @foreach($datawilayah as $wilayahs)
-                            <option value="{{ $wilayahs->wilayahid }}" {{ $wilayah == $wilayahs->wilayahid ? 'selected' : '' }}>{{$wilayahs->wilayahnama}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="col-xs-2 col-sm-2" id="cabang">
-                        <select class="form-control chosen-select" name="cabang">
-                            <option value="0" default>----Pilih Cabang-----</option>
-                            @foreach($datacabang as $cabangs)
-                            <option value="{{ $cabangs->cabangid }}" {{ $cabang == $cabangs->cabangid ? 'selected' : '' }}>{{$cabangs->cabangnama}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="col-xs-4 col-sm-4" id="pelanggan">
-                        <select class="form-control chosen-select" id="pelanggan" name="pelanggan">
-                            <option value="0" default>----Pilih Pelanggan-----</option>
-                            @foreach($datapelanggan as $pelanggans)
-                            <option value="{{ $pelanggans->pelangganid }}" {{ $pelanggan == $pelanggans->pelangganid ? 'selected' : '' }}>{{ $pelanggans->cabangnama. ' - '.$pelanggans->pelanggankode. ' - '.$pelanggans->pelanggannama}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="col-xs-2 col-sm-2">
-                        <input type="text" class="form-control date-picker" placeholder="tanggal awal" name='tgl_awal' id="tgl_awal" value="{{ $tgl_awal }}">
-                    </div>
-                    <div class="col-xs-2 col-sm-2">
-                        <input type="text" class="form-control date-picker" placeholder="tanggal akhir" name='tgl_akhir' id="tgl_akhir" value="{{ $tgl_akhir }}">
-                    </div>
-
-                    <div class="col-xs-1 col-sm-1">
-                        <button class="btn btn-sm btn-primary" type="submit" class="btn btn-primary">Cari</button>
+                        <div class="col-xs-1 col-sm-1">
+                            <button class="btn btn-sm btn-primary" type="submit" class="btn btn-primary">Cari</button>
+                        </div>
                     </div>
                 </form>
             </div>
             <!-- <div class="pull-right tableTools-container"></div> -->
         </div>
 
-        @if ($berdasarkan === 'dasar_wilayah')
+        @if ($berdasarkan === 'dasar_barang')
+        <!-- untuk dasar_barang -->
+        @include('penjualan.jualtrend.dasar_barang')
+
+        @elseif ($berdasarkan === 'dasar_wilayah')
         <!-- untuk dasar_wilayah -->
-        @include('penjualan.jualsummary.dasar_wilayah')
+        @include('penjualan.jualtrend.dasar_wilayah')
 
         @elseif ($berdasarkan === 'dasar_cabang')
         <!-- untuk dasar_cabang -->
-        @include('penjualan.jualsummary.dasar_cabang')
+        @include('penjualan.jualtrend.dasar_cabang')
 
         @elseif ($berdasarkan === 'dasar_pelanggan')
         <!-- untuk dasar_pelanggan -->
-        @include('penjualan.jualsummary.dasar_pelanggan')
+        @include('penjualan.jualtrend.dasar_pelanggan')
+
+        @elseif ($berdasarkan === 'dasar_sales')
+        <!-- untuk dasar_sales -->
+        @include('penjualan.jualtrend.dasar_sales')
 
         @else
         <!-- Jika Belum dipilih filternya -->
@@ -108,12 +148,21 @@
         $('#wilayah').hide();
         $('#cabang').hide();
         $('#pelanggan').hide();
+        $('#sales').hide();
 
         $('#berdasarkan').change(function() {
+            if ($('#berdasarkan').val() == 'dasar_barang') {
+                $('#wilayah').hide();
+                $('#cabang').hide();
+                $('#pelanggan').hide();
+                $('#sales').hide();
+
+            }
             if ($('#berdasarkan').val() == 'dasar_wilayah') {
                 $('#wilayah').hide();
                 $('#cabang').hide();
                 $('#pelanggan').hide();
+                $('#sales').hide();
 
             }
             if ($('#berdasarkan').val() == 'dasar_cabang') {
@@ -121,6 +170,7 @@
                 $('#cabang').show();
 
                 $('#pelanggan').hide();
+                $('#sales').hide();
 
             }
             if ($('#berdasarkan').val() == 'dasar_pelanggan') {
@@ -128,6 +178,15 @@
                 $('#cabang').show();
                 $('#pelanggan').show();
 
+                $('#sales').hide();
+
+            }
+            if ($('#berdasarkan').val() == 'dasar_sales') {
+                $('#wilayah').show();
+                $('#cabang').show();
+                $('#sales').show();
+
+                $('#pelanggan').hide();
 
             }
 

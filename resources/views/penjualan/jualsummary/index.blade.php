@@ -22,9 +22,11 @@
                         <div class="col-xs-3 col-sm-3">
                             <select class="form-control chosen-select" id="berdasarkan" name="berdasarkan">
                                 <option value="" default>----Pilih Berdasarkan-----</option>
+                                <option value="dasar_barang" {{$berdasarkan == "dasar_barang" ? 'selected' : ''}}> Per Barang </option>
                                 <option value="dasar_wilayah" {{$berdasarkan == "dasar_wilayah" ? 'selected' : ''}}> Per Wilayah </option>
                                 <option value="dasar_cabang" {{$berdasarkan == "dasar_cabang" ? 'selected' : ''}}> Per Cabang </option>
                                 <option value="dasar_pelanggan" {{$berdasarkan == "dasar_pelanggan" ? 'selected' : ''}}> Per Pelanggan </option>
+                                <option value="dasar_sales" {{$berdasarkan == "dasar_sales" ? 'selected' : ''}}> Per Sales </option>
 
                             </select>
                         </div>
@@ -55,6 +57,15 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        <div class="col-xs-4 col-sm-4" id="sales">
+                            <select class="form-control chosen-select" id="sales" name="sales">
+                                <option value="0" default>----Pilih Sales-----</option>
+                                @foreach($datasales as $saless)
+                                <option value="{{ $saless->pegawaiid }}" {{ $sales == $saless->pegawaiid ? 'selected' : '' }}>{{ $saless->cabangnama. ' - '.$saless->pegawainik.' - '.$saless->pegawainama}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <br>&nbsp;
                     <div class="col-lg-12 col-sm-12">
@@ -74,7 +85,11 @@
             <!-- <div class="pull-right tableTools-container"></div> -->
         </div>
 
-        @if ($berdasarkan === 'dasar_wilayah')
+        @if ($berdasarkan === 'dasar_barang')
+        <!-- untuk dasar_barang -->
+        @include('penjualan.jualsummary.dasar_barang')
+
+        @elseif ($berdasarkan === 'dasar_wilayah')
         <!-- untuk dasar_wilayah -->
         @include('penjualan.jualsummary.dasar_wilayah')
 
@@ -85,6 +100,10 @@
         @elseif ($berdasarkan === 'dasar_pelanggan')
         <!-- untuk dasar_pelanggan -->
         @include('penjualan.jualsummary.dasar_pelanggan')
+
+        @elseif ($berdasarkan === 'dasar_sales')
+        <!-- untuk dasar_sales -->
+        @include('penjualan.jualsummary.dasar_sales')
 
         @else
         <!-- Jika Belum dipilih filternya -->
@@ -111,12 +130,14 @@
         $('#wilayah').hide();
         $('#cabang').hide();
         $('#pelanggan').hide();
+        $('#sales').hide();
 
         $('#berdasarkan').change(function() {
             if ($('#berdasarkan').val() == 'dasar_wilayah') {
                 $('#wilayah').hide();
                 $('#cabang').hide();
                 $('#pelanggan').hide();
+                $('#sales').hide();
 
             }
             if ($('#berdasarkan').val() == 'dasar_cabang') {
@@ -124,6 +145,7 @@
                 $('#cabang').show();
 
                 $('#pelanggan').hide();
+                $('#sales').hide();
 
             }
             if ($('#berdasarkan').val() == 'dasar_pelanggan') {
@@ -131,6 +153,15 @@
                 $('#cabang').show();
                 $('#pelanggan').show();
 
+                $('#sales').hide();
+
+            }
+            if ($('#berdasarkan').val() == 'dasar_sales') {
+                $('#wilayah').show();
+                $('#cabang').show();
+                $('#sales').show();
+
+                $('#pelanggan').hide();
 
             }
 
