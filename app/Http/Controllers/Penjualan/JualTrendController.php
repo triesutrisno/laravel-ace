@@ -130,17 +130,38 @@ class JualTrendController extends Controller
             ->get();
 
         $kalender = CAL_GREGORIAN;
+        $periode = 'bulanan';
         $thn = 2020;
 
-        for ($bln = 1; $bln <= 12; $bln++) {
+        if ($periode == 'bulanan') {
+            # code...
+            for ($a = 1; $a <= 12; $a++) {
+                // hiung jumlah hari dalam bulan
+                $hari = cal_days_in_month($kalender, $a, $thn);
+                // ambil tgl awal bulan
+                $tgl_awal =  date($thn . '-' . sprintf("%02d", $a)  . '-01');
+                // ambil tgl akhir bulan dari perhitungan
+                $tgl_akhir =  date($thn . '-' . sprintf("%02d", $a)  . '-' . $hari);
+                echo $tgl_awal . ' - ' . $tgl_akhir . '<br>';
+            }
+        } elseif ($periode == 'harian') {
+            # code...
+            $bln = 2;
             // hiung jumlah hari dalam bulan
             $hari = cal_days_in_month($kalender, $bln, $thn);
-            // ambil tgl awal bulan
-            $tgl_awal =  date($thn . '-' . sprintf("%02d", $bln)  . '-01');
-            // ambil tgl akhir bulan dari perhitungan
-            $tgl_akhir =  date($thn . '-' . sprintf("%02d", $bln)  . '-' . $hari);
-            echo $tgl_awal . ' - ' . $tgl_akhir . '<br>';
+
+            for ($a = 1; $a <= $hari; $a++) {
+                // ambil tgl awal bulan
+                $tgl_awal =  date($thn . '-' . sprintf("%02d", $bln)  . '-' . sprintf("%02d", $a));
+                // ambil tgl akhir bulan dari perhitungan
+                $tgl_akhir =  date($thn . '-' . sprintf("%02d", $bln)  . '-' . sprintf("%02d", $a));
+                echo $tgl_awal . ' - ' . $tgl_akhir . '<br>';
+            }
         }
+
+
+
+
 
         die();
 

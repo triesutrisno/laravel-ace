@@ -65,6 +65,7 @@
                     <th>Tgl Daftar</th>
                     <th>Kode Bisnis Kokoh</th>
                     <th>Kode SAP SIG</th>
+                    <th>Nama CRO</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -90,6 +91,7 @@
                     <td align="left">{{$row->pelanggandaftar}}</td>
                     <td align="left">{{$row->biskokode}}</td>
                     <td align="left">{{$row->sapkode}}</td>
+                    <td align="left">{{$row->pegawainik . ' - '. $row->pegawainama}}</td>
                     <td align="center">{{$row->status==0 ? 'Non Aktif' : 'Aktif'}}</td>
                 </tr>
                 @endforeach
@@ -115,6 +117,7 @@
                     <th>Tgl Daftar</th>
                     <th>Kode Bisnis Kokoh</th>
                     <th>Kode SAP SIG</th>
+                    <th>Nama CRO</th>
                     <th>Status</th>
                 </tr>
             </tfoot>

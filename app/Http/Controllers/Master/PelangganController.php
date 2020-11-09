@@ -52,12 +52,15 @@ class PelangganController extends Controller
             ->select(
                 'ms_wilayah.wilayahnama',
                 'ms_cabang.cabangnama',
+                'ms_pegawai.pegawainik',
+                'ms_pegawai.pegawainama',
                 'ms_pelanggan.*',
             )
             ->where($wilayahs, $wilayah)
             ->where($cabangs, $cabang)
             ->join('ms_cabang', 'ms_cabang.cabangid', '=', 'ms_pelanggan.cabangid')
             ->join('ms_wilayah', 'ms_wilayah.wilayahid', '=', 'ms_cabang.wilayahid')
+            ->join('ms_pegawai', 'ms_pegawai.pegawaiid', '=', 'ms_pelanggan.salesid')
             ->orderBy("ms_wilayah.wilayahnama", "ASC")
             ->orderBy("ms_cabang.cabangnama", "ASC")
             ->orderBy("ms_pelanggan.pelanggankode", "ASC")
